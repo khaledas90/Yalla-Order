@@ -1,0 +1,43 @@
+.SuccessPass .card {
+  border-radius: 25px;
+  margin-top: 125px;
+}
+
+.SuccessPass .imgSuccess {
+  max-width: 100%;
+  width: 150px;
+  margin: 25px 0;
+}
+
+.SuccessPass p {
+  font-weight: 600;
+  font-size: 25px;
+  margin: 25px;
+}
+
+.SuccessPass form .btnLogin {
+  padding: 14px 0;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  background-color: transparent;
+  border: 2px solid #fd7e7e;
+  color: #fd7e7e;
+  transition: all 0.4s;
+  font-weight: 600;
+  border-radius: 50px;
+}
+
+.SuccessPass form .btnLogin a {
+  text-decoration: none;
+  color: #fd7e7e;
+}
+
+.SuccessPass form .btnLogin:hover {
+  background-color: #fd7e7e;
+  color: #fff;
+}
+
+.SuccessPass form .btnLogin:hover a {
+  color: #fff;
+}

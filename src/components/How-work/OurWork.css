@@ -1,0 +1,21 @@
+.OurWork {
+  margin-top: 8rem;
+  margin-bottom: 50px;
+  background-image: url("../../assets/OurWork_bg.png");
+  background-repeat: no-repeat;
+  background-position: bottom left;
+}
+.OurWork h1 {
+  text-align: center;
+  color: #000000;
+  font-weight: 500;
+  font-size: 55px;
+  line-height: 1;
+  font-family: Cabin Sketch, sans-serif;
+}
+.OurWork h1 .span-1 {
+  color: #fd7e7e;
+}
+.OurWork h1 .span-2 {
+  color: #3a98ea;
+}

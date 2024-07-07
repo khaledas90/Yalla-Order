@@ -1,0 +1,30 @@
+.Partner {
+  margin-bottom: 50px;
+  margin-top: 18pc;
+}
+
+.Partner h1 {
+  text-align: center;
+  color: #000000;
+  font-weight: 500;
+  font-size: 55px;
+  line-height: 1;
+  font-family: Cabin Sketch, sans-serif;
+}
+
+.Partner h1 span {
+  color: #fd7e7e;
+}
+
+.Partner .slider h4 {
+  color: #fd7e7e;
+  margin: 20px 0;
+}
+
+.Partner .slider .midTitle {
+  color: #3a98ea;
+}
+
+.Partner .slider .content img {
+  width: 180px;
+}

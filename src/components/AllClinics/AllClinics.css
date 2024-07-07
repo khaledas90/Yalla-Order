@@ -1,0 +1,92 @@
+.allClinics {
+  padding: 50px 0;
+  margin-top: 150px;
+}
+
+.allClinics h1 {
+  margin-bottom: 35px;
+  font-weight: 500;
+}
+
+.allClinics h1 span {
+  color: var(--secondary-color);
+}
+
+.allClinics .Clinic {
+  border: 1px solid var(--dark-color);
+  border-radius: 20px;
+  height: 344px;
+  overflow: hidden;
+  position: relative;
+  transition: 0.1s;
+}
+
+.allClinics .Clinic:hover {
+  border: 3px solid var(--secondary-color);
+}
+
+.allClinics .Clinic a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
+.allClinics .Clinic img {
+  width: 100%;
+  height: 80%;
+  aspect-ratio: 3/2;
+}
+
+.allClinics .Clinic .details {
+  position: absolute;
+  top: 65%;
+  width: 110%;
+  height: 45%;
+  left: -3px;
+  background-color: var(--white-color);
+  border-radius: 25px;
+  transform: rotate(-12deg);
+  box-shadow: -1px 0px 5px 5px rgba(0, 0, 0, 0.12);
+}
+
+.allClinics .Clinic .details div {
+  position: absolute;
+  transform: rotate(12deg);
+  top: 20px;
+  left: 13px;
+}
+
+.allClinics .Clinic .details div p {
+  color: var(--dark-color);
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.allClinics .Clinic .details div p:first-of-type {
+  font-weight: 500;
+}
+
+/* .allClinics .Clinic .details div p:last-child {
+  font-weight: 400;
+} */
+
+.seeMoreBtn {
+  border: none;
+  background-color: transparent;
+  color: var(--secondary-color);
+  font-size: 1.8rem;
+  transition: 0.3s;
+}
+
+.seeMoreBtn:hover {
+  color: var(--main-darker);
+}
+
+@media screen and (max-width: 767px) {
+  .allClinics .Clinic {
+    margin: auto;
+    width: 363px;
+  }
+}

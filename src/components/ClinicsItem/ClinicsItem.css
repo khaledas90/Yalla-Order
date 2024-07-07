@@ -1,0 +1,18 @@
+.cardShadow {
+  box-shadow: 0px 1px #ddd;
+}
+
+.summaryStyle {
+  width: 75%;
+}
+
+.containerStyle {
+  position: relative;
+  top: -70px;
+}
+
+@media (max-width: 500px) {
+  .summaryStyle {
+    width: 100%;
+  }
+}

@@ -1,0 +1,77 @@
+.formStyle {
+  width: 500px !important;
+}
+
+@media (max-width: 500px) {
+  .formStyle {
+    width: 400px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .formStyle {
+    width: 370px !important;
+  }
+}
+
+.formStyle button {
+  font-size: 12px;
+  background-color: var(--main-color);
+  top: 8px !important;
+  right: 5px !important;
+}
+
+.formStyle button:hover {
+  background-color: #3a98ea !important;
+}
+
+.formStyle input:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.formStyle input::placeholder {
+  font-size: 13px;
+  color: #bababa !important;
+}
+
+.formStyle input {
+  padding-left: 22px;
+}
+
+.inputStyle {
+  position: relative;
+  top: 60px;
+}
+
+.inputStyle h1 {
+  font-family: "Cabin Sketch", sans-serif;
+  font-weight: 400;
+  color: white;
+  font-size: 4rem;
+  margin-bottom: 30px;
+  line-height: 74.94px;
+  text-transform: uppercase;
+}
+
+.pStyle {
+  font-family: "Roboto";
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 37.5px;
+}
+
+.locationIcon {
+  width: 20px;
+  position: absolute;
+  left: -30px !important;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.locationIcon2 {
+  position: absolute;
+  top: 51%;
+  transform: translateY(-50%);
+  left: 15px;
+}

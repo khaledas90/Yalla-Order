@@ -1,0 +1,100 @@
+.To-Partner-container {
+  padding: 50px 0;
+  margin-top: 50px;
+}
+
+.To-Partner {
+  width: 70%;
+  height: 463px;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+  position: relative;
+  background-image: url("../../assets/snack-pastry-board-with-potatoes-water-black-background-top-view.png");
+}
+
+.To-Partner img {
+  position: absolute;
+  top: 50%;
+  height: 120%;
+  right: 0;
+  transform: translate(50%, -50%);
+}
+
+.To-Partner .details {
+  padding: 100px 60px;
+  color: var(--white-color);
+}
+
+.To-Partner .details h1 {
+  font-family: "Cabin Sketch", sans-serif;
+  font-size: 3rem;
+  font-weight: 500;
+}
+
+.To-Partner .details p {
+  font-weight: 500;
+  font-size: 1.6rem;
+  margin: 35px 0;
+}
+
+.To-Partner .details p span {
+  color: var(--main-color);
+}
+
+.To-Partner .details .BtnGoToLoginPartner {
+  background-color: var(--white-color);
+  color: var(--dark-color);
+  width: 228px;
+  padding: 10px 0;
+  border-radius: 22px;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+@media screen and (max-width: 767px) {
+  .To-Partner {
+    height: 300px;
+  }
+  .To-Partner .details {
+    padding: 40px 25px;
+  }
+  .To-Partner .details h1 {
+    font-size: 2rem;
+  }
+  .To-Partner .details p {
+    font-size: 1.2rem;
+  }
+  .To-Partner img {
+    height: 110%;
+  }
+}
+
+@media screen and (max-width: 635px) {
+  .To-Partner img {
+    display: none;
+  }
+  .To-Partner {
+    width: 90%;
+  }
+  .To-Partner .details button {
+    width: 155px;
+  }
+}
+
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  .To-Partner {
+    height: 350px;
+  }
+  .To-Partner .details {
+    padding: 80px 25px;
+  }
+  .To-Partner .details h1 {
+    font-size: 2.3rem;
+  }
+  .To-Partner .details p {
+    font-size: 1.4rem;
+  }
+  .To-Partner img {
+    height: 110%;
+  }
+}

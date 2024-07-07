@@ -1,0 +1,111 @@
+.orderSummary .orderHeader{
+        background-color: var(--dark-color);
+        color: var(--white-color);
+        display: flex;
+        justify-content: space-between;
+        padding: 25px;
+        font-size: 30px;
+        align-items: center;
+}
+.orderSummary .orderHeader button{
+    background-color: transparent;
+    color: var(--main-color);
+    border: none;
+}
+.restaurant-name{
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+.itemsForEachRestaurant table{
+    width: 100%;
+}
+.itemsForEachRestaurant table .tableHeader{
+    background-color: #f1f1f1;
+    font-size: 20px;
+   
+}
+.itemsForEachRestaurant table .tableHeader th{
+    padding: 5px;
+}
+.itemsForEachRestaurant table .tableHeader td{
+    color: #707070;
+    padding: 5px;
+    font-weight: 400;
+    
+}
+
+.DeliveryAddress .addressHeader{
+    background-color: #f1f1f1;
+    padding: 7px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.2rem;
+
+}
+.DeliveryAddress .addressHeader p{
+    margin-bottom: 0;
+}
+.DeliveryAddress .addressHeader button{
+    border: none;
+    color: var(--main-color);
+    background-color: transparent;
+    padding: 0;
+}
+.DeliveryAddress .Address{
+    padding: 10px 20px;
+}
+.requests p{
+    background-color: #f1f1f1;
+    padding: 7px 10px;
+    font-size: 1.2rem;
+
+}
+.requests textarea{
+    padding: 8px;
+    margin-left: 10px;
+    margin-bottom: 20px;
+    display: block;
+}
+.PaymentSummary > p{
+    background-color: #f1f1f1;
+    padding: 5px 10px;
+    font-size: 1.2rem;
+
+}
+.inputs{
+    display: flex;
+    gap: 10px;
+}
+.cash{
+    padding: 5px;
+    font-size: 1.3rem;
+    font-weight: 500;
+
+}
+.orderOverview{
+    width: 500px;
+    margin: auto;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 1.2rem;
+}
+.orderOverview li{
+    display: flex;
+    justify-content: space-around;
+    color: #707070;
+}
+.confBtn{
+    background-color: var(--main-color);
+    border-radius: 22px;
+    width: 300px;
+    border: none;
+    padding: 10px;
+    color: #fff;
+    font-size: 1.2rem;
+
+}
+
+

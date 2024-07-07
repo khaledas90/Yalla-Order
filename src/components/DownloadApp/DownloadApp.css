@@ -1,0 +1,48 @@
+.mobileSec {
+  background: url("../../assets/bg-download-app.png");
+  height: 540px;
+  border-top-left-radius: 10%;
+  border-bottom-left-radius: 10%;
+  margin-top: 50px;
+  margin-bottom: 150px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.mobileSec .content {
+  margin-left: 12rem;
+}
+
+.cabinSketchRegular {
+  font-family: Cabin Sketch;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 56.21px;
+  text-align: left;
+}
+
+@media (max-width: 991.21px) {
+  .image {
+    width: 140px;
+  }
+  .mobileSec .content {
+    margin-left: 0px;
+    align-items: center;
+  }
+  .cabinSketchRegular {
+    text-align: center;
+    font-size: 38px;
+  }
+}
+
+@media (max-width: 500px) {
+  .image {
+    width: 140px;
+  }
+}
+
+.mobileStyle {
+  position: absolute;
+  top: -15%;
+  right: 0;
+}

@@ -1,0 +1,334 @@
+.restaurantsMenu .img-wrapper {
+  margin-top: 60px;
+}
+
+.restaurantsMenu .TitleMenuPage h1 {
+  font-family: "Cabin Sketch", sans-serif;
+  font-weight: 400;
+  color: white;
+  font-size: 4rem;
+  margin-bottom: 30px;
+  line-height: 74.94px;
+  text-transform: uppercase;
+}
+
+.RestaurantDetails {
+  text-align: center;
+  margin-top: -20px;
+}
+
+.RestaurantDetails .details p:first-of-type {
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--dark-color);
+}
+
+.RestaurantDetails .details p:nth-of-type(2),
+.RestaurantDetails .details p:nth-of-type(3) {
+  color: #959595;
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.RestaurantDetails .details p:last-of-type {
+  color: #bbb;
+  font-size: 32px;
+}
+
+.tabs {
+  color: var(--dark-color);
+  margin-top: 55px;
+  margin-bottom: 150px;
+}
+
+.tab-headers {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+}
+
+.tab-header {
+  padding: 30px 40px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease-in-out;
+  width: 50%;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 500;
+}
+
+.tab-header svg {
+  width: 30px;
+  height: 30px;
+}
+
+.tab-header.active {
+  color: var(--main-color);
+}
+
+.tab-header::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  height: 2px;
+  background: var(--main-color);
+  width: 100%;
+  transform: scaleX(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.tab-header.active.menu::after {
+  animation: borderLeftToRight 0.3s forwards;
+}
+
+.tab-header.active.info::after {
+  animation: borderRightToLeft 0.3s forwards;
+}
+
+@keyframes borderLeftToRight {
+  from {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  to {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@keyframes borderRightToLeft {
+  from {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  to {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+}
+
+.tab-content {
+  padding: 30px 20px;
+  border-top: none;
+}
+
+.infoContent {
+  background-color: var(--white-color);
+  border-radius: 22px;
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+}
+
+.infoContent > p {
+  background-color: var(--dark-color);
+  color: var(--white-color);
+  padding: 45px 62px;
+  font-size: 36px;
+  font-weight: 500;
+}
+
+.infoContent .infoList {
+  padding: 45px 62px;
+}
+
+.infoContent .infoList li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 27px;
+  font-weight: 400;
+}
+
+.infoContent .infoList li p:first-of-type {
+  color: #959595;
+}
+
+.menuContent {
+  display: flex;
+}
+
+.menuContent .categories {
+  background-color: var(--white-color);
+  border-radius: 22px;
+  border: 1px solid #ddd;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  width: 25%;
+}
+
+.menuContent .categories p {
+  background-color: var(--dark-color);
+  padding: 20px 32px;
+  font-size: 32px;
+  color: var(--white-color);
+  font-weight: 500;
+}
+
+.menuContent .categories .categoriesList {
+  padding: 28px 42px;
+  color: var(--dark-color);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menuContent .categories .categoriesList li {
+  font-size: 26px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.menuContent .categories .categoriesList li.active {
+  color: var(--main-color);
+}
+
+.menuContent .menuBasedCategory {
+  padding: 28px 42px;
+  color: var(--dark-color);
+  width: 75%;
+}
+
+.menuContent .menuBasedCategory > p {
+  font-size: 32px;
+  font-weight: 400;
+}
+
+.menuContent .menuBasedCategory .dishesList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menuContent .menuBasedCategory .dish {
+  border: 1px solid #ddd;
+  border-radius: 22px;
+  overflow: hidden;
+  display: flex;
+  font-size: 26px;
+  position: relative;
+}
+
+.menuContent .menuBasedCategory .dish button {
+  border: none;
+  background-color: transparent;
+  position: absolute;
+  font-size: 20px;
+}
+
+.menuContent .menuBasedCategory .dish .favBtn {
+  top: 20px;
+  right: 20px;
+}
+
+.menuContent .menuBasedCategory .dish .bagBtn {
+  bottom: 20px;
+  right: 20px;
+}
+
+.menuContent .menuBasedCategory .dish .dishImg {
+  width: 50%;
+}
+
+.menuContent .menuBasedCategory .dish .dishImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.checkBagBtn {
+  padding: 14px 72px;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  background-color: #fd7e7e;
+  border: 2px solid #fd7e7e;
+  color: #ffffff;
+  transition: all 0.4s;
+  font-weight: 600;
+  border-radius: 50px;
+}
+
+.checkBagBtn a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.checkBagBtn:hover {
+  background-color: #fd7e7e;
+  color: #fff;
+}
+
+.checkBagBtn:hover a {
+  color: #fff;
+}
+
+@media screen and (min-width: 993px) and (max-width: 1200px) {
+  .menuContent .menuBasedCategory .dish {
+    flex-direction: column;
+    height: 420px;
+    font-size: 20px;
+    width: 400px;
+  }
+  .menuContent .menuBasedCategory .dish .dishImg {
+    width: 100%;
+    height: 50%;
+  }
+}
+
+@media screen and (min-width: 776px) and (max-width: 992px) {
+  .menuContent .menuBasedCategory .dish {
+    flex-direction: column;
+    height: 420px;
+    font-size: 20px;
+    width: 400px;
+  }
+  .menuContent .menuBasedCategory .dish .dishImg {
+    width: 100%;
+    height: 50%;
+  }
+  .menuContent .categories {
+    width: 30%;
+  }
+  .menuContent .menuBasedCategory {
+    width: 70%;
+  }
+  .menuContent .categories .categoriesList li {
+    font-size: 20px;
+  }
+  .menuContent .categories p {
+    font-size: 25px;
+  }
+}
+
+.menuContent .menuBasedCategory .dish .dish-details {
+  padding: 15px;
+}
+
+.menuContent .menuBasedCategory .dish .dish-name,
+.menuContent .menuBasedCategory .dish .price {
+  font-weight: 500;
+}
+
+@media screen and (max-width: 570px) {
+  .infoContent > p {
+    padding: 25px 40px;
+    font-size: 20px;
+  }
+  .infoContent .infoList {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .infoContent .infoList li {
+    font-size: 20px;
+  }
+  .infoContent > p {
+    font-size: 30px;
+  }
+}
