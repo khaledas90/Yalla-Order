@@ -11,6 +11,8 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import Explore from "../components/Explore/Explore.jsx";
 function HomeRestaurants() {
+
+
     return (
         <main className="HomeRestaurants">
             <Helmet>
