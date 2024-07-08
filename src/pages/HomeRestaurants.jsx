@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet"
-// import Header from "../components/header/Header";
+import { useEffect } from "react";
 import HeroRestaurant from "../components/Hero/HeroRestaurant";
 import Header from "../components/header/Header.jsx";
 import HowWorkHomeRestaurant from "../components/How-Work-Home/HowWorkHomeRestaurant.jsx";
@@ -10,7 +10,26 @@ import DownloadAppRestaurant from "../components/DownloadApp/DownloadAppRestaura
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import Explore from "../components/Explore/Explore.jsx";
+
+
+
+// api
+
+import { getRestaurants } from "../services/apiRestaurant.js";
+let apiUrl = "https://insta-order-site.web-allsafeeg.com/api";
+let token = "313|lQZW0WC2iV5cuamyL4ReqboYJvMtPHXsGoG7fM5Q25578c7e";
+let language = "en";
+
+
 function HomeRestaurants() {
+    useEffect(() => {
+        getRestaurants(token, apiUrl, language).then((result) => {
+            console.log(result);
+        }).catch((err) => {
+
+        });
+    }, [])
+
     return (
         <main className="HomeRestaurants">
             <Helmet>
