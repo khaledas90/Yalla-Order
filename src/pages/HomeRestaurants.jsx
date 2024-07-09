@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 
 function HomeRestaurants() {
     const { token } = useSelector(state => state.User)
-    console.log(token, 'token');
+    console.log(token, '');
     return (
         <main className="HomeRestaurants">
             <Helmet>
