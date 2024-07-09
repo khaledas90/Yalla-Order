@@ -55,7 +55,7 @@ export default function Header({ MainPage, IconOne, IconTwo, IconThree }) {
                     to="/clinics"
                     className={`links text-white d-flex justify-content-center`}
                   >
-                    <Link to={MainPage === "Restaurants" ? "/restaurants" : "/CLinics"}>{MainPage}</Link>
+                    <Link to={MainPage === "Restaurants" ? "/Restaurants" : "/CLinics"}>{MainPage}</Link>
                   </Nav.Link>
                   <Nav.Link
 
@@ -95,7 +95,7 @@ export default function Header({ MainPage, IconOne, IconTwo, IconThree }) {
                     <Link exact="true" to="/">Home</Link>
                   </Nav.Link>
                   <Nav.Link className={`links text-white`}>
-                    <Link to={MainPage === "Restaurants" ? "/restaurants" : "/CLinics"}>{MainPage}</Link>
+                    <Link to={MainPage === "Restaurants" ? "/Restaurants" : "/CLinics"}>{MainPage}</Link>
                   </Nav.Link>
                   <Nav.Link className={`links text-white`}>
                     <Link to="/BecomeAPartner">Become a partner</Link>

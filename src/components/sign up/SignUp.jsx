@@ -1,4 +1,7 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { faApple, faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons";
@@ -6,29 +9,35 @@ import Header from "../header/Header";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import { useForm } from "react-hook-form";
-import apiRegister from "../../services/Authentiction/apiAuthRegister";
 import "./signUp.css";
-import axios from "axios";
+import { registerUser } from "../../store/UserSlice.js";
+import { useNavigate } from "react-router-dom";
+const SignUp = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { status, error } = useSelector(state => state.User);
+  console.log(status, error, 'store');
 
-export default function SignUp() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = async (value) => {
-    // const { Email, Name, Password } = data;
-
-    try {
-      const { data } = await axios.post('https://insta-order-site.web-allsafeeg.com/api/register', {
-        username: 'jk',
-        email: 'jj@sdfsd.com',
-        password: '123123',
-        phone: "01090563586"
-      });
-      console.log(data.data);
-    } catch (error) {
-      console.log(error.response ? error.response.data : error.message);
-    }
-  };
+  const formik = useFormik({
+    initialValues: {
+      Name: '',
+      Email: '',
+      Phone: '',
+      Password: ''
+    },
+    validationSchema: Yup.object({
+      Name: Yup.string().required('Name is required'),
+      Email: Yup.string().email('Invalid email address').required('Email is required'),
+      Phone: Yup.string().required('Phone is required'),
+      Password: Yup.string().required('Password is required'),
+    }),
+    onSubmit: async (values) => {
+      localStorage.setItem('token', 'token');
+      dispatch(registerUser(values));
+      navigate('/login')
+    },
+  });
 
   return (
     <div className="SignUp Main_bg">
@@ -37,34 +46,51 @@ export default function SignUp() {
         <div className="row justify-content-center">
           <div className="col-lg-7">
             <div className="card p-4">
-              <form className="py-2 px-2" onClick={onSubmit}>
+              <form className="py-2 px-2" onSubmit={formik.handleSubmit}>
                 <h2 className="text-center mb-5">Create Account</h2>
                 <div className="form-group my-4">
                   <input
-                    {...register("Name", { required: true })}
                     type="text"
                     placeholder="Name"
                     className="form-control rounded-pill px-4 py-3 border-secondary"
+                    {...formik.getFieldProps('Name')}
                   />
-                  {errors.Name && <span className="error">Name is required</span>}
+                  {formik.touched.Name && formik.errors.Name ? (
+                    <span className="error">{formik.errors.Name}</span>
+                  ) : null}
                 </div>
                 <div className="form-group my-4">
                   <input
-                    {...register("Email", { required: true })}
                     type="email"
                     placeholder="Email"
                     className="form-control rounded-pill px-4 py-3 border-secondary"
+                    {...formik.getFieldProps('Email')}
                   />
-                  {errors.Email && <span className="error">Email is required</span>}
+                  {formik.touched.Email && formik.errors.Email ? (
+                    <span className="error">{formik.errors.Email}</span>
+                  ) : null}
+                </div>
+                <div className="form-group my-4">
+                  <input
+                    type="text"
+                    placeholder="Phone"
+                    className="form-control rounded-pill px-4 py-3 border-secondary"
+                    {...formik.getFieldProps('Phone')}
+                  />
+                  {formik.touched.Phone && formik.errors.Phone ? (
+                    <span className="error">{formik.errors.Phone}</span>
+                  ) : null}
                 </div>
                 <div className="form-group my-2">
                   <input
-                    {...register("Password", { required: true })}
                     type="password"
                     placeholder="Password"
                     className="form-control rounded-pill px-4 py-3 border-secondary"
+                    {...formik.getFieldProps('Password')}
                   />
-                  {errors.Password && <span className="error">Password is required</span>}
+                  {formik.touched.Password && formik.errors.Password ? (
+                    <span className="error">{formik.errors.Password}</span>
+                  ) : null}
                 </div>
                 <div className="d-grid gap-2 mt-4">
                   <button type="submit" className="btn btn-primary btnLogin btn-block">
@@ -91,11 +117,12 @@ export default function SignUp() {
                 </div>
                 <div className="text-center SignUp">
                   <span>
-                    Already have an account?
-                    <Link to="/Login">Log in</Link>
+                    Already have an account? <Link to="/Login">Log in</Link>
                   </span>
                 </div>
               </form>
+              {status === 'loading' && <p>Loading...</p>}
+              {status === 'failed' && <p>Error: {error}</p>}
             </div>
           </div>
         </div>
@@ -103,3 +130,5 @@ export default function SignUp() {
     </div>
   );
 }
+
+export default SignUp;

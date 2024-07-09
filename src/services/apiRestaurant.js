@@ -1,6 +1,3 @@
-// let apiUrl = "https://insta-order-site.web-allsafeeg.com/api";
-// let token = "310|Jtp8tTfHXTrFXh413EAC2XWzPddRK2dWYvYpIFKPaaae8122";
-
 async function getRestaurants(token, apiUrl, language) {
     let response = await fetch(`${apiUrl}/places/restaurantes/list`, {
         headers: {
@@ -16,5 +13,4 @@ async function getRestaurants(token, apiUrl, language) {
     return data;
 }
 
-// function SignUp() {}
 export { getRestaurants };
