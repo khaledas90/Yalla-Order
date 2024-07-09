@@ -6,7 +6,7 @@ async function getRestaurants(token, apiUrl, language) {
         headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
-            Accept: "application/json",
+            "Accept": "application/json",
             "Access-Control-Allow-Origin": "*",
             "Accept-Language": language,
         },
@@ -16,4 +16,5 @@ async function getRestaurants(token, apiUrl, language) {
     return data;
 }
 
+// function SignUp() {}
 export { getRestaurants };
