@@ -9,19 +9,54 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import logo from "../../assets/logo.png";
 
 
-
-
-
+import Bag from "../bag/Bag";
+import FavRestaurant from "../favorite-restaurants/FavRestaurant";
+import LanguageMenu from "../LanguageSwitch/LanguageMenu";
 import "./header.css";
 import { Link } from "react-router-dom";
-
-
-export default function Header({ MainPage, IconOne, IconTwo, IconThree }) {
+import { useState } from "react";
+import { useLanguage } from "../../context/LanguageProvider";
+import ProfileMenu from "../ProfileResturant/ProfileMenu";
+export default function Header({ MainPage, IconOne, IconTwo, IconThree,IconFour }) {
   const { loginBtn, navStatus } = useNav();
-
+  const [openMenu,setOpenMenu] = useState("");
+  // const {language} = useLanguage();
+  function handleOpenBag(){
+    if(openMenu === "bag"){
+      setOpenMenu("")
+    }
+    else{
+      setOpenMenu("bag")
+    }
+  }
+  function handleOpenFav(){
+    if(openMenu === "fav"){
+      setOpenMenu("")
+    }
+    else{
+      setOpenMenu("fav")
+    }
+  }
+  function handleOpenLang(){
+    if(openMenu === "lang"){
+      setOpenMenu("")
+    } 
+    else{
+      setOpenMenu("lang")
+    }
+  }
+  function handleOpenProf(){
+    if(openMenu === "prof"){
+      setOpenMenu("")
+    } 
+    else{
+      setOpenMenu("prof")
+    }
+  }
   return (
     <>
       <Navbar expand="lg" className="pt-3">
+   
         <Container>
           <Navbar.Brand href="#home" className='logoStyle'>
             <img src={logo} className="w-100" alt="logo" />
@@ -107,10 +142,24 @@ export default function Header({ MainPage, IconOne, IconTwo, IconThree }) {
               </Navbar.Collapse>
               <div className="d-flex gap-2 align-items-center">
                 <div className="navBarIcons d-flex gap-3 align-items-center">
-                  <button className="btn border-0 bg-transparent text-white p-0"> {IconOne}</button>
-                  <button className="btn border-0 bg-transparent text-white p-0"> {IconTwo}</button>
-                  <button className="btn border-0 bg-transparent text-white p-0">{IconThree}</button>
+                <div className = "Fav-open">
+                 <button onClick={() => handleOpenFav()} className="btn border-0 bg-transparent text-white p-0"> {IconOne}</button>
+                {openMenu === "fav" && <FavRestaurant/>}
 
+                </div>
+                <div className="Lang-open">
+                <button onClick={() => handleOpenLang()} className="btn border-0 bg-transparent text-white p-0"> {IconTwo}</button>
+                {openMenu === "lang" && <LanguageMenu setOpenMenu={setOpenMenu}/>}
+                </div>
+                <div className = "Bag-open">
+                <button onClick={() => handleOpenBag()} className="btn border-0 bg-transparent text-white p-0">{IconThree}</button>
+                {openMenu === "bag" && <Bag/>}
+                </div>
+                <div className = "prof-open">
+                 <button onClick={() => handleOpenProf()} className="btn border-0 bg-transparent text-white p-0"> {IconFour}</button>
+                {openMenu === "prof" && <ProfileMenu/>}
+
+                </div>
                   <button
                     className={`btnStyle btn text-white ms-2 text-center`}
                   >

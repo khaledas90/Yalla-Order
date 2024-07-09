@@ -5,6 +5,7 @@ import Header from "../header/Header";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import Lang from "./Lang.js";
 
 export default function AboutUs() {
   return (
@@ -36,6 +37,7 @@ export default function AboutUs() {
           </div>
         </div>
       </div>
+      <Lang/>
     </>
   );
 }

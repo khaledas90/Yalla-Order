@@ -25,8 +25,10 @@ import HomeMedical from "./pages/HomeMedical";
 import Clinics from "./pages/Clinics";
 import ClinicItem from "./pages/ClinicItem";
 import ProfileDoctors from './pages/ProfileDoctors';
+import LanguageProvider from "./context/LanguageProvider";
 function App() {
     return (
+        <LanguageProvider>
         <Router>
             <div className="App">
                 <Routes>
@@ -57,6 +59,7 @@ function App() {
                 <Footer />
             </div>{" "}
         </Router>
+        </LanguageProvider>
     );
 }
 
