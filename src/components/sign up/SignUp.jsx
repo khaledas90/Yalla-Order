@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./signUp.css";
@@ -12,8 +12,24 @@ import Header from "../header/Header";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import { signUp } from "../../services/apiAuth";
 
 export default function SignUp() {
+  const [email,setEmail] = useState("");
+  const [Password,setPassword] = useState("");
+  const [phone,setPhone] = useState("010123456789");
+  const [name,setName] = useState("");
+
+  function handleSubmit(e){
+    e.preventDefault();
+    signUp("https://insta-order-site.web-allsafeeg.com/api",email, name , Password, phone)
+    .then(result => {
+        console.log('User signed up successfully:', result);
+    })
+    .catch(error => {
+        console.error('Sign up failed:', error);
+    });
+  }
   return (
     <>
       <div className="SignUp Main_bg">
@@ -23,7 +39,7 @@ export default function SignUp() {
           <div className="row justify-content-center">
             <div className=" col-lg-7 ">
               <div className="card p-4">
-                <form className="py-2 px-2">
+                <form onSubmit={handleSubmit} className="py-2 px-2">
                   <h2 className="text-center mb-5">Create Account</h2>
                   <div className="form-group my-4">
                     <input
@@ -31,6 +47,8 @@ export default function SignUp() {
                       required
                       placeholder="Name "
                       className="form-control rounded-pill px-4 py-3 border-secondary"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                     />
                   </div>
                   <div className="form-group my-4">
@@ -39,6 +57,8 @@ export default function SignUp() {
                       required
                       placeholder="Email "
                       className="form-control rounded-pill px-4 py-3 border-secondary"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
                   <div className="form-group my-2">
@@ -47,6 +67,8 @@ export default function SignUp() {
                       required
                       placeholder="Password"
                       className="form-control rounded-pill px-4 py-3 border-secondary"
+                      value={Password}
+                      onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
 
