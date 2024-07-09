@@ -64,7 +64,38 @@
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
 }
-
+.Bag-open{
+  position: relative;
+}
+.Bag-open .bag{
+  position: absolute;
+  top: 50px;
+  left: -290px;
+}
+.Fav-open{
+  position: relative;
+}
+.Fav-open .fav{
+  position: absolute;
+  top: 50px;
+  left: -290px;
+}
+.Lang-open{
+  position: relative;
+}
+.Lang-open .langList{
+  position: absolute;
+  top: 50px;
+  left: -125px;
+}
+.prof-open{
+  position: relative;
+}
+.prof-open .profMenu{
+  position: absolute;
+  top: 50px;
+  left: -165px;
+}
 @media (max-width: 500px) {
   .navStyle {
     width: 405px;

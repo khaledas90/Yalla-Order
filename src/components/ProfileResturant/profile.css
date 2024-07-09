@@ -179,6 +179,37 @@
 .empty_Address {
   margin-top: 10%;
 }
+.profMenu{
+  background-color: #fff;
+  border-radius:12px;
+  
+}
+.profMenu a{
+  display: block;
+  width: 100%;
+  padding: 10px 1px;
+  text-decoration: none;
+  font-weight: 400;
+  color: #575757;
+  font-size: 20px;
+  width: 190px;
+  transition: 0.3s;
+}
+.profMenu a:hover{
+  color: var(--main-color);
+  background-color: #fefefe;
+}
+.profMenu::before{
+  content: "";
+  position: absolute;
+  top: -20px;
+  /* Adjust as necessary */
+  right: 30px;
+  /* Adjust as necessary */
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 30px solid #fff;
+}
 
 /* address saved */
 

@@ -1,0 +1,45 @@
+.langList{
+    background-color: #fff;
+    padding: 10px 0;
+    border-radius: 12px;
+    width: 190px;
+
+}
+.langList li{
+    transition: 0.3s;
+
+}
+.langList li button{
+    border: none;
+    background-color: transparent;
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 20px;
+    transition: 0.3s;
+}
+.langList li button:hover{
+    background-color: #f5f5f5;
+    color: var(--main-color);
+}
+.langList li button.en{
+    text-align: start;
+}
+.langList li button.ar{
+    text-align: end;
+}
+.langList li button.active{
+    background-color: #f5f5f5;
+    color: var(--main-color);
+}
+.langList::before{
+    content: "";
+    position: absolute;
+    top: -20px;
+    /* Adjust as necessary */
+    right: 40px;
+    /* Adjust as necessary */
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 30px solid #fff;
+}

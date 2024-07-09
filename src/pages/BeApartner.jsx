@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 function BeAPartner() {
     return (
         <div className="BeAPartner">
@@ -15,7 +16,7 @@ function BeAPartner() {
                 <meta name="description" content="Welcome to our service. Here you can find the best restaurants and clinics." />
             </Helmet>
             <div className="Main_bg">
-                <Header MainPage={'Clinks'} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
+                <Header MainPage={'Clinks'} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} IconFour={<AccountCircleOutlinedIcon/>}/>
                 <TopBeAPartner />
             </div>
             <Partner />
