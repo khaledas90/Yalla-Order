@@ -5,7 +5,7 @@ import Header from "../header/Header";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-
+import { Link } from "react-router-dom";
 export default function ContactUsDone() {
   return (
     <>
@@ -24,9 +24,12 @@ export default function ContactUsDone() {
                   <img src={imgContact} alt="img contact" />
                 </div>
                 <div className="Btn d-grid">
-                  <button className="btn btn-primary btn-contact btn-block rounded-pill py-3 font-weight-bold display-6">
-                    Done
-                  </button>
+                  <Link to={"/"}>
+                    <button className="btn btn-primary btn-contact btn-block rounded-pill py-3 font-weight-bold display-6">
+                      Done
+                    </button>
+                  </Link>
+
                 </div>
               </div>
             </div>

@@ -1,20 +1,26 @@
-import { Helmet } from "react-helmet"
+import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
+import { useSelector } from "react-redux";
 import HeroRestaurant from "../components/Hero/HeroRestaurant";
 import Header from "../components/header/Header.jsx";
 import HowWorkHomeRestaurant from "../components/How-Work-Home/HowWorkHomeRestaurant.jsx";
 import FavCuisinesRestaurant from "../components/FavCuisines/FavCuisinesRestaurant.jsx";
 import NavToPartnerRestaurant from "../components/NavToPartner/NavToPartnerRestaurant.jsx";
 import DownloadAppRestaurant from "../components/DownloadApp/DownloadAppRestaurant.jsx";
-
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import Explore from "../components/Explore/Explore.jsx";
-import { useSelector } from "react-redux";
-
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 function HomeRestaurants() {
-    const { token } = useSelector(state => state.User)
-    console.log(token, '');
+    const { token } = useSelector(state => state.User);
+    const [isLoggedIn, setIsLoggedIn] = useState(!!token);
+
+    useEffect(() => {
+        setIsLoggedIn(!!token);
+    }, [token]);
+    console.log(token);
     return (
         <main className="HomeRestaurants">
             <Helmet>
@@ -22,7 +28,13 @@ function HomeRestaurants() {
                 <meta name="description" content="Welcome to our service. Here you can find the best restaurants and clinics." />
             </Helmet>
             <div className="Main_bg">
-                <Header MainPage={'Restaurants'} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} />
+                <Header
+                    MainPage={'Restaurants'}
+                    IconOne={<FavoriteBorderOutlinedIcon />}
+                    IconTwo={<LanguageOutlinedIcon />}
+                    IconThree={isLoggedIn ? <LocalMallIcon /> : ''}
+                    IconFour={isLoggedIn ? <AccountCircleIcon /> : ''}
+                />
                 <HeroRestaurant />
             </div>
             <HowWorkHomeRestaurant />
@@ -32,10 +44,8 @@ function HomeRestaurants() {
                 <Explore />
                 <DownloadAppRestaurant />
             </div>
-
-
         </main>
-    )
+    );
 }
 
-export default HomeRestaurants
+export default HomeRestaurants;

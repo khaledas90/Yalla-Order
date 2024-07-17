@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,10 +14,13 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import { useNavigate } from "react-router-dom";
-import apiAuthenticate from "../../services/authentication/apiAuthenticate";
-
-
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import toast, { Toaster } from "react-hot-toast";
+import { loginUser } from "../../store/thunk/loginThunk";
+import { useDispatch } from "react-redux";
 export default function Login() {
+  const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -25,23 +28,26 @@ export default function Login() {
       Password: '',
     },
     validationSchema: Yup.object({
-      Email: Yup.string().email('Invalid email address').required('Email is required'),
-      Password: Yup.string().required('Password is required'),
+      Email: Yup.string()
+        .email('Invalid email address')
+        .required('Email is required')
+        .max(65, 'Email cannot be longer than 65 characters')
+        .matches(
+          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+          'email is required'
+        ),
+
+      Password: Yup.string()
+        .required('Password is required')
+        .min(8, 'Password must be at least 8 characters')
+        .max(20, 'Password cannot be longer than 20 characters')
+        .matches(
+          /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/,
+          'Password must contain an uppercase letter, a lowercase letter, a number, and a special character'
+        ),
     }),
     onSubmit: async (values) => {
-      const { Email, Password } = values;
-      console.log(Email, Password)
-      try {
-        const response = await apiAuthenticate.post('/login', {
-          email: Email,
-          password: Password,
-        });
-        navigate('/HomeRestaurants')
-        localStorage.setItem('token', response.data.data);
-        console.log(response.data);
-      } catch (error) {
-        console.log(error.response ? error.response.data : error.message);
-      }
+      dispatch(loginUser({ userData: values, navigate }));
     },
   });
 
@@ -57,25 +63,30 @@ export default function Login() {
                   <h2 className="text-center mb-5">LOGIN</h2>
                   <div className="form-group my-4">
                     <input
-                      type="text"
-                      placeholder="Email Address "
-                      className="form-control rounded-pill px-4 py-3 border-secondary"
+                      type="email"
+                      placeholder="Email"
+                      className={`form-control rounded-pill px-4 py-3 ${formik.touched.Email && formik.errors.Email ? 'border-danger' : formik.touched.Email ? 'border-info' : 'border-secondary'}`}
                       {...formik.getFieldProps('Email')}
                     />
                     {formik.touched.Email && formik.errors.Email ? (
-                      <span className="error">{formik.errors.Email}</span>
+                      <span className="error  text-danger">{formik.errors.Email}</span>
                     ) : null}
                   </div>
-                  <div className="form-group my-2">
+                  <div className="form-group my-2 position-relative">
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       placeholder="Password"
-                      className="form-control rounded-pill px-4 py-3 border-secondary"
+                      className={`form-control rounded-pill px-4 py-3 ${formik.touched.Password && formik.errors.Password ? 'border-danger' : formik.touched.Password ? 'border-info' : 'border-secondary'}`}
                       {...formik.getFieldProps('Password')}
                     />
-                    {formik.touched.Password && formik.errors.Password ? (
-                      <span className="error">{formik.errors.Password}</span>
-                    ) : null}
+                    <span
+                      className="position-absolute top-50 end-0 translate-middle-y pe-4"
+                      onClick={() => setShowPassword(!showPassword)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                    </span>
+
                   </div>
                   <div className="text-end forgetPass mb-3">
                     <Link to="/Forgot_password">Forgot password?</Link>
@@ -118,10 +129,14 @@ export default function Login() {
                   <div className="text-center SignUp">
                     <span>
                       Don’t have an account?{" "}
-                      <Link to="/Sign Up">Sign Up</Link>
+                      <Link to="/SignUp">Sign Up</Link>
                     </span>
                   </div>
                 </form>
+                <Toaster
+                  position="top-center"
+                  reverseOrder={false}
+                />
               </div>
             </div>
           </div>

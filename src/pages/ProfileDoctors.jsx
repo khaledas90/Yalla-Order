@@ -1,16 +1,24 @@
-
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useSelector } from "react-redux";
 import Helmet from "react-helmet";
 import Header from "../components/header/Header";
 import ProfileDoctor from "../components/ProfileDoctor/ProfileDoctor";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import doctor1 from "../assets/drRamy.svg";
 import iconRate from "../assets/iconRate.svg";
 import iconlight from "../assets/imdIconLight.svg";
 import '../components/ProfileDoctor/ProfileDoctor.css';
 function ProfileDoctors() {
+    const { token } = useSelector(state => state.User);
+    const [isLoggedIn, setIsLoggedIn] = useState(!!token);
+
+    useEffect(() => {
+        setIsLoggedIn(!!token);
+    }, [token]);
     return (
         <div className="ProfileDoctors">
             <Helmet>
@@ -18,7 +26,13 @@ function ProfileDoctors() {
                 <meta name="description" content="Discover the best restaurants around you." />
             </Helmet>
             <div className="Main_bg">
-                <Header MainPage={'clinics'} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} />
+                <Header
+                    MainPage={'Restaurants'}
+                    IconOne={<FavoriteBorderOutlinedIcon />}
+                    IconTwo={<LanguageOutlinedIcon />}
+                    IconThree={isLoggedIn ? <LocalMallIcon /> : ''}
+                    IconFour={isLoggedIn ? <AccountCircleIcon /> : ''}
+                />
                 <h1 className="text-center TitlePage">Clinics</h1>
 
             </div>

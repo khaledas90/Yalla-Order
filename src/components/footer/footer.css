@@ -1,16 +1,21 @@
 .footer {
-  background-color: #1f1f1f;
+    background-color: #1f1f1f;
 }
 
 .footerLogo {
-  width: 267px;
-  height: 117px;
+    width: 267px;
+    height: 117px;
 }
 
 .appDownload img {
-  width: 150px;
+    width: 150px;
 }
 
 .cobyRight p {
-  color: #afafaf;
+    color: #afafaf;
+}
+
+.footer a {
+    text-decoration: none;
+    color: #afafaf;
 }

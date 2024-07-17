@@ -1,49 +1,91 @@
-import React, { useState } from "react";
-import "./profile.css";
-import Header from "../header/Header";
+import { faBagShopping, faMapLocation, faPenToSquare, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-
-import {
-  faBagShopping,
-  faMapLocation,
-  faPenToSquare,
-  faRightFromBracket,
-} from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+import { useFormik } from "formik";
+import React, { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import * as Yup from "yup";
+import apiAuthenticate from "../../services/authentication/apiAuthenticate";
+import { logoutUser } from "../../store/thunk/logoutThunk";
+import Header from "../header/Header";
+import "./profile.css";
 export default function MyAccount() {
-  const [isActiveOne, setIsActiveOne] = useState(false);
-  const [isActiveTwo, setIsActiveTwo] = useState(true);
   const [isUpdate, setIsUpdate] = useState(false);
-  const [isSave, setIsSave] = useState(true);
+  const { token } = useSelector((state) => state.User);
+  const [profileData, setProfileData] = useState({});
+  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
 
-  const handleClick = (gender) => {
-    if (gender === "Male") {
-      setIsActiveOne(false);
-      setIsActiveTwo(true);
-    } else {
-      setIsActiveOne(true);
-      setIsActiveTwo(false);
-    }
-  };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleUpdate = (type) => {
-    if (type === "Save") {
-      setIsUpdate(false);
-      setIsSave(true);
-    } else {
-      setIsUpdate(true);
-      setIsSave(false);
+  const formik = useFormik({
+    initialValues: {
+      Name: '',
+      email: '',
+      phone: '',
+    },
+    validationSchema: Yup.object({
+      Name: Yup.string().required('Name is required').min(2).max(50),
+      email: Yup.string().email('Invalid email address').required('Email is required').max(65),
+
+      phone: Yup.string().required('Phone is required').matches(/^[0-9]{11}$/, 'Phone must be exactly 11 digits'),
+    }),
+    onSubmit: async (values) => {
+      try {
+        await apiAuthenticate.post("/user/edit/profile", {
+          name: values.Name,
+          email: values.email,
+          phone: values.phone,
+        });
+        toast.success("Profile updated successfully!");
+        setIsUpdate(false);
+      } catch (err) {
+        toast.error("Error updating profile.");
+      }
+    },
+  });
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const res = await apiAuthenticate.get("/user/show/profile");
+        setProfileData(res.data.data);
+        formik.setValues({
+          Name: res.data.data.name || '',
+          email: res.data.data.email || '',
+          phone: res.data.data.phone || '',
+        });
+      } catch (err) {
+        toast.error("Error fetching profile data.");
+      }
+    };
+
+    fetchProfileData();
+  }, [token]);
+
+  const handleLogOut = async () => {
+    const resultAction = await dispatch(logoutUser());
+    if (logoutUser.fulfilled.match(resultAction)) {
+      navigate('/login');
     }
-  };
+  }
+
   return (
     <>
+      <Toaster />
       <div className="Profile Main_bg_profile">
-        <Header MainPage={"Restaurants" ? "restaurants" : "CLinics"} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
-
-
+        <Header
+          MainPage={"Restaurants"}
+          IconOne={<FavoriteBorderOutlinedIcon />}
+          IconTwo={<LanguageOutlinedIcon />}
+          IconThree={isLoggedIn ? <LocalMallIcon /> : ''}
+          IconFour={isLoggedIn ? <AccountCircleIcon /> : ''}
+        />
         <div className="MyAccount">
           <h1>My Profile</h1>
           <div className="container">
@@ -52,170 +94,90 @@ export default function MyAccount() {
                 <div className="card">
                   <div className="card-body p-0">
                     <div className="row">
-                      <div className="col-lg-4 ">
+                      <div className="col-lg-4">
                         <div className="List_group">
                           <ul>
                             <li>My Account</li>
                             <li className="active">
-                              <FontAwesomeIcon
-                                icon={faPenToSquare}
-                                className=" profile-icon"
-                              />
+                              <FontAwesomeIcon icon={faPenToSquare} className="profile-icon" />
                               <Link to="/MyAccount"> Edit Profile</Link>
                             </li>
                             <li>
-                              <FontAwesomeIcon
-                                icon={faBagShopping}
-                                className="profile-icon"
-                              />
+                              <FontAwesomeIcon icon={faBagShopping} className="profile-icon" />
                               <Link to="/MyOrder"> My Order</Link>
                             </li>
-
                             <li>
-                              <FontAwesomeIcon
-                                icon={faMapLocation}
-                                className="profile-icon"
-                              />
+                              <FontAwesomeIcon icon={faMapLocation} className="profile-icon" />
                               <Link to="/MyAddress"> Saved Address</Link>
                             </li>
-                            <li>
-                              <FontAwesomeIcon
-                                icon={faRightFromBracket}
-                                className=" profile-icon"
-                              />
+                            <li onClick={handleLogOut} >
+                              <FontAwesomeIcon icon={faRightFromBracket} className="profile-icon" />
                               <Link> Log Out </Link>
                             </li>
                           </ul>
                         </div>
                       </div>
-                      <div className="col-lg-8 ">
+                      <div className="col-lg-8">
                         <div className="content">
-                          <form>
+                          <form onSubmit={formik.handleSubmit}>
                             <div className="form-group row mb-3">
-                              <label
-                                htmlFor="inputEmail3"
-                                className="col-lg-3 col-ms-4 col-form-label"
-                              >
-                                First Name
-                              </label>
-                              <div className="col-lg-7 col-ms-4 ">
+                              <label className="col-lg-3 col-form-label">Name</label>
+                              <div className="col-lg-7">
                                 <input
                                   type="text"
                                   className="form-control"
-                                  id="inputEmail3"
-                                  placeholder="khaled"
+                                  {...formik.getFieldProps('Name')}
                                   disabled={!isUpdate}
                                 />
-                              </div>
-                            </div>
-                            <div className="form-group row mb-3">
-                              <label className="col-lg-3 col-ms-4 col-form-label">
-                                Last Name
-                              </label>
-                              <div className="col-lg-7 col-ms-4">
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  id="inputPassword3"
-                                  placeholder="Ahmed"
-                                  disabled={!isUpdate}
-                                />
-                              </div>
-                            </div>
-                            <div className="form-group row mb-3">
-                              <label className="col-lg-3 col-ms-4 col-form-label">
-                                Email
-                              </label>
-                              <div className="col-lg-7 col-ms-4">
-                                <input
-                                  type="email"
-                                  className="form-control"
-                                  id="inputPassword3"
-                                  placeholder="khaled****@gmail.com"
-                                  disabled={!isUpdate}
-                                />
-                              </div>
-                            </div>
-                            <div className="form-group row mb-3">
-                              <label className="col-lg-3 col-ms-4 col-form-label">
-                                Password
-                              </label>
-                              <div className="col-lg-7 col-ms-4">
-                                <input
-                                  type="text"
-                                  className="form-control"
-                                  id="inputPassword3"
-                                  placeholder="Ahmed"
-                                  disabled={!isUpdate}
-                                />
-                              </div>
-                            </div>
-                            <div className="form-group row mb-3">
-                              <label className="col-lg-3 col-ms-3 col-form-label">
-                                Gender
-                              </label>
-                              <div className="col-lg-7 col-ms-4">
-                                <div className="row">
-                                  <div className="col-lg-6  d-grid">
-                                    {" "}
-                                    <button
-                                      onClick={() => handleClick("Male")}
-                                      type="button"
-                                      disabled={!isUpdate}
-                                      className={`btn btn-primary  btnAccount ${isActiveTwo ? "active" : ""
-                                        }`}
-                                    >
-                                      Male
-                                    </button>
-                                  </div>
-                                  <div className="col-lg-6 d-grid">
-                                    {" "}
-                                    <button
-                                      onClick={() => handleClick("female")}
-                                      type="button"
-                                      disabled={!isUpdate}
-                                      className={`btn btn-primary  btnAccount ${isActiveOne ? "active" : ""
-                                        }`}
-                                    >
-                                      Female
-                                    </button>
-                                  </div>
-                                </div>
+                                {formik.touched.Name && formik.errors.Name && (
+                                  <div className="text-danger">{formik.errors.Name}</div>
+                                )}
                               </div>
                             </div>
 
                             <div className="form-group row mb-3">
-                              <label className="col-lg-3 col-ms-4 col-form-label">
-                                Date of birth
-                              </label>
-                              <div className="col-lg-7 col-ms-4">
+                              <label className="col-lg-3 col-form-label">Email</label>
+                              <div className="col-lg-7">
                                 <input
-                                  type="date"
+                                  type="email"
                                   className="form-control"
-                                  id="inputPassword3"
-                                  placeholder="30/5/1998"
+                                  {...formik.getFieldProps('email')}
                                   disabled={!isUpdate}
                                 />
+                                {formik.touched.email && formik.errors.email && (
+                                  <div className="text-danger">{formik.errors.email}</div>
+                                )}
                               </div>
                             </div>
+
+
+
                             <div className="form-group row mb-3">
-                              <div className="col-lg-12 col-ms-4 d-flex justify-content-center text-center">
-                                <button
-                                  type="button"
-                                  onClick={() => handleUpdate("Update")}
-                                  className={`btn btn-primary active ${isUpdate && (true ? "d-none" : "d-block")
-                                    } btnAccount btnAccountSave `}
-                                >
-                                  Update
-                                </button>
-                                <button
-                                  type="button"
-                                  onClick={() => handleUpdate("Save")}
-                                  className={`btn btn-primary mb-2 active ${isSave && (true ? "d-none" : "d-block")
-                                    }  btnAccount btnAccountSave `}
-                                >
-                                  Save
-                                </button>
+                              <label className="col-lg-3 col-form-label">Phone</label>
+                              <div className="col-lg-7">
+                                <input
+                                  type="text"
+                                  className="form-control"
+                                  {...formik.getFieldProps('phone')}
+                                  disabled={!isUpdate}
+                                />
+                                {formik.touched.phone && formik.errors.phone && (
+                                  <div className="text-danger">{formik.errors.phone}</div>
+                                )}
+                              </div>
+                            </div>
+
+                            <div className="form-group row mb-3">
+                              <div className="col-lg-12 d-flex justify-content-center text-center">
+                                {isUpdate ? (
+                                  <button type="submit" className="btn btn-primary text-white btnAccount btnAccountSave">
+                                    Update
+                                  </button>
+                                ) : (
+                                  <button type="button" onClick={() => setIsUpdate(true)} className="btn btn-primary text-white btnAccount btnAccountSave">
+                                    Edit
+                                  </button>
+                                )}
                               </div>
                             </div>
                           </form>

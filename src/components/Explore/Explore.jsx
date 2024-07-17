@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./Explore.css";
 import { useDispatch } from "react-redux";
-import { changeType } from "../../store/UserSlice";
+import { changeType } from "../../store/SliceUser";
 function Explore() {
     const dispatch = useDispatch()
 

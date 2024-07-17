@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { LogoutUser } from '../../store/UserSlice';
 import { Button, Card } from "react-bootstrap";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useSelector } from "react-redux";
 import "./profile.css";
 import Header from "../header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,15 +33,31 @@ const orders = [
   },
 ];
 export default function MyOrder() {
+  const { token } = useSelector((state) => state.User);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
   const [isOrders, SetIsOrders] = useState(orders.length > 0);
 
   useEffect(() => {
     SetIsOrders(orders.length > 0);
-  }, [isOrders]);
+    setIsLoggedIn(!!token);
+
+  }, [isOrders, token]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleLogOut = async () => {
+    console.log("logout");
+    const resultAction = await dispatch(LogoutUser());
+    if (LogoutUser.fulfilled.match(resultAction)) {
+      navigate('/login');
+    }
+  }
   return (
     <>
       <div className="Profile Main_bg_profile">
-        <Header MainPage={"Restaurants" ? "restaurants" : "CLinics"} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
+        <Header MainPage={"Restaurants" ? "restaurants" : "CLinics"} IconOne={<FavoriteBorderOutlinedIcon />}
+          IconTwo={<LanguageOutlinedIcon />}
+          IconThree={isLoggedIn ? <LocalMallIcon /> : ''}
+          IconFour={isLoggedIn ? <AccountCircleIcon /> : ''} />
 
 
 
@@ -76,7 +95,7 @@ export default function MyOrder() {
                               />
                               <Link to="/MyAddress"> Saved Address</Link>
                             </li>
-                            <li>
+                            <li onClick={handleLogOut}>
                               <FontAwesomeIcon
                                 icon={faRightFromBracket}
                                 className=" profile-icon"

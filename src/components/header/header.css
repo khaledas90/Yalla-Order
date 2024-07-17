@@ -1,115 +1,124 @@
 .logoStyle {
-  width: 127px;
-  height: 51px;
+    width: 127px;
+    height: 51px;
 }
 
 .btnStyle {
-  padding: 10px 40px 10px 40px !important;
-  gap: 0px;
-  border: 2px solid white !important;
-  opacity: 0px;
-  border-radius: 100px !important;
-  -webkit-border-radius: 100px !important;
-  -moz-border-radius: 100px !important;
-  -ms-border-radius: 100px !important;
-  -o-border-radius: 100px !important;
+    padding: 10px 40px 10px 40px !important;
+    gap: 0px;
+    border: 2px solid white !important;
+    opacity: 0px;
+    border-radius: 100px !important;
+    -webkit-border-radius: 100px !important;
+    -moz-border-radius: 100px !important;
+    -ms-border-radius: 100px !important;
+    -o-border-radius: 100px !important;
 }
 
 .links a {
-  color: #fff;
-  text-decoration: none;
+    color: #fff;
+    text-decoration: none;
 }
 
 .links a:hover {
-  color: var(--main-color);
-  text-decoration: none;
+    color: var(--main-color);
+    text-decoration: none;
 }
 
 .LinkLogin {
-  color: #fff;
-  text-decoration: none;
+    color: #fff;
+    text-decoration: none;
 }
 
 .LinkLogin:hover {
-  color: #fff;
-  text-decoration: none;
+    color: #fff;
+    text-decoration: none;
 }
 
 .btnStyle:hover {
-  background-color: var(--main-color) !important;
+    background-color: var(--main-color) !important;
 }
 
 .links {
-  font-family: Roboto;
-  font-size: 20px !important;
-  font-weight: 400;
-  line-height: 28.13px;
-  color: white;
+    font-family: Roboto;
+    font-size: 20px !important;
+    font-weight: 400;
+    line-height: 28.13px;
+    color: white;
 }
 
 .links:hover {
-  color: var(--main-color) !important;
+    color: var(--main-color) !important;
 }
 
 .navStyle {
-  position: absolute;
-  top: 100%;
-  background-color: #1f1f1f;
-  border-radius: 20px;
-  width: 720px;
-  height: 261px;
-  padding: 10px;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  -ms-border-radius: 20px;
-  -o-border-radius: 20px;
+    position: absolute;
+    top: 100%;
+    background-color: #1f1f1f;
+    border-radius: 20px;
+    width: 720px;
+    height: 261px;
+    padding: 10px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
 }
-.Bag-open{
-  position: relative;
+
+.Bag-open {
+    position: relative;
 }
-.Bag-open .bag{
-  position: absolute;
-  top: 50px;
-  left: -290px;
+
+.Bag-open .bag {
+    position: absolute;
+    top: 50px;
+    left: -290px;
 }
-.Fav-open{
-  position: relative;
+
+.Fav-open {
+    position: relative;
 }
-.Fav-open .fav{
-  position: absolute;
-  top: 50px;
-  left: -290px;
+
+.Fav-open .fav {
+    position: absolute;
+    top: 50px;
+    left: -290px;
 }
-.Lang-open{
-  position: relative;
+
+.Lang-open {
+    position: relative;
 }
-.Lang-open .langList{
-  position: absolute;
-  top: 50px;
-  left: -125px;
+
+.Lang-open .langList {
+    position: absolute;
+    top: 50px;
+    left: -125px;
 }
-.prof-open{
-  position: relative;
+
+.prof-open {
+    position: relative;
 }
-.prof-open .profMenu{
-  position: absolute;
-  top: 50px;
-  left: -165px;
+
+.prof-open .profMenu {
+    position: absolute;
+    top: 50px;
+    left: -165px;
 }
+
 @media (max-width: 500px) {
-  .navStyle {
-    width: 405px;
-  }
+    .navStyle {
+        width: 405px;
+    }
 }
 
 @media (max-width: 400px) {
-  .navStyle {
-    width: 370px;
-  }
+    .navStyle {
+        width: 346px;
+    }
 }
 
 @media (max-width: 400px) {
-  .btnStyle {
-    margin-top: 1rem !important;
-  }
+    .btnStyle {
+        margin-top: 1rem !important;
+    }
 }

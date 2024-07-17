@@ -1,5 +1,5 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,15 +9,16 @@ import Header from "../header/Header";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import "./signUp.css";
-import { registerUser } from "../../store/UserSlice.js";
+import { registerUser } from "../../store/thunk/registerThunk";
 import { useNavigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import "./signUp.css";
+
 const SignUp = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { status, error } = useSelector(state => state.User);
-  console.log(status, error, 'store');
-
 
   const formik = useFormik({
     initialValues: {
@@ -27,15 +28,32 @@ const SignUp = () => {
       Password: ''
     },
     validationSchema: Yup.object({
-      Name: Yup.string().required('Name is required'),
-      Email: Yup.string().email('Invalid email address').required('Email is required'),
-      Phone: Yup.string().required('Phone is required'),
-      Password: Yup.string().required('Password is required'),
+      Name: Yup.string()
+        .required('Name is required')
+        .min(2, 'Name must be at least 2 characters')
+        .max(50, 'Name cannot be longer than 50 characters'),
+      Email: Yup.string()
+        .email('Invalid email address')
+        .required('Email is required')
+        .max(65, 'Email cannot be longer than 65 characters')
+        .matches(
+          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+          'email is required'
+        ),
+      Phone: Yup.string()
+        .required('Phone is required')
+        .matches(/^[0-9]{11}$/, 'Phone must be exactly 11 digits'),
+      Password: Yup.string()
+        .required('Password is required')
+        .min(8, 'Password must be at least 8 characters')
+        .max(20, 'Password cannot be longer than 20 characters')
+        .matches(
+          /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/,
+          'Password must contain an uppercase letter, a lowercase letter, a number, and a special character'
+        ),
     }),
     onSubmit: async (values) => {
-      localStorage.setItem('token', 'token');
-      dispatch(registerUser(values));
-      navigate('/login')
+      dispatch(registerUser({ userData: values, navigate }));
     },
   });
 
@@ -52,44 +70,54 @@ const SignUp = () => {
                   <input
                     type="text"
                     placeholder="Name"
-                    className="form-control rounded-pill px-4 py-3 border-secondary"
+                    className={`form-control rounded-pill px-4 py-3 ${formik.touched.Name && formik.errors.Name ? 'border-danger' : formik.touched.Name ? 'border-info' : 'border-secondary'}`}
                     {...formik.getFieldProps('Name')}
                   />
                   {formik.touched.Name && formik.errors.Name ? (
-                    <span className="error">{formik.errors.Name}</span>
+                    <span className="error  text-danger">{formik.errors.Name}</span>
                   ) : null}
                 </div>
                 <div className="form-group my-4">
                   <input
                     type="email"
                     placeholder="Email"
-                    className="form-control rounded-pill px-4 py-3 border-secondary"
+                    className={`form-control rounded-pill px-4 py-3 ${formik.touched.Email && formik.errors.Email ? 'border-danger' : formik.touched.Email ? 'border-info' : 'border-secondary'}`}
                     {...formik.getFieldProps('Email')}
                   />
                   {formik.touched.Email && formik.errors.Email ? (
-                    <span className="error">{formik.errors.Email}</span>
+                    <span className="error  text-danger">{formik.errors.Email}</span>
                   ) : null}
                 </div>
                 <div className="form-group my-4">
                   <input
                     type="text"
                     placeholder="Phone"
-                    className="form-control rounded-pill px-4 py-3 border-secondary"
+                    className={`form-control rounded-pill px-4 py-3 ${formik.touched.Phone && formik.errors.Phone ? 'border-danger' : formik.touched.Phone ? 'border-info' : 'border-secondary'}`}
                     {...formik.getFieldProps('Phone')}
                   />
                   {formik.touched.Phone && formik.errors.Phone ? (
-                    <span className="error">{formik.errors.Phone}</span>
+                    <span className="error  text-danger">{formik.errors.Phone}</span>
                   ) : null}
                 </div>
-                <div className="form-group my-2">
+                <div className="form-group my-2 position-relative">
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="Password"
-                    className="form-control rounded-pill px-4 py-3 border-secondary"
+                    className={`form-control rounded-pill px-4 py-3 ${formik.touched.Password && formik.errors.Password ? 'border-danger' : formik.touched.Password ? 'border-info' : 'border-secondary'}`}
                     {...formik.getFieldProps('Password')}
                   />
+                  <span
+                    className="position-absolute top-50 end-0 translate-middle-y pe-4"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                  </span>
+
+                </div>
+                <div className="">
                   {formik.touched.Password && formik.errors.Password ? (
-                    <span className="error">{formik.errors.Password}</span>
+                    <span className="error text-danger">{formik.errors.Password}</span>
                   ) : null}
                 </div>
                 <div className="d-grid gap-2 mt-4">
@@ -121,8 +149,11 @@ const SignUp = () => {
                   </span>
                 </div>
               </form>
-              {status === 'loading' && <p>Loading...</p>}
-              {status === 'failed' && <p>Error: {error}</p>}
+
+              <Toaster
+                position="top-center"
+                reverseOrder={false}
+              />
             </div>
           </div>
         </div>

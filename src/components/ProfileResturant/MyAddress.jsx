@@ -7,8 +7,8 @@ import Header from "../header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import {
     faBagShopping,
     faMapLocation,
@@ -19,7 +19,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import imgEmptyAddress from "../../assets/EmptyAddress.png";
-
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useSelector } from "react-redux";
 const Addresses = [
     {
         id: 1,
@@ -33,15 +35,32 @@ const Addresses = [
     },
 ];
 export default function MyAddress() {
+    const { token } = useSelector((state) => state.User);
+
+    const [isLoggedIn, setIsLoggedIn] = useState(!!token);
     const [isAddresses, SetIsAddresses] = useState(Addresses.length > 0);
 
     useEffect(() => {
         SetIsAddresses(Addresses.length > 0);
-    }, [isAddresses]);
+        setIsLoggedIn(!!token);
+
+    }, [token, isAddresses]);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    // const handleLogOut = async () => {
+    //     console.log("logout");
+    //     const resultAction = await dispatch(LogoutUser());
+    //     if (LogoutUser.fulfilled.match(resultAction)) {
+    //         navigate('/login');
+    //     }
+    // }
     return (
         <>
             <div className="Profile Main_bg_profile">
-                <Header MainPage={"Restaurants" ? "restaurants" : "CLinics"} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
+                <Header MainPage={"Restaurants" ? "restaurants" : "CLinics"} IconOne={<FavoriteBorderOutlinedIcon />}
+                    IconTwo={<LanguageOutlinedIcon />}
+                    IconThree={isLoggedIn ? <LocalMallIcon /> : ''}
+                    IconFour={isLoggedIn ? <AccountCircleIcon /> : ''} />
 
 
                 <div className="MyAccount">
@@ -77,7 +96,7 @@ export default function MyAddress() {
                                                             />
                                                             <Link to="/MyAddress"> Saved Address </Link>{" "}
                                                         </li>{" "}
-                                                        <li>
+                                                        <li >
                                                             <FontAwesomeIcon
                                                                 icon={faRightFromBracket}
                                                                 className=" profile-icon"
@@ -135,11 +154,7 @@ export default function MyAddress() {
                                                         </div>
                                                     )}{" "}
                                                     <div className="text-center mt-5 mb-2  ">
-                                                        <Button className="btnAccounts">
-                                                            <Link exact="true" to="">
-                                                                Add Address{" "}
-                                                            </Link>{" "}
-                                                        </Button>{" "}
+                                                        <Button className="btnAccounts">Add new address</Button>
                                                     </div>{" "}
                                                 </div>{" "}
                                             </div>{" "}
@@ -149,8 +164,8 @@ export default function MyAddress() {
                             </div>{" "}
                         </div>{" "}
                     </div>{" "}
-                </div>{" "}
-            </div>{" "}
+                </div > {" "}
+            </div > {" "}
         </>
     );
 }

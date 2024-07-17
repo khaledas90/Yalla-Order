@@ -1,11 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./profile.css";
 import Header from "../header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-
+import LocalMallIcon from '@mui/icons-material/LocalMall';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useSelector } from "react-redux";
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { LogoutUser } from '../../store/UserSlice';
 import {
 
   faCalendarCheck,
@@ -14,12 +18,16 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+
 export default function MyAccount() {
   const [isActiveOne, setIsActiveOne] = useState(false);
   const [isActiveTwo, setIsActiveTwo] = useState(true);
   const [isUpdate, setIsUpdate] = useState(false);
   const [isSave, setIsSave] = useState(true);
-
+  const { token } = useSelector((state) => state.User);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleClick = (gender) => {
     if (gender === "Male") {
       setIsActiveOne(false);
@@ -29,6 +37,9 @@ export default function MyAccount() {
       setIsActiveTwo(false);
     }
   };
+  useEffect(() => {
+    setIsLoggedIn(!!token);
+  }, [token]);
 
   const handleUpdate = (type) => {
     if (type === "Save") {
@@ -39,10 +50,20 @@ export default function MyAccount() {
       setIsSave(false);
     }
   };
+  const handleLogOut = async () => {
+    console.log("logout");
+    const resultAction = await dispatch(LogoutUser());
+    if (LogoutUser.fulfilled.match(resultAction)) {
+      navigate('/login');
+    }
+  }
   return (
     <>
       <div className="Profile Main_bg_profile">
-        <Header MainPage={"Restaurants" ? "restaurants" : "CLinics"} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
+        <Header MainPage={"Restaurants" ? "restaurants" : "CLinics"} IconOne={<FavoriteBorderOutlinedIcon />}
+          IconTwo={<LanguageOutlinedIcon />}
+          IconThree={isLoggedIn ? <LocalMallIcon /> : ''}
+          IconFour={isLoggedIn ? <AccountCircleIcon /> : ''} />
 
 
         <div className="MyAccount">
@@ -79,7 +100,7 @@ export default function MyAccount() {
                               />
                               <Link to="/MyAddress"> Saved Address</Link>
                             </li>
-                            <li>
+                            <li onClick={handleLogOut}>
                               <FontAwesomeIcon
                                 icon={faRightFromBracket}
                                 className=" profile-icon"
