@@ -20,17 +20,17 @@ i18n
     }
 
   });
-function LanguageMenu({setOpenMenu}) {
+function LanguageMenu() {
     const {language,setLanguage} = useLanguage()
     function chanageToEn(){
         setLanguage("en");
         i18n.changeLanguage("en")
-        setOpenMenu("")
+       window.location.reload()
     }
     function chanageToAr(){
         setLanguage("ar");
         i18n.changeLanguage("ar")
-        setOpenMenu("")
+        window.location.reload()
     }
   return (
     <ul className='langList'>

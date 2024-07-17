@@ -17,8 +17,10 @@ import {
     faRightFromBracket,
     faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import Modal from "../modal/Modal";
 import { Link } from "react-router-dom";
 import imgEmptyAddress from "../../assets/EmptyAddress.png";
+import GoogleMapComponent from "./GoogleMapComponent";
 
 const Addresses = [
     {
@@ -135,11 +137,18 @@ export default function MyAddress() {
                                                         </div>
                                                     )}{" "}
                                                     <div className="text-center mt-5 mb-2  ">
-                                                        <Button className="btnAccounts">
+                                                        
                                                             <Link exact="true" to="">
-                                                                Add Address{" "}
+                                                            <Modal>
+                                                            <Modal.Open opens="add-address">
+                                                              <button className="btnAccounts">Add Address</button>
+                                                            </Modal.Open>
+                                                            <Modal.Window name="add-address">
+                                                                <GoogleMapComponent apiKey = "AIzaSyBCUdcDFvWmHDl94vcWToYa5vD3ukF8rG8"/>
+                                                            </Modal.Window>
+                                                          </Modal>
                                                             </Link>{" "}
-                                                        </Button>{" "}
+                                                     
                                                     </div>{" "}
                                                 </div>{" "}
                                             </div>{" "}

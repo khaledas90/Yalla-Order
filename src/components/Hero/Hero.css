@@ -30,7 +30,11 @@
   -ms-border-radius: 25px;
   -o-border-radius: 25px;
 }
-
+.locForm {
+  margin-bottom: 100px;
+  margin-top: 80px;
+  max-width: 400px;
+}
 .features .item {
   /* display: flex;
   gap: 18px; */

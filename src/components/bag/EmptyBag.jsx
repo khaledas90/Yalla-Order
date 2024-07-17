@@ -1,5 +1,5 @@
 import "./Bag.css";
-import shoppingBag from "../../assets/shopping-bag.svg"
+import shoppingBag from "../../assets/shopping-bag.png";
 function EmptyBag() {
   return (
     <div className="bag">

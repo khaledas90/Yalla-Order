@@ -13,6 +13,7 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import NavRestaurants from "../NavRestaurants/NavRestaurants";
 export default function MyAccount() {
   const [isActiveOne, setIsActiveOne] = useState(false);
   const [isActiveTwo, setIsActiveTwo] = useState(true);
@@ -41,8 +42,7 @@ export default function MyAccount() {
   return (
     <>
       <div className="Profile Main_bg_profile">
-        <Header MainPage={"Restaurants" ? "restaurants" : "CLinics"} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
-
+      <NavRestaurants/>
 
         <div className="MyAccount">
           <h1>My Profile</h1>

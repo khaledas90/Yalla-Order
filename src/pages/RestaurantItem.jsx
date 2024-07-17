@@ -5,6 +5,7 @@ import Header from "../components/header/Header";
 import RestaurantItems from "../components/RestaurantItem/RestaurantItem";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
+import NavRestaurants from "../components/NavRestaurants/NavRestaurants";
 function RestaurantItem() {
     return (
         <div className="Restaurants">
@@ -13,7 +14,7 @@ function RestaurantItem() {
                 <meta name="description" content="Discover the best restaurants around you." />
             </Helmet>
             <div className="Main_bg">
-                <Header MainPage={'Restaurants'} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} />
+            <NavRestaurants/>
 
             </div>
             <RestaurantItems />

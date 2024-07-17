@@ -1,5 +1,5 @@
 .bag {
-  max-width: 522px;
+  width: 400px;
   border-radius: 22px;
   font-size: 22px;
   font-weight: 500;
@@ -29,7 +29,7 @@
 .bag .bagItem {
   display: flex;
   align-items: center;
-  gap: 30px;
+  justify-content: space-between;
   margin-bottom: 15px;
 }
 
@@ -93,6 +93,10 @@
   border: none;
   padding: 12px;
   border-radius: 80px;
+  transition: 0.3s;
+}
+.bag .checkBtn:hover {
+  background-color: var(--main-darker);
 }
 
 .bag::before {
@@ -106,6 +110,16 @@
   border-right: 15px solid transparent;
   border-bottom: 30px solid var(--main-color);
 }
+.bagBtns{
+  display: flex;
+  gap: 5px;
+}
+.bagBtns .delBtn{
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+} 
 
 .emptyBag {
   text-align: center;
@@ -116,4 +130,12 @@
   color: #ddd;
   font-size: 25px;
   font-weight: 500;
+}
+
+@media screen and (max-width:767px) {
+  .bag{
+    font-size: 17px;
+    max-width: 300px;
+  }
+  
 }

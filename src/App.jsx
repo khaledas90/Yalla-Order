@@ -26,9 +26,18 @@ import Clinics from "./pages/Clinics";
 import ClinicItem from "./pages/ClinicItem";
 import ProfileDoctors from './pages/ProfileDoctors';
 import LanguageProvider from "./context/LanguageProvider";
+import OrderPage from "./components/Order/OrderPage";
+import OrderProvider from "./context/OrderProvider";
+import OrderSummary from "./components/OrderSummary/OrderSummary";
+import ConfirmedOrderProvider from "./context/ConfirmedOrderProvider";
+import TrackOrders from "./pages/TrackOrders";
+import TrackedOrderItem from "./components/TrackOrders/TrackedOrderItem";
+import RestaurantCategory from "./components/FavCuisines/RestaurantCategory";
 function App() {
     return (
         <LanguageProvider>
+        <ConfirmedOrderProvider>
+        <OrderProvider>
         <Router>
             <div className="App">
                 <Routes>
@@ -41,6 +50,11 @@ function App() {
                     <Route path="/restaurants" element={< Restaurants />} />
                     <Route path="/restaurants/:id" element={<RestaurantItem />} />
                     <Route path="/restaurants/:id/menu" element={<RestaurantsMenu />} />
+                    <Route path="/restaurants/:id/menu/orderPage" element={<OrderPage/>}/>
+                    <Route path="/restaurants/:id/menu/orderPage/:orderId" element={<OrderSummary/>}/>
+                    <Route path="/categories/:id" element={<RestaurantCategory/>}/>
+                    <Route path="/trackOrders" element={<TrackOrders/>}/>
+                    <Route path="/trackOrders/:id" element={<TrackedOrderItem/>}/>
                     <Route path="/BecomeAPartner" element={<BeAPartner />} />{" "}
                     <Route path="/Login" element={<Login />} />{" "}
                     <Route path="/Sign Up" element={<SignUp />} />{" "}
@@ -59,6 +73,8 @@ function App() {
                 <Footer />
             </div>{" "}
         </Router>
+        </OrderProvider>
+        </ConfirmedOrderProvider>
         </LanguageProvider>
     );
 }

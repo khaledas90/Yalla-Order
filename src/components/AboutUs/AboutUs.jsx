@@ -6,13 +6,13 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import Lang from "./Lang.js";
+import NavRestaurants from "../NavRestaurants/NavRestaurants.jsx";
 
 export default function AboutUs() {
   return (
     <>
       <div className="AboutUs Main_bg">
-        <Header MainPage={"Restaurants" ? "Restaurants" : "CLinics"} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
-
+      <NavRestaurants/>
         <div className="container p-5">
           <div className="row justify-content-center">
             <div className=" col-lg-7 ">
