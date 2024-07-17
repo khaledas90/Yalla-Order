@@ -42,43 +42,67 @@ import RestaurantCategory from "./components/FavCuisines/RestaurantCategory";
 function App() {
   return (
     <LanguageProvider>
-      <Router>
-        <div className="App">
-          <Routes>
-            <Route
-              path="/"
-              element={<Navigate replace to="/HomeRestaurants" />}
-            />
-            <Route path="/HomeRestaurants" element={<HomeRestaurants />} />
-            <Route path="/HomeMedical" element={<HomeMedical />} />
-            <Route path="/CLinics" element={<Clinics />} />
-            <Route path="/CLinics/:id" element={<ClinicItem />} />
-            <Route path="/showAllClinics" element={<ShowAllClinics />} />
-            <Route path="/profileDoctor/:id" element={<ProfileDoctors />} />
-            <Route path="/restaurants" element={<Restaurants />} />
-            <Route path="/restaurants/:id" element={<RestaurantItem />} />
-            <Route path="/restaurants/:id/menu" element={<RestaurantsMenu />} />
-            <Route path="/BecomeAPartner" element={<BeAPartner />} />{" "}
-            <Route path="/Login" element={<Login />} />{" "}
-            <Route path="/Sign Up" element={<SignUp />} />{" "}
-            <Route path="/Forgot_password" element={<ForgetPass />} />{" "}
-            <Route path="/VerifyEmail" element={<VerifyEmail />} />{" "}
-            <Route path="/NewPass" element={<NewPass />} />{" "}
-            <Route path="/SuccessPass" element={<SuccessPass />} />{" "}
-            <Route path="/AboutUs" element={<AboutUs />} />{" "}
-            <Route path="/ContactUs" element={<ContactUs />} />{" "}
-            <Route
-              path="/ContactUs/ContactUsDone"
-              element={<ContactUsDone />}
-            />{" "}
-            <Route path="/LoginAPartner" element={<LoginAPartner />} />{" "}
-            <Route path="/MyAccount" element={<MyAccount />} />{" "}
-            <Route path="/MyOrder" element={<MyOrder />} />{" "}
-            <Route path="/MyAddress" element={<MyAddress />} />{" "}
-          </Routes>{" "}
-          <Footer />
-        </div>{" "}
-      </Router>
+      <ConfirmedOrderProvider>
+        <OrderProvider>
+          <Router>
+            <div className="App">
+              <Routes>
+                <Route
+                  path="/"
+                  element={<Navigate replace to="/HomeRestaurants" />}
+                />
+                <Route
+                  path="/"
+                  element={<Navigate replace to="/HomeRestaurants" />}
+                />
+                <Route path="/HomeRestaurants" element={<HomeRestaurants />} />
+                <Route path="/HomeMedical" element={<HomeMedical />} />
+                <Route path="/CLinics" element={<Clinics />} />
+                <Route path="/CLinics/:id" element={<ClinicItem />} />
+                <Route path="//profileDoctor" element={<ProfileDoctors />} />
+                <Route path="/restaurants" element={<Restaurants />} />
+                <Route path="/restaurants/:id" element={<RestaurantItem />} />
+                <Route
+                  path="/restaurants/:id/menu"
+                  element={<RestaurantsMenu />}
+                />
+                <Route
+                  path="/restaurants/:id/menu/orderPage"
+                  element={<OrderPage />}
+                />
+                <Route
+                  path="/restaurants/:id/menu/orderPage/:orderId"
+                  element={<OrderSummary />}
+                />
+                <Route
+                  path="/categories/:id"
+                  element={<RestaurantCategory />}
+                />
+                <Route path="/trackOrders" element={<TrackOrders />} />
+                <Route path="/trackOrders/:id" element={<TrackedOrderItem />} />
+                <Route path="/BecomeAPartner" element={<BeAPartner />} />{" "}
+                <Route path="/Login" element={<Login />} />{" "}
+                <Route path="/Sign Up" element={<SignUp />} />{" "}
+                <Route path="/Forgot_password" element={<ForgetPass />} />{" "}
+                <Route path="/VerifyEmail" element={<VerifyEmail />} />{" "}
+                <Route path="/NewPass" element={<NewPass />} />{" "}
+                <Route path="/SuccessPass" element={<SuccessPass />} />{" "}
+                <Route path="/AboutUs" element={<AboutUs />} />{" "}
+                <Route path="/ContactUs" element={<ContactUs />} />{" "}
+                <Route
+                  path="/ContactUs/ContactUsDone"
+                  element={<ContactUsDone />}
+                />{" "}
+                <Route path="/LoginAPartner" element={<LoginAPartner />} />{" "}
+                <Route path="/MyAccount" element={<MyAccount />} />{" "}
+                <Route path="/MyOrder" element={<MyOrder />} />{" "}
+                <Route path="/MyAddress" element={<MyAddress />} />{" "}
+              </Routes>{" "}
+              <Footer />
+            </div>
+          </Router>
+        </OrderProvider>
+      </ConfirmedOrderProvider>
     </LanguageProvider>
   );
 }
