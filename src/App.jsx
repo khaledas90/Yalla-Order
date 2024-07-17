@@ -1,6 +1,11 @@
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Navigate, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 import Footer from "./components/footer/Footer";
 import Login from "./components/Login/Login";
@@ -24,43 +29,51 @@ import RestaurantsMenu from "./pages/RestaurantsMenu";
 import HomeMedical from "./pages/HomeMedical";
 import Clinics from "./pages/Clinics";
 import ClinicItem from "./pages/ClinicItem";
-import ProfileDoctors from './pages/ProfileDoctors';
+import ShowAllClinics from "./pages/ShowAllClinics";
+import ProfileDoctors from "./pages/ProfileDoctors";
 import LanguageProvider from "./context/LanguageProvider";
 function App() {
-    return (
-        <LanguageProvider>
-        <Router>
-            <div className="App">
-                <Routes>
-                    <Route path="/" element={<Navigate replace to="/HomeRestaurants" />} />
-                    <Route path="/HomeRestaurants" element={< HomeRestaurants />} />
-                    <Route path="/HomeMedical" element={< HomeMedical />} />
-                    <Route path="/CLinics" element={< Clinics />} />
-                    <Route path="/CLinics/:id" element={< ClinicItem />} />
-                    <Route path="//profileDoctor" element={< ProfileDoctors />} />
-                    <Route path="/restaurants" element={< Restaurants />} />
-                    <Route path="/restaurants/:id" element={<RestaurantItem />} />
-                    <Route path="/restaurants/:id/menu" element={<RestaurantsMenu />} />
-                    <Route path="/BecomeAPartner" element={<BeAPartner />} />{" "}
-                    <Route path="/Login" element={<Login />} />{" "}
-                    <Route path="/Sign Up" element={<SignUp />} />{" "}
-                    <Route path="/Forgot_password" element={<ForgetPass />} />{" "}
-                    <Route path="/VerifyEmail" element={<VerifyEmail />} />{" "}
-                    <Route path="/NewPass" element={<NewPass />} />{" "}
-                    <Route path="/SuccessPass" element={<SuccessPass />} />{" "}
-                    <Route path="/AboutUs" element={<AboutUs />} />{" "}
-                    <Route path="/ContactUs" element={<ContactUs />} />{" "}
-                    <Route path="/ContactUs/ContactUsDone" element={<ContactUsDone />} />{" "}
-                    <Route path="/LoginAPartner" element={<LoginAPartner />} />{" "}
-                    <Route path="/MyAccount" element={<MyAccount />} />{" "}
-                    <Route path="/MyOrder" element={<MyOrder />} />{" "}
-                    <Route path="/MyAddress" element={<MyAddress />} />{" "}
-                </Routes>{" "}
-                <Footer />
-            </div>{" "}
-        </Router>
-        </LanguageProvider>
-    );
+  return (
+    <LanguageProvider>
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route
+              path="/"
+              element={<Navigate replace to="/HomeRestaurants" />}
+            />
+            <Route path="/HomeRestaurants" element={<HomeRestaurants />} />
+            <Route path="/HomeMedical" element={<HomeMedical />} />
+            <Route path="/CLinics" element={<Clinics />} />
+            <Route path="/CLinics/:id" element={<ClinicItem />} />
+            <Route path="/showAllClinics" element={<ShowAllClinics />} />
+            <Route path="/profileDoctor/:id" element={<ProfileDoctors />} />
+            <Route path="/restaurants" element={<Restaurants />} />
+            <Route path="/restaurants/:id" element={<RestaurantItem />} />
+            <Route path="/restaurants/:id/menu" element={<RestaurantsMenu />} />
+            <Route path="/BecomeAPartner" element={<BeAPartner />} />{" "}
+            <Route path="/Login" element={<Login />} />{" "}
+            <Route path="/Sign Up" element={<SignUp />} />{" "}
+            <Route path="/Forgot_password" element={<ForgetPass />} />{" "}
+            <Route path="/VerifyEmail" element={<VerifyEmail />} />{" "}
+            <Route path="/NewPass" element={<NewPass />} />{" "}
+            <Route path="/SuccessPass" element={<SuccessPass />} />{" "}
+            <Route path="/AboutUs" element={<AboutUs />} />{" "}
+            <Route path="/ContactUs" element={<ContactUs />} />{" "}
+            <Route
+              path="/ContactUs/ContactUsDone"
+              element={<ContactUsDone />}
+            />{" "}
+            <Route path="/LoginAPartner" element={<LoginAPartner />} />{" "}
+            <Route path="/MyAccount" element={<MyAccount />} />{" "}
+            <Route path="/MyOrder" element={<MyOrder />} />{" "}
+            <Route path="/MyAddress" element={<MyAddress />} />{" "}
+          </Routes>{" "}
+          <Footer />
+        </div>{" "}
+      </Router>
+    </LanguageProvider>
+  );
 }
 
 export default App;
