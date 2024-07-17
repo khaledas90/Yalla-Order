@@ -7,8 +7,8 @@ import TopBeAPartner from "../components/TopBeAPartner/TopBeAPartner";
 import { Helmet } from "react-helmet";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import LocalMallIcon from '@mui/icons-material/LocalMall';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { useSelector } from "react-redux";
 function BeAPartner() {
     const { token } = useSelector(state => state.User);
@@ -20,17 +20,11 @@ function BeAPartner() {
     return (
         <div className="BeAPartner">
             <Helmet>
-                <title>FoODc</title>
+                <title>Be Partner With Insta Order</title>
                 <meta name="description" content="Welcome to our service. Here you can find the best restaurants and clinics." />
             </Helmet>
             <div className="Main_bg">
-                <Header
-                    MainPage={'Restaurants'}
-                    IconOne={<FavoriteBorderOutlinedIcon />}
-                    IconTwo={<LanguageOutlinedIcon />}
-                    IconThree={isLoggedIn ? <LocalMallIcon /> : ''}
-                    IconFour={isLoggedIn ? <AccountCircleIcon /> : ''}
-                />
+                <Header MainPage={'Clinks'} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} IconFour={<AccountCircleOutlinedIcon />} />
                 <TopBeAPartner />
             </div>
             <Partner />

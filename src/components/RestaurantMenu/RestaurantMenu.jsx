@@ -1,6 +1,6 @@
 import { Link, useParams, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { RESTAURANTS } from "../AllRestaurants/FakeData";
 import ReactStars from "react-rating-stars-component";
 import "./RestaurantMenu.css";
@@ -9,8 +9,14 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import InfoIcon from '@mui/icons-material/Info';
 import SausageHawawshi1 from "../../assets/Sausage Hawawshi 1.png";
 import SausageHawawshi2 from "../../assets/Sausage Hawawshi2.png";
+import rate from "../../assets/rate.svg";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import { addItemToFavorites, fetchAllCategories, fetchAllMenuItems, fetchMenuItems, fetchRestaurantById } from "../../services/apiRestaurant";
+import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
+import { useTranslation } from "react-i18next";
+import Loader from "../loader/Loader";
+import Spinner from "../loader/Spinner";
 const Menu = [
     {
         id: 1, DishName: "Sausage Hawawshi", category: "Hawawshi", image: SausageHawawshi1, ingradiantes: "Dough stuffed with Oriental susage , Mozzarella cheese , Roumi cheese and vegetables", price: "EGP 95.00"
@@ -29,7 +35,27 @@ function RestaurantMenu() {
     const [CurrentRestaurant, setCurrentRestaurant] = useState({});
     const [RestaurantRating, setRestaurantRating] = useState();
     const [activeTab, setActiveTab] = useState('menu');
-    const [showCategory, setShowCategory] = useState(Category[0]);
+    
+    const [restaurant, setRestaurant] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [categories, setCategories] = useState([]);
+    const [showCategory, setShowCategory] = useState("All");
+    const [loadCategories,setLoadCategories] = useState(true)
+    const [erorrCategories,setErorrCategories] = useState(true)
+    const [selectedCategoryId,setSelectedCategoryId] = useState();
+    const [menuItems, setMenuItems] = useState([]);
+    const [loadMenuItems,setLoadMenuItems] = useState(false);
+    const [errorMenuItems,setErrorMenuItems] = useState(true);
+    const [AllMenuItems, setAllMenuItems] = useState([]);
+    const [loadingMenu, setLoadingMenu] = useState(false);
+    const [menuError, setMenuError] = useState(null);
+    const [loadingFavorite, setLoadingFavorite] = useState(false);
+    const [favoriteError, setFavoriteError] = useState(null);
+    const [favoriteSuccess, setFavoriteSuccess] = useState(false);
+  
+    const {t} = useTranslation()
+    const lang = localStorage.getItem("i18nextLng");
 
     const ratingChanged = (newRating) => {
         setRestaurantRating(newRating)
@@ -37,27 +63,149 @@ function RestaurantMenu() {
     const handleTabClick = (tab) => {
         setActiveTab(tab);
     };
-    const handleShowCategory = (e) => {
-        setShowCategory(e.target.title)
-        console.log(showCategory)
+
+    async function handleAddToFavorites(e,productId) {
+      try {
+        e.preventDefault();
+        setLoadingFavorite(true);
+        setFavoriteError(null);
+        setFavoriteSuccess(false);
+  
+        const response = await addItemToFavorites(productId);
+  
+        setFavoriteSuccess(true);
+        console.log('Product added to favorites successfully');
+        return response;
+      } catch (error) {
+        console.error('Error adding product to favorites:', error);
+        setFavoriteError('Failed to add product to favorites');
+        throw error;
+      } finally {
+        setLoadingFavorite(false);
+      }
     }
+  
+
+
 
     useEffect(() => {
-        console.log(id);
-        setCurrentRestaurant((RESTAURANTS.find((el) => el.id === 1)))
-    }, [id])
+        const getRestaurant = async () => {
+          try {
+            setLoading(true); 
+            const data = await fetchRestaurantById(id);
+            setRestaurant(data.data);
+            setError(null); 
+          } catch (error) {
+            console.error('Error fetching restaurant:', error);
+            setError('Failed to fetch restaurant');
+          } finally {
+            setLoading(false);
+          }
+        };
+    
+        getRestaurant();
+      }, [id]);
+    
+
+      useEffect(() => {
+        const getCategories = async () => {
+          try {
+            setLoadCategories(true); // Start loading
+            const data = await fetchAllCategories();
+            setCategories(data.data);
+            setErorrCategories(null); // Clear any previous errors
+          } catch (error) {
+            console.error('Error fetching categories:', error);
+            setErorrCategories('Failed to fetch categories');
+          } finally {
+            setLoadCategories(false); // End loading
+          }
+        };
+    
+        getCategories();
+      }, []);
+
+      useEffect(() => {
+        const fetchMenu = async () => {
+          try {
+            setLoadingMenu(true);
+            setMenuError(null);
+    
+            const data = await fetchAllMenuItems(id);
+    
+            setMenuItems(data.data);
+          
+          } catch (error) {
+            console.error('Error fetching menu items:', error);
+            setMenuError('Failed to fetch menu items');
+          } finally {
+            setLoadingMenu(false);
+          }
+        };
+    
+        fetchMenu();
+      }, [id]);
+
+
+      if(loading) return <Loader/>
+
+      const { "Total rate": totalRate, "best selling": bestSelling, "resturant info": restaurantInfo, reviwes } = restaurant;
+
+      const handleShowCategory = async (e,id) => {
+        setShowCategory(e.target.title);
+        setSelectedCategoryId(null);
+        setMenuItems([]);
+        setErrorMenuItems("")
+        try {
+            setLoadMenuItems(true); // Start loading
+            let data;
+            showCategory === "All" || id === -1 ? data = await fetchAllMenuItems(restaurantInfo.id) : data = await fetchMenuItems(restaurantInfo.id, id)
+            setMenuItems(data.data);
+            setErrorMenuItems(null); 
+          } catch (error) {
+            console.error(`Error fetching menu items for category ${id}:`, error);
+            setErrorMenuItems('Failed to fetch menu items');
+          } finally {
+            setLoadMenuItems(false); // End loading
+          }
+          
+        };
+
+        
+
+        // const handleFetchMenu = async () => {
+        //     try {
+        //       setLoadingMenu(true);
+        //       setMenuError(null);
+        
+        //       const data = await fetchAllMenuItems(restaurantId);
+        
+        //       setMenuItems(data);
+        //       console.log('Menu items:', data);
+        //     } catch (error) {
+        //       console.error('Error fetching menu items:', error);
+        //       setMenuError('Failed to fetch menu items');
+        //     } finally {
+        //       setLoadingMenu(false);
+        //     }
+        //   };
+    
+
     return (
 
         <div className="restaurantsMenu">
             <Helmet>
-                <title>{RestaurantName} Menu</title>
+            {lang === "ar"? <title>{t("Menu")} {restaurantInfo.name}</title> : 
+            <title>{restaurantInfo.name} {t("Menu")}</title>
+            }
+                
             </Helmet>
             <div className='inputDiv inputDivRestaurantItem'>
 
             </div>
             <div className="TitleMenuPage">
                 <div className="content text-center">
-                    <h1>Restaurants</h1>
+                    <h1>{t("restaurants")}</h1>
                 </div>
             </div>
 
@@ -86,11 +234,10 @@ function RestaurantMenu() {
 
             <div className="RestaurantDetails">
                 <div className="details">
-                    <p>{CurrentRestaurant.name}</p>
-                    <p>in Sidi Gaber, Alex</p>
-                    <p>{CurrentRestaurant?.food?.join(",")}</p>
+                    <p>{restaurantInfo.name}</p>
+                    <p>{restaurantInfo.address}</p>
+                    <p>{restaurantInfo.descrption}</p>
                     <div><div className="back"></div><img src={openIcon} alt="" /></div>
-                    <p>Min. order: EGP 20.00</p>
                 </div>
 
             </div>
@@ -114,66 +261,64 @@ function RestaurantMenu() {
                         {activeTab === 'menu' &&
                             <div className="menuContent">
                                 <div className="categories">
-                                    <p>Categories</p>
+                                    <p>{t("Categories")}</p>
                                     <ul className="categoriesList">
-                                        {Category?.map((e => <li title={e} className={`${showCategory === e ? "active" : ""}`} onClick={handleShowCategory} key={e}>{e}</li>))}
+                                        <li title="All" onClick={(e) => handleShowCategory(e,-1)} className={`${showCategory === "All" ? "active" : ""}`}>All Menu</li>
+                                        {categories?.map((el => <li onClick={(e) => handleShowCategory(e,el.id)} title={el.name} className={`${showCategory === el.name ? "active" : ""}`}  key={el.id}>{el.name}</li>))}
                                     </ul>
                                 </div>
                                 <div className="menuBasedCategory">
                                     <p>{showCategory}</p>
                                     <div className="dishesList">
-                                        {Menu.filter((e => e.category === showCategory)).map((e =>
-                                            <div key={e.id} className="dish">
-                                                <div className="dishImg"><img src={e.image} alt={e.DishName} /></div>
+                                    {errorMenuItems === "Failed to fetch menu items"? <h2 className="no-menu-items">{t("No Items From This Category")}</h2> : null}
+                                        { loadMenuItems ? <Spinner/>  : menuItems?.map((el =>
+                                            <Link to={`orderPage?restaurantId=${restaurantInfo.id}&productId=${el.id}&productName=${el['product name']}`}>
+                                            <div key={el.id} className="dish">
+                                                <div className="dishImg"><img src={el.logo} alt={el['product name']} /></div>
                                                 <div className="dish-details">
-                                                    <p className="dish-name">{e.DishName}</p>
-                                                    <p className="ingradiantes">{e.ingradiantes}</p>
-                                                    <p className="price">{e.price}</p>
+                                                    <p className="dish-name">{el['product name']}</p>
+                                                    <p className="ingradiantes">{el['product descrption']}</p>
+                                                    <p className="price">{el['product price']} EGP</p>
                                                 </div>
-                                                <button className="favBtn"><FavoriteBorderOutlinedIcon /></button>
-                                                <button className="bagBtn"><ShoppingBagOutlinedIcon /></button>
+                                                <button onClick={(e)=> handleAddToFavorites(e,el.id) } className="favBtn"><FavoriteBorderOutlinedIcon /></button>
 
                                             </div>
+                                            </Link>
                                         ))}
                                     </div>
                                     <div className="d-flex align-items-center justify-content-center mt-5">
-                                        <button type="button" className="checkBagBtn"><Link to={`CreateOrder`}>Check your bag</Link></button>
                                     </div>
 
                                 </div>
                             </div>
                         }
                         {activeTab === 'info' &&
-                            <div className="infoContent">
-                                <p>{CurrentRestaurant.name}</p>
+                            <div className={`infoContent ${lang === "ar" ? "ar" : ""}`}>
+                                <p>{restaurantInfo.name}</p>
                                 <ul className="infoList">
                                     <li>
-                                        <p>Minimum Order Amount</p>
-                                        <p>EGP 20.00</p>
+                                        <p>{t("Working Hours")}</p>
+                                        <p>{restaurantInfo.starttime}PM - {restaurantInfo.endtime}AM</p>
                                     </li>
                                     <li>
-                                        <p>Working Hours</p>
-                                        <p>1:00PM - 2:30AM</p>
+                                        <p>{t("Address")}</p>
+                                        <p>{restaurantInfo.address}</p>
                                     </li>
                                     <li>
-                                        <p>Delivery Time</p>
-                                        <p>38 mins</p>
+                                        <p>{t("Delivery fee")}</p>
+                                        <p>EGP {restaurantInfo.delivery_fee}</p>
                                     </li>
                                     <li>
-                                        <p>Delivery fee</p>
-                                        <p>EGP 4.99</p>
+                                        <p>{t("Payment")}</p>
+                                        <p>Cash <PaymentsOutlinedIcon/></p>
                                     </li>
                                     <li>
-                                        <p>Payment</p>
-                                        <p>Cash</p>
+                                        <p>{t("Rating")}</p>
+                                        <p>{totalRate} ⭐</p>
                                     </li>
                                     <li>
-                                        <p>Rating</p>
-                                        <p></p>
-                                    </li>
-                                    <li>
-                                        <p>Cuisines</p>
-                                        <p>Pies, Pizza, Pasta</p>
+                                        <p>{t("Description")}</p>
+                                        <p>{restaurantInfo.descrption}</p>
                                     </li>
 
                                 </ul>

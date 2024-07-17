@@ -1,6 +1,7 @@
 import React from "react";
 import "./TopBeAPartner.css";
 import ImgHome from "../../assets/img-home.png";
+import Spinner from "../loader/Spinner";
 export default function TopBeAPartner() {
     return (
         <>

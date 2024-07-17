@@ -16,13 +16,13 @@
 
 .formStyle button {
   font-size: 12px;
-  background-color: var(--main-color);
+  background-color: #3a98ea;
   top: 8px !important;
   right: 5px !important;
 }
 
 .formStyle button:hover {
-  background-color: #3a98ea !important;
+  background-color: #002a54!important;
 }
 
 .formStyle input:focus {

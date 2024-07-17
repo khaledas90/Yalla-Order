@@ -1,0 +1,48 @@
+.StyledModal{
+position: fixed;
+  top: 54%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 0px 5px 3px #828080a7;
+  padding: 1rem 1rem;
+  transition: 0.5s;
+
+}
+.overlay{
+ position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: #0000004c;
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  transition: 0.5s;
+}
+/* .window-container{
+  max-width: 800px;
+} */
+.closeBtn{
+background: none;
+  border: none;
+  padding: 0.4rem;
+  border-radius: 1.4rem;
+  transform: translateX(0.8rem);
+  transition: 0.3s;
+  position: absolute;
+  top: 1.2rem;
+  right: 1.9rem;
+}
+.closeBtn:hover{
+    background-color: rgb(243, 238, 238);
+}
+.closeBtn svg{
+    width: 1.4rem;
+    height: 1.4rem;
+    /* Sometimes we need both */
+    /* fill: var(--color-grey-500);
+    stroke: var(--color-grey-500); */
+    color: rgb(167, 167, 167);
+}

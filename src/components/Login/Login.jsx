@@ -10,51 +10,54 @@ import {
   faGoogle,
 } from "@fortawesome/free-brands-svg-icons";
 import Header from "../header/Header";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useNavigate } from "react-router-dom";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import toast, { Toaster } from "react-hot-toast";
-import { loginUser } from "../../store/thunk/loginThunk";
+import apiAuthenticate from "../../services/authentication/apiAuthenticate";
 import { useDispatch } from "react-redux";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { Toaster } from "react-hot-toast";
+
 export default function Login() {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      Email: '',
-      Password: '',
+      Email: "",
+      Password: "",
     },
     validationSchema: Yup.object({
-      Email: Yup.string()
-        .email('Invalid email address')
-        .required('Email is required')
-        .max(65, 'Email cannot be longer than 65 characters')
-        .matches(
-          /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
-          'email is required'
-        ),
-
-      Password: Yup.string()
-        .required('Password is required')
-        .min(8, 'Password must be at least 8 characters')
-        .max(20, 'Password cannot be longer than 20 characters')
-        .matches(
-          /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])/,
-          'Password must contain an uppercase letter, a lowercase letter, a number, and a special character'
-        ),
+      Email: Yup.string().email('Invalid email address').required('Email is required'),
+      Password: Yup.string().required('Password is required'),
     }),
     onSubmit: async (values) => {
-      dispatch(loginUser({ userData: values, navigate }));
+      const { Email, Password } = values;
+      console.log(Email, Password)
+      try {
+        const response = await apiAuthenticate.post('/login', {
+          email: Email,
+          password: Password,
+        });
+        navigate('/HomeRestaurants')
+        localStorage.setItem('token', response.data.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error.response ? error.response.data : error.message);
+      }
     },
   });
 
   return (
     <>
       <div className="Login Main_bg">
-        <Header MainPage={"Restaurants" ? "Restaurants" : "Clinics"} IconOne={<FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
+        <Header
+          MainPage={"Restaurants" ? "Restaurants" : "Clinics"}
+          IconOne={<FavoriteBorderOutlinedIcon />}
+          IconTwo={<LanguageOutlinedIcon />}
+          IconThree={<ShoppingBagOutlinedIcon />}
+        />
         <div className="container p-5">
           <div className="row justify-content-center">
             <div className="col-lg-7">
@@ -63,9 +66,9 @@ export default function Login() {
                   <h2 className="text-center mb-5">LOGIN</h2>
                   <div className="form-group my-4">
                     <input
-                      type="email"
-                      placeholder="Email"
-                      className={`form-control rounded-pill px-4 py-3 ${formik.touched.Email && formik.errors.Email ? 'border-danger' : formik.touched.Email ? 'border-info' : 'border-secondary'}`}
+                      type="text"
+                      placeholder="Email Address "
+                      className="form-control rounded-pill px-4 py-3 border-secondary"
                       {...formik.getFieldProps('Email')}
                     />
                     {formik.touched.Email && formik.errors.Email ? (
@@ -76,7 +79,7 @@ export default function Login() {
                     <input
                       type={showPassword ? "text" : "password"}
                       placeholder="Password"
-                      className={`form-control rounded-pill px-4 py-3 ${formik.touched.Password && formik.errors.Password ? 'border-danger' : formik.touched.Password ? 'border-info' : 'border-secondary'}`}
+                      className="form-control rounded-pill px-4 py-3 border-secondary"
                       {...formik.getFieldProps('Password')}
                     />
                     <span
@@ -107,29 +110,29 @@ export default function Login() {
                     </div>
                   </div>
                   <div className="d-flex justify-content-center mt-3">
-                    <a href="https://www.facebook.com" className="me-2">
+                    <Link to="https://www.facebook.com" className="me-2">
                       <FontAwesomeIcon
                         icon={faFacebook}
                         className="me-2 social-icon"
                       />
-                    </a>
-                    <a href="https://www.apple.com" className="me-2">
+                    </Link>
+                    <Link to="https://www.apple.com" className="me-2">
                       <FontAwesomeIcon
                         icon={faApple}
                         className="me-2 social-icon social-icon2"
                       />
-                    </a>
-                    <a href="https://www.google.com" id="google">
+                    </Link>
+                    <Link to="https://www.google.com" id="google">
                       <FontAwesomeIcon
                         icon={faGoogle}
                         className="me-2 social-icon social-icon3"
                       />
-                    </a>
+                    </Link>
                   </div>
                   <div className="text-center SignUp">
                     <span>
                       Don’t have an account?{" "}
-                      <Link to="/SignUp">Sign Up</Link>
+                      <Link to="/Sign Up">Sign Up</Link>
                     </span>
                   </div>
                 </form>

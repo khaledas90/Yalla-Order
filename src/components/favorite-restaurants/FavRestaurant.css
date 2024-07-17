@@ -92,3 +92,10 @@
     font-size: 25px;
     font-weight: 500;
 }
+
+@media screen and (max-width:767px) {
+    .fav {
+        width: 270px;
+        font-size: 17px;
+    }
+}

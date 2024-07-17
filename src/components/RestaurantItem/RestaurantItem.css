@@ -2,7 +2,11 @@
   position: relative;
   top: -84px;
 }
+.Restaurant-item.ar{
+direction: rtl;
+unicode-bidi: bidi-override;
 
+}
 .restaurant-overview .img-wrapper {
   width: 375px;
   height: 331px;
@@ -75,7 +79,7 @@
   margin-top: 26px;
 }
 
-.dishes button {
+.navToMenu{
   padding: 20px;
   border-radius: 62px;
   text-transform: capitalize;
@@ -85,6 +89,7 @@
   font-size: 20px;
   transition: 0.3s;
   border: none;
+
 }
 
 .dishes button:hover {
@@ -110,6 +115,34 @@
   font-size: 32px;
   font-weight: 500;
   color: var(--main-darker);
+}
+.add-review-form{
+  padding: 10px;
+}
+.add-review-form.ar{
+  direction: rtl;
+}
+.add-review-form textarea{
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px;
+
+
+}
+.add-review-form .add-review-btn{
+  background-color: var(--main-color);
+  color: #fff;
+  border: none;
+  padding: 4px 7px;
+  border-radius: 5px;
+  width: 100px;
+}
+.add-outer{
+  border: none;
+  background-color: transparent;
+  color: var(--main-color);
+  font-size: 25px;
+
 }
 
 @media screen and (max-width: 767px) {

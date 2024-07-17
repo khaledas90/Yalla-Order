@@ -17,10 +17,10 @@ import {
     faRightFromBracket,
     faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import Modal from "../modal/Modal";
 import { Link } from "react-router-dom";
 import imgEmptyAddress from "../../assets/EmptyAddress.png";
-import LocalMallIcon from '@mui/icons-material/LocalMall';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import GoogleMapComponent from "./GoogleMapComponent";
 import { useSelector } from "react-redux";
 const Addresses = [
     {
@@ -59,8 +59,7 @@ export default function MyAddress() {
             <div className="Profile Main_bg_profile">
                 <Header MainPage={"Restaurants" ? "restaurants" : "CLinics"} IconOne={<FavoriteBorderOutlinedIcon />}
                     IconTwo={<LanguageOutlinedIcon />}
-                    IconThree={isLoggedIn ? <LocalMallIcon /> : ''}
-                    IconFour={isLoggedIn ? <AccountCircleIcon /> : ''} />
+                />
 
 
                 <div className="MyAccount">
@@ -154,7 +153,18 @@ export default function MyAddress() {
                                                         </div>
                                                     )}{" "}
                                                     <div className="text-center mt-5 mb-2  ">
-                                                        <Button className="btnAccounts">Add new address</Button>
+
+                                                        <Link exact="true" to="">
+                                                            <Modal>
+                                                                <Modal.Open opens="add-address">
+                                                                    <button className="btnAccounts">Add Address</button>
+                                                                </Modal.Open>
+                                                                <Modal.Window name="add-address">
+                                                                    <GoogleMapComponent apiKey="AIzaSyBCUdcDFvWmHDl94vcWToYa5vD3ukF8rG8" />
+                                                                </Modal.Window>
+                                                            </Modal>
+                                                        </Link>{" "}
+
                                                     </div>{" "}
                                                 </div>{" "}
                                             </div>{" "}

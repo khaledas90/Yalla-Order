@@ -1,19 +1,19 @@
-import { faBagShopping, faMapLocation, faPenToSquare, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { faBagShopping, faMapLocation, faPenToSquare, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { Link, useNavigate } from "react-router-dom";
+// import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import LocalMallIcon from '@mui/icons-material/LocalMall';
-import { useFormik } from "formik";
-import React, { useEffect, useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import * as Yup from "yup";
-import apiAuthenticate from "../../services/authentication/apiAuthenticate";
-import { logoutUser } from "../../store/thunk/logoutThunk";
-import Header from "../header/Header";
-import "./profile.css";
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import { logoutUser } from '../../store/thunk/logoutThunk'; // Adjust the import based on your file structure
+import apiAuthenticate from '../../services/authentication/apiAuthenticate'; // Adjust the import based on your file structure
+import toast, { Toaster } from 'react-hot-toast';
+import Header from '../header/Header';
+
 export default function MyAccount() {
   const [isUpdate, setIsUpdate] = useState(false);
   const { token } = useSelector((state) => state.User);
@@ -32,7 +32,6 @@ export default function MyAccount() {
     validationSchema: Yup.object({
       Name: Yup.string().required('Name is required').min(2).max(50),
       email: Yup.string().email('Invalid email address').required('Email is required').max(65),
-
       phone: Yup.string().required('Phone is required').matches(/^[0-9]{11}$/, 'Phone must be exactly 11 digits'),
     }),
     onSubmit: async (values) => {
@@ -79,13 +78,8 @@ export default function MyAccount() {
     <>
       <Toaster />
       <div className="Profile Main_bg_profile">
-        <Header
-          MainPage={"Restaurants"}
-          IconOne={<FavoriteBorderOutlinedIcon />}
-          IconTwo={<LanguageOutlinedIcon />}
-          IconThree={isLoggedIn ? <LocalMallIcon /> : ''}
-          IconFour={isLoggedIn ? <AccountCircleIcon /> : ''}
-        />
+        <Header MainPage={"Restaurants" ? "restaurants" : "Clinics"} IconOne={<FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
+
         <div className="MyAccount">
           <h1>My Profile</h1>
           <div className="container">
@@ -110,9 +104,9 @@ export default function MyAccount() {
                               <FontAwesomeIcon icon={faMapLocation} className="profile-icon" />
                               <Link to="/MyAddress"> Saved Address</Link>
                             </li>
-                            <li onClick={handleLogOut} >
+                            <li onClick={handleLogOut}>
                               <FontAwesomeIcon icon={faRightFromBracket} className="profile-icon" />
-                              <Link> Log Out </Link>
+                              <Link to="#"> Log Out </Link>
                             </li>
                           </ul>
                         </div>
@@ -149,8 +143,6 @@ export default function MyAccount() {
                                 )}
                               </div>
                             </div>
-
-
 
                             <div className="form-group row mb-3">
                               <label className="col-lg-3 col-form-label">Phone</label>

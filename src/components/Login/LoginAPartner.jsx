@@ -8,15 +8,20 @@ import {
   faGoogle,
 } from "@fortawesome/free-brands-svg-icons";
 import Header from "../header/Header";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 
 export default function LoginAPartner() {
   return (
     <>
       <div className="Login LoginAPartner Main_bg">
-        <Header MainPage={"Restaurants" ? "Restaurants" : "CLinics"} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
+        <Header
+          MainPage={"Restaurants" ? "Restaurants" : "CLinics"}
+          IconOne={<FavoriteBorderOutlinedIcon />}
+          IconTwo={<LanguageOutlinedIcon />}
+          IconThree={<ShoppingBagOutlinedIcon />}
+        />
 
         <div className="container p-5">
           <div className="row justify-content-center">
@@ -64,24 +69,24 @@ export default function LoginAPartner() {
                     </div>
                   </div>
                   <div className="d-flex justify-content-center mt-3">
-                    <a href="www.facebook.com" className=" me-2">
+                    <Link to="www.facebook.com" className=" me-2">
                       <FontAwesomeIcon
                         icon={faFacebook}
                         className="me-2 social-icon"
                       />
-                    </a>
-                    <a href="www.twitter.com" className="me-2">
+                    </Link>
+                    <Link to="www.twitter.com" className="me-2">
                       <FontAwesomeIcon
                         icon={faApple}
                         className="me-2 social-icon social-icon2"
                       />
-                    </a>
-                    <a href="www.google.com" id="google">
+                    </Link>
+                    <Link to="www.google.com" id="google">
                       <FontAwesomeIcon
                         icon={faGoogle}
                         className="me-2 social-icon  social-icon3"
                       />
-                    </a>
+                    </Link>
                   </div>
                   <div className="text-center SignUp ">
                     <span>

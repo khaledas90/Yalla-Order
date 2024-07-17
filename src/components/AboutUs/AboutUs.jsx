@@ -4,10 +4,9 @@ import "./AboutUs.css";
 import Header from "../header/Header";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import LocalMallIcon from '@mui/icons-material/LocalMall';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+
 import { useSelector } from "react-redux";
-// import Lang from "./Lang.js";
 
 export default function AboutUs() {
   const { token } = useSelector(state => state.User);
@@ -19,13 +18,8 @@ export default function AboutUs() {
   return (
     <>
       <div className="AboutUs Main_bg">
-        <Header
-          MainPage={'Restaurants'}
-          IconOne={<FavoriteBorderOutlinedIcon />}
-          IconTwo={<LanguageOutlinedIcon />}
-          IconThree={isLoggedIn ? <LocalMallIcon /> : ''}
-          IconFour={isLoggedIn ? <AccountCircleIcon /> : ''}
-        />
+        <Header MainPage={"Restaurants" ? "Restaurants" : "CLinics"} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
+
         <div className="container p-5">
           <div className="row justify-content-center">
             <div className=" col-lg-7 ">
@@ -50,7 +44,6 @@ export default function AboutUs() {
           </div>
         </div>
       </div>
-      {/* <Lang /> */}
     </>
   );
 }

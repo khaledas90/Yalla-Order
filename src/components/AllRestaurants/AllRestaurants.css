@@ -11,6 +11,9 @@
 .allRestaurants h1 span {
   color: var(--main-color);
 }
+.allRestaurants.ar{
+  text-align: right;
+}
 
 .allRestaurants .restaurant {
   border: 1px solid var(--dark-color);
@@ -56,6 +59,11 @@
   top: 20px;
   left: 13px;
 }
+.allRestaurants.ar .restaurant .details div {
+  right: 50px;
+  top: 10px;
+}
+
 
 .allRestaurants .restaurant .details div p {
   color: var(--dark-color);
