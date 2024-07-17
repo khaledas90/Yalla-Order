@@ -8,15 +8,16 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import NavRestaurants from "../components/NavRestaurants/NavRestaurants";
 function BeAPartner() {
     return (
         <div className="BeAPartner">
             <Helmet>
-                <title>FoODc</title>
+                <title>Be Partner With Insta Order</title>
                 <meta name="description" content="Welcome to our service. Here you can find the best restaurants and clinics." />
             </Helmet>
             <div className="Main_bg">
-                <Header MainPage={'Clinks'} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} IconFour={<AccountCircleOutlinedIcon/>}/>
+            <NavRestaurants/>
                 <TopBeAPartner />
             </div>
             <Partner />

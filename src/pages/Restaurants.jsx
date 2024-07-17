@@ -8,28 +8,46 @@ import Header from "../components/header/Header";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import NavRestaurants from "../components/NavRestaurants/NavRestaurants";
 
 function Restaurants() {
+     const {t} = useTranslation()
+     const [restaurants, setRestaurants] = useState([]);
+     const [loading, setLoading] = useState(true);
+     const [error, setError] = useState(null);
+     const handleSearchResults = (results) => {
+        setRestaurants(results);
+      };
     return (
         <div className="Restaurants">
             <Helmet>
-                <title>Restaurants</title>
+                <title>{t("restaurants")}</title>
                 <meta name="description" content="Discover the best restaurants around you." />
             </Helmet>
             <div className="Main_bg">
-                <Header MainPage={'Restaurants'} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconFour={<AccountCircleOutlinedIcon/>}/>
+              <NavRestaurants/>
                 <div className='inputDiv'>
                     <SearchRestaurants
                         pageAddress={"RESTAURANTES"}
                         placeholder={"Find your Restaurant.."}
                         btnText={"Search"}
                         icon={Search}
+                        onSearchResults={handleSearchResults}
 
                     />
                 </div>
             </div>
 
-            <AllRestaurants />
+            <AllRestaurants
+              restaurants={restaurants} 
+              loading={loading} 
+              error={error}
+              setRestaurants={setRestaurants}
+              setLoading={setLoading}
+              setError={setError}
+               />
         </div>
     );
 }

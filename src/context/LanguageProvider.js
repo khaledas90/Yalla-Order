@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import { createContext, useContext, useEffect, useState } from "react";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
+=======
+import { createContext, useContext, useEffect, useState } from "react"
+
+>>>>>>> e3d39b4ff3c38205a822a617ec011a75bc72a2f1
 
 const LanguageContext = createContext();
 function LanguageProvider({ children }) {

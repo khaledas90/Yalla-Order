@@ -19,14 +19,24 @@ function HeroRestaurant() {
                         <div className="content">
                             <div className='left-hero'>
                                 <h1 className='text-center text-lg-start m-auto'>A unique experience for food lovers</h1>
-                                <div className='inputDiv inputDivHome '>
-                                    <SearchRestaurants
-                                        placeholder={"Find your Location.."}
-                                        btnText={"Branch Menu"}
-                                        icon={locationOne}
-                                        locIcon={location}
-
+                                <div className='inputDiv inputDivHome d-flex justify-content-center justify-content-lg-start'>
+                                <form
+                                className={`position-relative formStyle form-control rounded-pill bg-white py-2 px-4 mx-auto mx-md-0 locForm `}
+                            >
+                                <div className=''>
+                                    <input
+                                        type="text"
+                                        className="form-control w-75 border-0 font-monospace"
+                                        placeholder="Find your Location.."
+                                       
                                     />
+                                    <img src={locationOne} className='locationIcon2' alt="" />
+                                </div>
+                                <button type="submit" className="btn rounded-pill p-2 position-absolute top-0 end-0 text-white px-3">
+                                       search
+                                    <img src={location} className='locationIcon' alt="" />
+                                </button>
+                            </form>
                                 </div>
                             </div>
                         </div>

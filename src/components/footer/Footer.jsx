@@ -4,6 +4,7 @@ import instagram from "../../assets/instagram.svg";
 import appStore from "../../assets/logo appstore.png";
 import googlePlay from "../../assets/logo googlestore.png";
 import logo from "../../assets/logo.png";
+import logoImg from "../../assets/Insta Order.svg"
 
 import "./footer.css";
 
@@ -15,7 +16,7 @@ const Footer = () => {
       >
         <div className="d-flex justify-content-between container flex-column flex-lg-row flex-md-row">
           <div className="logo d-lg-block d-flex justify-content-center align-items-center">
-            <img src={logo} className='footerLogo' alt="" />
+            <img src={logoImg} className='footerLogo' alt="" />
           </div>
           <div className="footer-icon d-flex flex-column gap-3 gap-lg-5 mt-3 mt-lg-5">
             <div className="contact text-white d-flex gap-3 align-items-center justify-content-center justify-content-lg-start ms-0 ms-lg-3">

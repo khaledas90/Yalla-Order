@@ -1,5 +1,5 @@
 .fav{
-    max-width: 522px;
+    width: 270px;
     border-radius: 22px;
     font-size: 22px;
     font-weight: 500;
@@ -82,4 +82,10 @@
     color: #ddd;
     font-size: 25px;
     font-weight: 500;
+}
+@media screen and (max-width:767px) {
+    .fav{
+        width: 270px;
+        font-size: 17px;
+    }
 }

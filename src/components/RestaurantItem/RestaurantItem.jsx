@@ -12,12 +12,16 @@ import { RESTAURANTS } from "../AllRestaurants/FakeData";
 import { useEffect, useState } from "react";
 import locationOne from '../../assets/Location-One.svg';
 import location from '../../assets/Location.svg';
+import { addReview, fetchRestaurantById } from "../../services/apiRestaurant";
+import { useTranslation } from "react-i18next";
+import Modal from "../modal/Modal";
+import Loader from "../loader/Loader";
 
 function RestaurantItems() {
 
     // slick slider
     var settings = {
-        dots: true,
+        dots : false,
         infinite: true,
         speed: 500,
         slidesToShow: 3,
@@ -30,7 +34,7 @@ function RestaurantItems() {
                     slidesToShow: 2,
                     slidesToScroll: 1,
                     infinite: true,
-                    dots: true
+                    dots: false
                 }
             },
             {
@@ -52,28 +56,78 @@ function RestaurantItems() {
     };
     const [searchParams] = useSearchParams();
     const RestaurantName = searchParams.get('restaurant');
-    const [RestaurantRating, setRestaurantRating] = useState();
+
     const [CurrentRestaurant, setCurrentRestaurant] = useState({});
+    const lang = localStorage.getItem("i18nextLng");
     const navigate = useNavigate();
     const { id } = useParams();
+    const [restaurant, setRestaurant] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+     const {t} = useTranslation()
+
+     const [comment, setComment] = useState('');
+     const [RestaurantRating, setRestaurantRating] = useState();
+
+
+
     const ratingChanged = (newRating) => {
         setRestaurantRating(newRating)
     };
-    const navigateToMenu = () => {
-        navigate(`/restaurants/${id}/menu?restaurant=${CurrentRestaurant.name}`);
-    };
+   
+    const handleAddReview = async (event) => {
+        event.preventDefault();
+        try {
+          const result = await addReview(id, comment, RestaurantRating);
+          console.log('Review added successfully:', result);
+          setComment("");
+          setRestaurantRating(0);
+          
+        } catch (error) {
+          console.error('Error adding review:', error);
+        }
+      };
+
     useEffect(() => {
-        console.log(id);
-        setCurrentRestaurant((RESTAURANTS.find((el) => el.id === 1)))
-    }, [id])
+        const getRestaurant = async () => {
+          try {
+            setLoading(true); // Start loading
+            const data = await fetchRestaurantById(id);
+            setRestaurant(data.data);
+            setError(null); // Clear any previous errors
+          } catch (error) {
+            console.error('Error fetching restaurant:', error);
+            setError('Failed to fetch restaurant');
+          } finally {
+            setLoading(false); // End loading
+          }
+        };
+    
+        getRestaurant();
+      }, [id]);
+
+   
+
+     if(loading) return <Loader/>
+    
+     const { "Total rate": totalRate, "best selling": bestSelling, "resturant info": restaurantInfo, reviwes } = restaurant;
+     const navigateToMenu = () => {
+        navigate(`/restaurants/${id}/menu?restaurant=${restaurantInfo.name}`);
+    };
+      
+     console.log(restaurant)
+     console.log(restaurantInfo.name)
     return (
-        <div>
+        <div className={`Restaurant-item ${lang === "ar" ? "ar" : ""}`}>
             <Helmet>
-                <title>{RestaurantName} Restaurant</title>
+            {lang === "ar" ? <title>{t("Restaurant")} {RestaurantName}</title>
+            : <title>{restaurantInfo.name} {t("Restaurant")}</title>
+        }
+                
             </Helmet>
             <div className='inputDiv inputDivRestaurantItem'>
                 <SearchRestaurants
-                    Pagetext={"Select your area to see the restaurant menu"}
+                    Pagetext={t("Select your area to see the restaurant menu")}
                     pageAddress={"RESTAURANTES"}
                     placeholder={"Find your Restaurant.."}
                     btnText={"Branch Menu"}
@@ -85,69 +139,92 @@ function RestaurantItems() {
 
             <div className="restaurant-overview">
                 <div className="img-wrapper">
-                    <img src={CurrentRestaurant.image} alt={CurrentRestaurant.name} />
+                    <img src={restaurantInfo.logo} alt={CurrentRestaurant.name} />
                 </div>
 
             </div>
-            <div className="rating">
-                <span>{RestaurantRating} Rating</span>
-                <ReactStars
-                    count={5}
-                    onChange={ratingChanged}
-                    size={40}
-                    a11y={true}
-                    isHalf={true}
-                    emptyIcon={<i className="far fa-star" />}
-                    halfIcon={<i className="fa fa-star-half-alt" />}
-                    fullIcon={<i className="fa fa-star" />}
-                    activeColor="#ffd700"
-                    value={4}
-                />
-
-            </div>
+            
             <div className="container">
                 <div className="restaurant-deliver mb-5">
-                    <p><span>{CurrentRestaurant.name}</span> delivers to you</p>
-                    <p>El Maqam is a restaurant located in Egypt, serving a selection of Pies, Pizza, Pasta that delivers across Semouha - Sidi Gaber Station, Semouha - Sidi Gaber Station 2 and Sidi Besher Bahary.
-                        Their best selling dishes are Margherita Pizza, Oriental Sausage And Pastrami Pie, Pastrami Pie and Oriental Sausage Pie, although they have a variety of dishes and meals to choose from like Pies, Pizza, Pasta.</p>
+                    <p><span>{restaurantInfo.name}</span> {t("delivers to you")}</p>
+                    <p>{restaurantInfo.address}</p>
                 </div>
-
-                <div className="dishes">
-                    <p>Best Seller Dishes</p>
+                {bestSelling.length !== 0 ? 
+                    <div className="dishes">
+                    <p>{t("Best Seller Dishes")}</p>
                     <div className="row">
-                        {CurrentRestaurant.bestDishes?.map((e =>
-                            <div key={e.DishName} className="col-12 col-md-6 col-lg-3 mb-5">
+                        {bestSelling?.map((e =>
+                            <div key={e.id} className="col-12 col-md-6 col-lg-3 mb-5">
                                 <div className="dish">
-                                    <div><img src={e.img} alt="dish" /></div>
-                                    <p>{e.DishName}</p>
+                                    <div><img src={e.image} alt="dish" /></div>
+                                    <p>{e.name}</p>
 
                                 </div>
                             </div>))}
                     </div>
-                    <div className="text-center">
-                        <button onClick={navigateToMenu}>View Menu</button>
-                    </div>
+                   
+                </div> 
+
+                    : null
+                }
+                <div className="text-center">
+                      <button className="navToMenu" onClick={navigateToMenu}>{t("View Menu")}</button>
                 </div>
+                
                 <div className="reviews">
                     <div className="reviewsHeader">
-                        <p>{CurrentRestaurant.name} Reviews</p>
-                        <p>Add Review</p>
+                        {lang === "ar" ? <p>{t("Reviews")} {restaurantInfo.name}</p> : 
+                        <p>{restaurantInfo.name} {t("Reviews")}</p>
+                         }
+                        
+                        <Modal>
+                        <Modal.Open opens="add-review">
+                          <button className="add-outer">{t("Add Review")}</button>
+                        </Modal.Open>
+                        <Modal.Window name="add-review">
+                          <form onSubmit={handleAddReview} className={`add-review-form ${lang === "ar" ? "ar" : ""}`}>
+                                <h3 className="review-form-header">{t("Add Review")}</h3>
+                                <div>
+                                <div className="rating">
+                                <span>{RestaurantRating} {t("Rating")}</span>
+                                <ReactStars
+                                    count={5}
+                                    onChange={ratingChanged}
+                                    size={30}
+                                    a11y={true}
+                                    isHalf={true}
+                                    emptyIcon={<i className="far fa-star" />}
+                                    halfIcon={<i className="fa fa-star-half-alt" />}
+                                    fullIcon={<i className="fa fa-star" />}
+                                    activeColor="#ffd700"
+                                    value={0}
+                                />
+                            </div>
+                                
+                                </div>
+                                <textarea value={comment} onChange={(e) => setComment(e.target.value)} rows="6" placeholder={t("Comment")}></textarea>
+                                <div className="text-center"><button className="add-review-btn">{t("Add")}</button></div>
+                                
+                          
+                          </form>
+                        </Modal.Window>
+                      </Modal>
                     </div>
                     <Slider {...settings}>
-                        {CurrentRestaurant.Reviews?.map((e) =>
-                            <div key={e.user}>
+                        {reviwes?.map((e) =>
+                            <div key={e['user name']}>
                                 <div className="review">
                                     <div className="icon" ><img src={CommentIcon} alt="icon" /></div>
                                     <div className="userDetails">
-                                        <div className="userImg"><img src={e.userImg} alt="userImg" /></div>
+                                        
                                         <div>
-                                            <p>{e.user}</p>
-                                            <p>customer</p>
+                                            <p style={{fontWeight:"500"}}>{e['user name']}</p>
+                                            <p style={{color:"#ddd",fontWeight:"500"}}>{t("customer")}</p>
                                         </div>
                                     </div>
                                     <div className="comment">
-                                        <p>{e.comment}</p>
-                                        <p>{e.createdAt}</p>
+                                        <p>{e['user comment']}</p>
+                                        <p>{e["user rate time"]}</p>
                                     </div>
                                 </div>
                             </div>

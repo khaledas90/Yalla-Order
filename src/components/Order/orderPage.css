@@ -1,0 +1,43 @@
+.orderPage .img-wrapper {
+    margin-top: 60px;
+  }
+  .orderPage .TitleMenuPage{
+    margin-top: 350px;
+  }
+  .orderPage .restaurant-overview{
+    margin-top: -180px;
+  }
+  
+  .orderPage .TitleMenuPage h1 {
+    font-family: "Cabin Sketch", sans-serif;
+    font-weight: 400;
+    color: white;
+    font-size: 4rem;
+    margin-bottom: 30px;
+    line-height: 74.94px;
+    text-transform: uppercase;
+  }
+  
+  .RestaurantDetails {
+    text-align: center;
+    margin-top: -20px;
+    margin-bottom: 50px;
+  }
+  
+  .RestaurantDetails .details p:first-of-type {
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--dark-color);
+  }
+  
+  .RestaurantDetails .details p:nth-of-type(2),
+  .RestaurantDetails .details p:nth-of-type(3) {
+    color: #959595;
+    font-size: 32px;
+    font-weight: 400;
+  }
+  
+  .RestaurantDetails .details p:last-of-type {
+    color: #bbb;
+    font-size: 32px;
+  }

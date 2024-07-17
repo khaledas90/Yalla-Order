@@ -1,4 +1,8 @@
+import { useState } from "react";
 import "./CreateOrder.css";
+import { addToCart } from "../../services/apiRestaurant";
+import { useOrders } from "../../context/OrderProvider";
+import { useTranslation } from "react-i18next";
 
 const styles = {
     section: {
@@ -18,46 +22,115 @@ const styles = {
     },
 };
 
-function CreateOrder() {
+function CreateOrder({orderDetails,productName,productId}) {
+    const {additem,addsaui,resturant,sizes} = orderDetails;
+    const [size_id,setSize_id] = useState();
+    const [checkedExtras, setCheckedExtras] = useState([]);
+    const [checkedSauce,setCheckedSauce] = useState([]);
+    const [qty,setQty] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [successMessage, setSuccessMessage] = useState('');
+    const {t} = useTranslation()
+    const lang = localStorage.getItem("i18nextLng");
+    const {orders,addOrder} = useOrders();
+    console.log(size_id)
+    console.log(sizes)
+    console.log(checkedExtras)
+    console.log(resturant)
+    console.log(orders)
+    function handleChangeExtras(e){
+        const {value,checked} = e.target;
+        if (checked) {
+            if (!checkedExtras.includes(Number(value))) {
+                setCheckedExtras([...checkedExtras, Number(value)]);
+            }
+          } else {
+            setCheckedExtras(checkedExtras.filter((item) => item !== Number(value)));
+          }
+          
+    }
+    function handleChangeSauce(e){
+        const {value,checked} = e.target;
+        if (checked) {
+            if (!checkedSauce.includes(Number(value))) {
+                setCheckedSauce([...checkedSauce, Number(value)]);
+            }
+          } else {
+            setCheckedSauce(checkedSauce.filter((item) => item !== Number(value)));
+          }
+    }
+    function handleIncreaseQty(e){
+        e.preventDefault()
+        setQty((state) => state + 1)
+    }
+    function handleDecreaseQty(e){
+        e.preventDefault()
+        if(qty>1){
+            setQty((state) => state - 1)
+        }
+    }
+    
+    const handleAddToCart = async (e) => {
+        e.preventDefault()
+        try {
+          setLoading(true);
+          setError(null);
+          setSuccessMessage('');
+    
+          const data = await addToCart({
+            qty,
+            product_id: productId,
+            place_id:resturant.id,
+            size_id,
+            item : checkedExtras,
+            sauce:checkedSauce
+          });
+    
+          setSuccessMessage('Item added to cart successfully!');
+          const newOrder = {...data.data,resturant,productName}
+          addOrder(newOrder)
+          console.log('Add to cart response:', data);
+        } catch (error) {
+          console.error('Error adding to cart:', error);
+          setError('Failed to add item to cart');
+        } finally {
+          setLoading(false);
+        }
+      };
+    
     return (
-        <form className="createOrder">
-            <p className="mainHeader">Add Items Choices</p>
+        <form className={`createOrder ${lang=== "ar" ? "ar" : ""}`}>
+            <p className="mainHeader">{t("Add Items Choices")}</p>
             <div className="mainContent">
-
-
                 <div className="bagItem">
-                    <p>Sausage Hawawshi</p>
-                    <button className="clearBtn">-</button>
+                    <p>{productName}</p>
                     <div className="increaseAndDecrease">
-                        <button className="decreaseBtn">-</button>
-                        <div>1</div>
-                        <button className="increaseBtn">+</button>
+                        <button onClick={handleDecreaseQty} className="decreaseBtn">-</button>
+                        <div>{qty}</div>
+                        <button onClick={handleIncreaseQty} className="increaseBtn">+</button>
                     </div>
                     <span>Price on Selection</span>
                 </div>
                 <div style={styles.section}>
-                    <h3 className="secHeader">Your Choice Of Size <span>(Choose 1)</span></h3>
+                    <h3 className="secHeader">{t("Your Choice Of Size")} <span>({t("Choose 1")})</span></h3>
                     <div className="inputs">
                         <div>
+                        {sizes.slice(0,2)?.map((size => 
                             <div style={styles.inputGroup}>
-                                <input type="radio" id="radio1" name="Size" value="Panda (90.00)" />
-                                <label htmlFor="radio1">Panda (90.00)</label>
+                                <input type="radio" id={size.size} name="Size" value={size.id} onChange={(e) => setSize_id(e.target.value)} />
+                                <label htmlFor={size.size}>{size.size} ({size.price})</label>
                             </div>
-                            <div style={styles.inputGroup}>
-                                <input type="radio" id="radio2" name="Size" value="Medium (132.00)" />
-                                <label htmlFor="radio2">Medium (132.00)</label>
-                            </div>
+                        ))}  
                         </div>
 
                         <div>
+                            {sizes.slice(2,sizes.length)?.map((size => 
                             <div style={styles.inputGroup}>
-                                <input type="radio" id="radio3" name="Size" value="Large Roll (162.00)" />
-                                <label htmlFor="radio3">Large Roll (162.00)</label>
+                                <input type="radio" id={size.size} name="Size" value={size.id} onChange={(e) => setSize_id(e.target.value)} />
+                                <label htmlFor={size.size}>{size.size} ({size.price})</label>
                             </div>
-                            <div style={styles.inputGroup}>
-                                <input type="radio" id="radio4" name="Size" value="Large (162.00)" />
-                                <label htmlFor="radio4">Large (162.00)</label>
-                            </div>
+                        ))}  
                         </div>
                     </div>
 
@@ -66,78 +139,55 @@ function CreateOrder() {
                 </div>
 
                 <div style={styles.section}>
-                    <h3 className="secHeader">Your Choice Of Extras <span>(Choose up to 9 items)</span></h3>
+                    <h3 className="secHeader">{t("Your Choice Of Extras")} <span>({t("Choose up to 9 items")})</span></h3>
                     <div className="inputs">
+                    {additem.slice(0,3)?.map((item) =>
                         <div style={styles.inputGroup}>
-                            <input type="checkbox" id="checkbox1" name="Extras" value="Extra Vegetables (5.00)" />
-                            <label htmlFor="checkbox1">Extra Vegetables (5.00)</label>
-                        </div>
-                        <div style={styles.inputGroup}>
-                            <input type="checkbox" id="checkbox2" name="Extras" value="Extra Salami (25.00)" />
-                            <label htmlFor="checkbox2">Extra Salami (25.00)</label>
-                        </div>
-                        <div style={styles.inputGroup}>
-                            <input type="checkbox" id="checkbox3" name="Extras" value="Extra Oriental Sausage (30.00)" />
-                            <label htmlFor="checkbox3">Extra Oriental Sausage (30.00)</label>
-                        </div>
+                        <input type="checkbox" id={item.name} name="Extras" value={item.id} onChange={handleChangeExtras} checked={checkedExtras.includes(item.id)} />
+                        <label htmlFor={item.name}>{item.name} ({item.price})</label>
+                    </div>
+                    )}
 
                     </div>
                     <div className="inputs">
+                        {additem?.slice(3,6)?.map((item) =>
                         <div style={styles.inputGroup}>
-                            <input type="checkbox" id="checkbox4" name="Extras" value="Extra Mozzarella Cheese (25.00)" />
-                            <label htmlFor="checkbox4">Extra Mozzarella Cheese (25.00)</label>
-                        </div>
-                        <div style={styles.inputGroup}>
-                            <input type="checkbox" id="checkbox5" name="Extras" value="Extra Kiri Cheese (25.00)" />
-                            <label htmlFor="checkbox5">Extra Kiri Cheese (25.00)</label>
-                        </div>
-                        <div style={styles.inputGroup}>
-                            <input type="checkbox" id="checkbox6" name="Extras" value="Extra Minced Meat (30.00)" />
-                            <label htmlFor="checkbox6">Extra Minced Meat (30.00)</label>
-                        </div>
+                        <input type="checkbox" id={item.name} name="Extras" value={item.id} onChange={handleChangeExtras} checked={checkedExtras.includes(item.id)} />
+                        <label htmlFor={item.name}>{item.name} ({item.price})</label>
+                    </div>
+                    )}
 
                     </div>
                     <div className="inputs">
+                    {additem?.slice(6,additem.length)?.map((item) =>
                         <div style={styles.inputGroup}>
-                            <input type="checkbox" id="checkbox7" name="Extras" value="Extra Roumi Cheese (25.00)" />
-                            <label htmlFor="checkbox7">Extra Roumi Cheese (25.00)</label>
-                        </div>
-                        <div style={styles.inputGroup}>
-                            <input type="checkbox" id="checkbox8" name="Extras" value="Extra Pastrami (30.00)" />
-                            <label htmlFor="checkbox8">Extra Pastrami (30.00)</label>
-                        </div>
+                        <input type="checkbox" id={item.name} name="Extras" value={item.id} onChange={handleChangeExtras} checked={checkedExtras.includes(item.id)} />
+                        <label htmlFor={item.name}>{item.name} ({item.price})</label>
+                    </div>
+                    )}
 
                     </div>
 
 
                 </div>
-
-                <div style={styles.section}>
-                    <h3 className="secHeader">Your Choice Of Sauce <span>(Choose up to 2 items)</span></h3>
+                {addsaui.length !== 0  && 
+                    <div style={styles.section}>
+                    <h3 className="secHeader">{t("Your Choice Of Sauce")} <span>({t("Choose up to 2 items")})</span></h3>
                     <div className="inputs">
-
-
+                    {addsaui?.map((sauce) => 
                         <div style={styles.inputGroup}>
-                            <input type="checkbox" id="checkbox9" name="Sauce" value="Barbecue Sauce (25.00)" />
-                            <label htmlFor="checkbox9">Barbecue Sauce (25.00)</label>
+                            <input type="checkbox" id={sauce.name} name="Sauce" value={sauce.id} onChange={handleChangeSauce} checked={checkedSauce.includes(sauce.id)}/>
+                            <label htmlFor={sauce.name}>{sauce.name} ({sauce.price})</label>
                         </div>
-                        <div style={styles.inputGroup}>
-                            <input type="checkbox" id="checkbox10" name="Sauce" value="Ranch Sauce (20.00)" />
-                            <label htmlFor="checkbox10">Ranch Sauce (20.00)</label>
-                        </div>
+                    )}
+
                     </div>
 
                 </div>
-
-                <div style={styles.section}>
-                    <h3 className="secHeader">Your Choice <span>(Choose up to 1 items)</span></h3>
-                    <div style={styles.inputGroup}>
-                        <input type="checkbox" id="checkbox4-1" name="Oriental" value="Make It Oriental (20.00)" />
-                        <label htmlFor="checkbox4-1">Make It Oriental (20.00)</label>
-                    </div>
-                </div>
+                }
+                
                 <div className="text-center">
-                    <button className="confirmBtn">Confirm</button>
+                    <button onClick={handleAddToCart} className="confirmBtn">{loading ? t("Adding...") : t("Add To Bag")}</button>
                 </div>
             </div>
         </form>

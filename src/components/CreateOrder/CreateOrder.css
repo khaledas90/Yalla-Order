@@ -3,6 +3,9 @@
   overflow: hidden;
   border: 1px solid #ddd;
 }
+.createOrder.ar{
+  direction: rtl;
+}
 
 .createOrder .mainContent {
   padding: 20px;
@@ -46,6 +49,8 @@
 
 .createOrder .bagItem p {
   margin-bottom: 0;
+  font-weight: 500;
+  font-size: 1.2rem;
 }
 
 .createOrder .bagItem .clearBtn,
