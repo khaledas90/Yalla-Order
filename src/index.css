@@ -1,58 +1,55 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 :root {
-  --main-color: #fd7e7e;
-  --main-darker: #ca6565;
-  --secondary-color: #3a98ea;
-  --white-color: #fefefe;
-  --dark-color: #1f1f1f;
+    --main-color: #fd7e7e;
+    --main-darker: #ca6565;
+    --secondary-color: #3a98ea;
+    --white-color: #fefefe;
+    --dark-color: #1f1f1f;
 }
 
 body {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  /* font-family: "Cabin Sketch", sans-serif; */
-  font-family: "Roboto", sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    /* font-family: "Cabin Sketch", sans-serif; */
+    font-family: "Roboto", sans-serif;
 }
 
 ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 a {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 :focus {
-  outline: none;
+    outline: none;
 }
 
 .Main_bg {
-  background-image: url("./assets/bg-home.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-height: 60vh;
+    background-image: url("./assets/bg-home.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 60vh;
 }
 
 .Main_bg_profile {
-  background-image: url("./assets/bg-home.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-height: 50vh;
-  max-height: 90vh;
+    background-image: url("./assets/bg-home.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 85vh;
+    max-height: 90vh;
 }

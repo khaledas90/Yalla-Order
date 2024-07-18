@@ -1,34 +1,28 @@
 import React, { useState } from "react";
-import "./NavRestaurants.css";
+import "./NavClinics.css";
 import logoImg from "../../assets/Insta Order.svg";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
-import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
 import { Link, NavLink } from "react-router-dom";
 import FavRestaurant from "../favorite-restaurants/FavRestaurant";
-import Bag from "../bag/Bag";
 import LanguageMenu from "../LanguageSwitch/LanguageMenu";
 import ProfileMenu from "../Profile/ProfileMenu";
 import { fetchFavoritesList } from "../../services/apiRestaurant";
 
-
-function NavRestaurants() {
-
+function NavClinics() {
   const token = localStorage.getItem("token");
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState({
     favorite: false,
-    bag: false,
+    calendar: false,
     language: false,
     profile: false,
   });
   const [loadingFavorites, setLoadingFavorites] = useState(false);
   const [favoritesError, setFavoritesError] = useState(null);
   const [favorites, setFavorites] = useState([]);
-  const [loadingBagItems, setLoadingBagItems] = useState(false);
-  const [bagItemsError, setBagItemsError] = useState(null);
-  const [bagItems, setBagItems] = useState([]);
 
   const handleFetchFavorites = async () => {
     try {
@@ -46,8 +40,8 @@ function NavRestaurants() {
       setLoadingFavorites(false);
     }
   };
+
   const favCount = favorites.length;
-  const bagCount = bagItems.length;
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
@@ -69,16 +63,13 @@ function NavRestaurants() {
       {token ? (
         <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
           <li>
-            <NavLink to="/HomeRestaurants">Home</NavLink>
+            <NavLink to="/HomeMedical">Home</NavLink>
           </li>
           <li>
-            <NavLink to="/restaurants">Restaurants</NavLink>
+            <NavLink to="/CLinics">Clinics</NavLink>
           </li>
           <li>
             <NavLink to="/BecomeAPartner">Become a Partner</NavLink>
-          </li>
-          <li>
-            <NavLink to="/trackOrders">Track Orders</NavLink>
           </li>
           <li>
             <NavLink to="/AboutUs">About Us</NavLink>
@@ -88,7 +79,7 @@ function NavRestaurants() {
 
       <div className="icons">
         {token ? (
-          ["favorite", "bag", "language", "profile"].map((icon) => (
+          ["favorite", "calendar", "language", "profile"].map((icon) => (
             <div className="icon" key={icon} onClick={() => toggleDropdown(icon)}>
               {icon === "favorite" && (
                 <div className="iconContainer" onClick={handleFetchFavorites}>
@@ -96,10 +87,9 @@ function NavRestaurants() {
                   {favCount !== 0 && <span className="Count">{favCount}</span>}
                 </div>
               )}
-              {icon === "bag" && (
+              {icon === "calendar" && (
                 <div className="iconContainer">
-                  <ShoppingBagOutlinedIcon />
-                  {bagCount !== 0 && <span className="Count">{bagCount}</span>}
+                  <EventOutlinedIcon />
                 </div>
               )}
               {icon === "language" && <LanguageOutlinedIcon />}
@@ -110,16 +100,6 @@ function NavRestaurants() {
                     favorites={favorites}
                     loadingFavorites={loadingFavorites}
                     favoritesError={favoritesError}
-                  />
-                )}
-                {icon === "bag" && (
-                  <Bag
-                    bagItems={bagItems}
-                    setBagItems={setBagItems}
-                    loadingBagItems={loadingBagItems}
-                    setLoadingBagItems={setLoadingBagItems}
-                    bagItemsError={bagItemsError}
-                    setBagItemsError={setBagItemsError}
                   />
                 )}
                 {icon === "language" && <LanguageMenu />}
@@ -165,4 +145,4 @@ function NavRestaurants() {
   );
 }
 
-export default NavRestaurants;
+export default NavClinics;

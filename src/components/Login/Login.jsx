@@ -9,18 +9,13 @@ import {
   faFacebook,
   faGoogle,
 } from "@fortawesome/free-brands-svg-icons";
-import Header from "../header/Header";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
-import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { useNavigate } from "react-router-dom";
 import apiAuthenticate from "../../services/authentication/apiAuthenticate";
-import { useDispatch } from "react-redux";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Toaster } from "react-hot-toast";
+import NavRestaurants from "../NavRestaurants/NavRestaurants";
 
 export default function Login() {
-  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const formik = useFormik({
@@ -52,12 +47,8 @@ export default function Login() {
   return (
     <>
       <div className="Login Main_bg">
-        <Header
-          MainPage={"Restaurants" ? "Restaurants" : "Clinics"}
-          IconOne={<FavoriteBorderOutlinedIcon />}
-          IconTwo={<LanguageOutlinedIcon />}
-          IconThree={<ShoppingBagOutlinedIcon />}
-        />
+
+        <NavRestaurants />
         <div className="container p-5">
           <div className="row justify-content-center">
             <div className="col-lg-7">

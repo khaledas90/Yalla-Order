@@ -10,12 +10,9 @@ import {
   faGoogle,
 } from "@fortawesome/free-brands-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import Header from "../header/Header";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import "./signUp.css";
 import { registerUser } from "../../store/thunk/registerThunk";
+import NavRestaurants from "../NavRestaurants/NavRestaurants";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -45,12 +42,8 @@ const SignUp = () => {
 
   return (
     <div className="SignUp Main_bg">
-      <Header
-        MainPage={"Restaurants"}
-        IconOne={<FavoriteBorderOutlinedIcon />}
-        IconTwo={<LanguageOutlinedIcon />}
-        IconThree={<ShoppingBagOutlinedIcon />}
-      />
+
+      <NavRestaurants />
       <div className="container p-5">
         <div className="row justify-content-center">
           <div className="col-lg-7">

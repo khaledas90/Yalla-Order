@@ -2,10 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 
 import "./VerifyEmail.css";
 import { Link } from "react-router-dom";
-import Header from "../header/Header";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import NavRestaurants from "../NavRestaurants/NavRestaurants";
 
 export default function VerifyEmail() {
   const [values, setValues] = useState(["", "", "", ""]);
@@ -48,8 +45,7 @@ export default function VerifyEmail() {
 
   return (
     <div className="VerifyEmail Main_bg">
-      <Header MainPage={"Restaurants" ? "Restaurants" : "CLinics"} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
-
+      <NavRestaurants />
       <div className="container p-5">
         <div className="row justify-content-center">
           <div className=" col-lg-7 ">

@@ -1,15 +1,13 @@
 import { Helmet } from "react-helmet";
-import Header from "../components/header/Header";
 import SearchRestaurants from "../components/SearchRestaurants/SearchRestaurants";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
-import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+
 import Search from "../assets/search.svg";
 
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { actAllClinicsDetails } from "../store/AllShowDetails/AllShowDetailsSlice";
+import NavClinics from "../components/NavClinics/NavClinics";
 
 function ShowAllClinics() {
   const { allShowClincis } = useSelector((state) => state.allShowClincis);
@@ -29,12 +27,8 @@ function ShowAllClinics() {
         />
       </Helmet>
       <div className="Main_bg">
-        <Header
-          MainPage={"Clinic"}
-          IconOne={<FavoriteBorderOutlinedIcon />}
-          IconTwo={<LanguageOutlinedIcon />}
-          IconThree={<ShoppingBagOutlinedIcon />}
-        />
+
+        <NavClinics />
 
         <SearchRestaurants
           pageAddress={"Clinics"}

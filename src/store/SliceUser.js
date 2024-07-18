@@ -11,6 +11,7 @@ const initialState = {
     error: null,
     token: read_cookie('token') || '',
     type: 'restaurant',
+    typePage: 'restaurant',
 };
 
 const userSlice = createSlice({
@@ -31,6 +32,9 @@ const userSlice = createSlice({
         },
         changeType(state, action) {
             state.type = action.payload;
+        },
+        changeTypePage(state, action) {
+            state.typePage = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -89,6 +93,6 @@ const userSlice = createSlice({
     },
 });
 
-export const { changeType, clearToken, setToken } = userSlice.actions;
+export const { changeType, clearToken, setToken, changeTypePage } = userSlice.actions;
 
 export default userSlice.reducer;

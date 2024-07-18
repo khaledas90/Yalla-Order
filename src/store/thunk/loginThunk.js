@@ -17,6 +17,8 @@ export const loginUser = createAsyncThunk(
                 const token = response.data.data;
                 console.log(response.data.data, 'token');
                 bake_cookie('token', token);
+                localStorage.getItem('token', token);
+                console.log(localStorage.getItem('token'));
                 setTimeout(() => {
                     navigate('/HomeRestaurants');
                 }, 1000);

@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Helmet from "react-helmet";
 import SearchRestaurants from "../components/SearchRestaurants/SearchRestaurants";
 import Search from "../assets/search.svg";
-import Header from "../components/header/Header";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import AllClinics from "../components/AllClinics/AllClinics";
+import NavClinics from "../components/NavClinics/NavClinics";
 function Clinics() {
   return (
     <div className="Clinics">
@@ -16,7 +13,7 @@ function Clinics() {
         <meta name="description" content="Discover the best Clinics around you." />
       </Helmet>
       <div className="Main_bg">
-        <Header MainPage={'Clinics'} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
+        <NavClinics />
         <div className='inputDiv'>
           <SearchRestaurants
             pageAddress={"Clinics"}

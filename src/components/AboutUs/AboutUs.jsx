@@ -1,25 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import "./AboutUs.css";
-import Header from "../header/Header";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-
-import { useSelector } from "react-redux";
+import NavRestaurants from "../NavRestaurants/NavRestaurants";
 
 export default function AboutUs() {
-  const { token } = useSelector(state => state.User);
-  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
 
-  useEffect(() => {
-    setIsLoggedIn(!!token);
-  }, [token]);
   return (
     <>
       <div className="AboutUs Main_bg">
-        <Header MainPage={"Restaurants" ? "Restaurants" : "CLinics"} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
-
+        <NavRestaurants />
         <div className="container p-5">
           <div className="row justify-content-center">
             <div className=" col-lg-7 ">

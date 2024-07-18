@@ -3,22 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBagShopping, faMapLocation, faPenToSquare, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { faBagShopping, faCalendar, faMapLocation, faPenToSquare, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
-// import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import { logoutUser } from '../../store/thunk/logoutThunk'; // Adjust the import based on your file structure
-import apiAuthenticate from '../../services/authentication/apiAuthenticate'; // Adjust the import based on your file structure
+import { logoutUser } from '../../store/thunk/logoutThunk';
+import apiAuthenticate from '../../services/authentication/apiAuthenticate';
 import toast, { Toaster } from 'react-hot-toast';
-import Header from '../header/Header';
+import NavRestaurants from '../NavRestaurants/NavRestaurants';
+import NavClinics from '../NavClinics/NavClinics';
 
 export default function MyAccount() {
+  const { typePage } = useSelector((state) => state.User);
   const [isUpdate, setIsUpdate] = useState(false);
-  const { token } = useSelector((state) => state.User);
   const [profileData, setProfileData] = useState({});
-  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -50,6 +46,7 @@ export default function MyAccount() {
   });
 
   useEffect(() => {
+    console.log(typePage);
     const fetchProfileData = async () => {
       try {
         const res = await apiAuthenticate.get("/user/show/profile");
@@ -65,7 +62,7 @@ export default function MyAccount() {
     };
 
     fetchProfileData();
-  }, [token]);
+  }, []);
 
   const handleLogOut = async () => {
     const resultAction = await dispatch(logoutUser());
@@ -77,9 +74,14 @@ export default function MyAccount() {
   return (
     <>
       <Toaster />
-      <div className="Profile Main_bg_profile">
-        <Header MainPage={"Restaurants" ? "restaurants" : "Clinics"} IconOne={<FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
-
+      <div className="Profile">
+        <div className="Main_bg_profile">
+          {typePage === "restaurant" ? (
+            <NavRestaurants />
+          ) : (
+            <NavClinics />
+          )}
+        </div>
         <div className="MyAccount">
           <h1>My Profile</h1>
           <div className="container">
@@ -96,10 +98,17 @@ export default function MyAccount() {
                               <FontAwesomeIcon icon={faPenToSquare} className="profile-icon" />
                               <Link to="/MyAccount"> Edit Profile</Link>
                             </li>
-                            <li>
-                              <FontAwesomeIcon icon={faBagShopping} className="profile-icon" />
-                              <Link to="/MyOrder"> My Order</Link>
-                            </li>
+                            {typePage === "restaurant" ? (
+                              <li>
+                                <FontAwesomeIcon icon={faBagShopping} className="profile-icon" />
+                                <Link to="/MyOrder"> My Order</Link>
+                              </li>
+                            ) : (
+                              <li>
+                                <FontAwesomeIcon icon={faCalendar} className="profile-icon" />
+                                <Link to="/MyReservations">My Reservations</Link>
+                              </li>
+                            )}
                             <li>
                               <FontAwesomeIcon icon={faMapLocation} className="profile-icon" />
                               <Link to="/MyAddress"> Saved Address</Link>

@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { LogoutUser } from '../../store/UserSlice';
+
 import { Button, Card } from "react-bootstrap";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import LocalMallIcon from '@mui/icons-material/LocalMall';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useSelector } from "react-redux";
+
 import "./profile.css";
-import Header from "../header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCalendarCheck,
+  faBagShopping,
+  faCalendar,
   faMapLocation,
   faPenToSquare,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import imgEmpty from "../../assets/shopping-bag.png";
+import { useDispatch, useSelector } from "react-redux";
+import NavRestaurants from "../NavRestaurants/NavRestaurants";
+import { logoutUser } from "../../store/thunk/logoutThunk";
 const orders = [
   {
     id: 1,
@@ -32,34 +29,29 @@ const orders = [
     totalAmount: "106.99 EGP",
   },
 ];
-export default function MyOrder() {
-  const { token } = useSelector((state) => state.User);
-  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
+export default function MyReservations() {
   const [isOrders, SetIsOrders] = useState(orders.length > 0);
-
+  const { token } = useSelector((state) => state.User);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
   useEffect(() => {
     SetIsOrders(orders.length > 0);
     setIsLoggedIn(!!token);
-
-  }, [isOrders, token]);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  }, [isOrders]);
   const handleLogOut = async () => {
-    console.log("logout");
-    const resultAction = await dispatch(LogoutUser());
-    if (LogoutUser.fulfilled.match(resultAction)) {
+    const resultAction = await dispatch(logoutUser());
+    if (logoutUser.fulfilled.match(resultAction)) {
       navigate('/login');
     }
   }
   return (
     <>
-      <div className="Profile Main_bg_profile">
-        <Header MainPage={"Restaurants" ? "restaurants" : "CLinics"} IconOne={<FavoriteBorderOutlinedIcon />}
-          IconTwo={<LanguageOutlinedIcon />}
-          IconThree={isLoggedIn ? <LocalMallIcon /> : ''}
-          IconFour={isLoggedIn ? <AccountCircleIcon /> : ''} />
+      <div className="Profile ">
 
-
+        <div className="Main_bg_profile">
+          <NavRestaurants />
+        </div>
 
         <div className="MyAccount">
           <h1>My Profile</h1>
@@ -80,12 +72,12 @@ export default function MyOrder() {
                               />
                               <Link to="/MyAccount"> Edit Profile</Link>
                             </li>
-                            <li>
+                            <li className="active">
                               <FontAwesomeIcon
-                                icon={faCalendarCheck}
+                                icon={faCalendar}
                                 className="profile-icon"
                               />
-                              <Link to="/MyOrder"> My reservations</Link>
+                              <Link to="/MyReservations">My reservations</Link>
                             </li>
 
                             <li>

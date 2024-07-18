@@ -3,13 +3,10 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import "./FrogrtPasss.css";
 import { Link } from "react-router-dom";
-import Header from "../header/Header";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import apiAuthenticate from "../../services/authentication/apiAuthenticate";
+import NavRestaurants from "../NavRestaurants/NavRestaurants";
 export default function ForgetPass() {
   const navigate = useNavigate();
   const formik = useFormik({
@@ -57,8 +54,7 @@ export default function ForgetPass() {
   return (
     <>
       <div className="ForgetPass Main_bg">
-        <Header MainPage={"Restaurants" ? "Restaurants" : "CLinics"} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
-
+        <NavRestaurants />
         <div className="container p-5">
           <div className="row justify-content-center">
             <div className=" col-lg-7 ">

@@ -1,14 +1,11 @@
 import React from "react";
 import "./ContactUs.css";
-import Header from "../header/Header";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import apiAuthenticate from "../../services/authentication/apiAuthenticate";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import NavRestaurants from "../NavRestaurants/NavRestaurants";
 
 export default function ContactUs() {
   const navigate = useNavigate();
@@ -80,8 +77,7 @@ export default function ContactUs() {
   return (
     <>
       <div className="ContactUs Main_bg">
-        <Header MainPage={"Restaurants"} IconOne={<FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
-
+        <NavRestaurants />
         <div className="container p-5">
           <div className="row justify-content-center">
             <div className="col-lg-7">

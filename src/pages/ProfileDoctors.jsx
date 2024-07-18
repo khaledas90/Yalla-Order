@@ -1,20 +1,12 @@
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Helmet from "react-helmet";
-import Header from "../components/header/Header";
 import ProfileDoctor from "../components/ProfileDoctor/ProfileDoctor";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-
 import doctor1 from "../assets/drRamy.svg";
 import iconRate from "../assets/iconRate.svg";
 import iconlight from "../assets/imdIconLight.svg";
 import "../components/ProfileDoctor/ProfileDoctor.css";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { actClinicsDetails } from "../store/ClinicsDetails/ClinicsDetailsSlice";
-import { useEffect } from "react";
-import Loading from "../components/Loading/Loading";
+import NavClinics from "../components/NavClinics/NavClinics";
 function ProfileDoctors() {
   return (
     <div className="ProfileDoctors">
@@ -23,7 +15,7 @@ function ProfileDoctors() {
         <meta name="description" content="Discover the best restaurants around you." />
       </Helmet>
       <div className="Main_bg">
-        <Header MainPage={'clinics'} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} />
+        <NavClinics />
         <h1 className="text-center TitlePage">Clinics</h1>
 
       </div>

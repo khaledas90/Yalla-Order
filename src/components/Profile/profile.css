@@ -1,0 +1,245 @@
+.Profile {
+    /* margin-bottom: 20pc; */
+}
+
+.Profile .MyAccount {
+    margin-top: -21pc;
+}
+
+.Profile .MyAccount h1 {
+    color: #fefefe;
+    font-weight: 500;
+    font-size: 55px;
+    /* margin-top: -24pc; */
+    text-align: center;
+    line-height: 1;
+    font-family: Cabin Sketch, sans-serif;
+}
+
+.Profile .MyAccount .card {
+    border-radius: 20px;
+    margin-top: 5pc;
+    margin-bottom: 50px;
+}
+
+.Profile .MyAccount .List_group ul {
+    list-style: none;
+    padding-left: 0px !important;
+}
+
+.Profile .MyAccount .List_group ul li a {
+    color: #959595;
+    text-decoration: none;
+}
+
+.Profile .MyAccount .List_group ul li {
+    color: #959595;
+    padding: 18px 21px 25px 43px;
+    font-size: 19px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.Profile .MyAccount .List_group ul li:not(:first-child) {
+    border-left: 5px solid #ffffff;
+}
+
+.Profile .MyAccount .List_group ul li:not(:first-child):hover {
+    border-left: 5px solid #fd7e7e;
+    background-color: #f0f0f0;
+}
+
+.Profile .MyAccount .List_group ul li:not(:first-child):hover a {
+    color: #fd7e7e;
+}
+
+.Profile .MyAccount .List_group ul li:not(:first-child):hover .profile-icon {
+    color: #fd7e7e;
+}
+
+.Profile .MyAccount .List_group ul .active:not(:first-child) {
+    border-left: 5px solid #fd7e7e;
+}
+
+.Profile .MyAccount .List_group ul .active:not(:first-child) a {
+    color: #fd7e7e;
+}
+
+.Profile .MyAccount .List_group ul .active:not(:first-child) .profile-icon {
+    color: #fd7e7e;
+}
+
+.Profile .MyAccount .List_group ul li:first-child {
+    background: #000;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    font-size: 27px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    margin-top: -1px;
+    margin-left: -1px;
+}
+
+.Profile .MyAccount .List_group ul li .profile-icon {
+    margin-right: 20px;
+}
+
+.Profile .MyAccount form {
+    margin-top: 110px;
+}
+
+.btnAccount {
+    padding: 14px 0;
+    font-size: 16px;
+    border: none;
+    background-color: #fff;
+    color: #969696;
+    border: 1px solid #969696;
+    transition: all 0.4s;
+    font-weight: 600;
+    border-radius: 12px;
+}
+
+.btnAccount:hover {
+    background-color: #fd7e7e;
+    color: #fff;
+    border: 1px solid #fff;
+}
+
+.Profile .MyAccount form .active {
+    background-color: #fd7e7e;
+    color: #fff;
+    border: 1px solid #fff;
+}
+
+.Profile .MyAccount form .btnAccountSave {
+    background-color: #3a98ea;
+    padding: 10px 50px;
+    margin-top: 15px;
+}
+
+.btn:disabled {
+    background-color: #ffffff;
+    color: #959595;
+}
+
+
+/* order address */
+
+.order-summary {
+    border: 1px solid #dee2e6;
+    border-radius: 0.35rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-top: 80px;
+    color: #959595;
+}
+
+.content .btnAccounts {
+    background-color: #fd7e7e;
+    cursor: pointer;
+    padding: 14px 60px;
+    border-radius: 50px;
+}
+
+.content .btnAccounts a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.empty_order,
+.empty_Address {
+    text-align: center;
+    margin-top: 17%;
+}
+
+.empty_order img,
+.empty_Address img {
+    max-width: 100%;
+    margin-bottom: 25px;
+}
+
+.empty_order h6,
+.empty_Address h6 {
+    font-size: 24px;
+    color: #959595;
+    font-weight: 400;
+}
+
+.address-summary p {
+    font-weight: 500;
+    font-size: 18px;
+    color: #959595;
+}
+
+.address-summary .iconGorp {
+    margin-right: 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.address-summary .address-icon {
+    margin-right: 5px;
+}
+
+.empty_Address {
+    margin-top: 10%;
+}
+
+.profMenu {
+    background-color: #fff;
+    border-radius: 12px;
+}
+
+.profMenu a {
+    display: block;
+    width: 100%;
+    padding: 10px 1px;
+    text-decoration: none;
+    font-weight: 400;
+    color: #575757;
+    font-size: 20px;
+    width: 190px;
+    transition: 0.3s;
+}
+
+.profMenu a:hover {
+    color: var(--main-color);
+    background-color: #fefefe;
+}
+
+.profMenu::before {
+    content: "";
+    position: absolute;
+    top: -20px;
+    /* Adjust as necessary */
+    right: 30px;
+    /* Adjust as necessary */
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 30px solid #fff;
+}
+
+
+/* address saved */
+
+@media screen and (max-width: 1985px) {
+    .Profile .MyAccount .content {
+        padding: 10px 20px;
+    }
+    .Profile .MyAccount form .btnAccount {
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 792.2px) {
+    .Profile .MyAccount h1 {
+        font-size: 45px;
+    }
+    .Profile .MyAccount .List_group ul li:first-child {
+        font-size: 22px;
+    }
+    .Profile .MyAccount .List_group ul li {
+        font-size: 17px;
+    }
+}

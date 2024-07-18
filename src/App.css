@@ -1,45 +1,53 @@
 .Restaurants .inputDiv {
-  margin-top: 120px;
+    margin-top: 120px;
 }
 
 .Restaurants .inputStyle h1 {
-  font-size: 3rem;
+    font-size: 3rem;
 }
 
 .Restaurants .inputDivRestaurantItem {
-  margin-top: -17pc;
+    margin-top: -17pc;
 }
 
 .HomeRestaurants .bgEndHome {
-  background-image: url("./assets/Group\ 1171276175\ 1.png");
-  background-repeat: no-repeat;
+    background-image: url("./assets/Group\ 1171276175\ 1.png");
+    background-repeat: no-repeat;
 }
 
 .HomeMedical .bgEndHome {
-  background-image: url("./assets/Group\ 1171276403.png");
-  background-repeat: no-repeat;
+    background-image: url("./assets/Group\ 1171276403.png");
+    background-repeat: no-repeat;
+}
+
+.HomeMedical .left-hero .inputDivHome h1 {
+    display: none;
+}
+
+.HomeMedical .left-hero .inputDivHome {
+    margin-top: 20pc;
 }
 
 .BeAPartner .Main_bg {
-  max-height: 100vh;
+    max-height: 100vh;
 }
 
 .Clinics .inputDiv {
-  margin-top: 10pc;
+    margin-top: 10pc;
 }
 
 .ClinicsItems .inputStyle {
-  position: relative;
-  top: 165px;
+    position: relative;
+    top: 165px;
 }
 
 .ProfileDoctors .TitlePage {
-  font-family: "Cabin Sketch", sans-serif;
-  font-weight: 400;
-  color: white;
-  font-size: 4rem;
-  margin-bottom: 30px;
-  line-height: 74.94px;
-  text-transform: uppercase;
-  margin-top: 10pc;
+    font-family: "Cabin Sketch", sans-serif;
+    font-weight: 400;
+    color: white;
+    font-size: 4rem;
+    margin-bottom: 30px;
+    line-height: 74.94px;
+    text-transform: uppercase;
+    margin-top: 10pc;
 }
