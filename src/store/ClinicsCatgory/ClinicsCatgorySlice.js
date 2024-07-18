@@ -4,10 +4,10 @@ import axios from "axios";
 const initialState = {
   error: null,
   loading: "pending",
-  clinics: [],
+  clinicsCatgoty: [],
 };
 
-const actClinics = createAsyncThunk(
+const actClinicsCatgoty = createAsyncThunk(
   "category/clinic/list",
   async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
@@ -21,7 +21,8 @@ const actClinics = createAsyncThunk(
           },
         }
       ); // Replace with your actual API endpoint
-      return res.data.data; // Assuming the API response has a 'data' field that contains the clinics data
+
+      return res.data.data;
     } catch (error) {
       return rejectWithValue(
         error.response ? error.response.data : error.message
@@ -30,31 +31,31 @@ const actClinics = createAsyncThunk(
   }
 );
 
-const clinicsSlice = createSlice({
-  name: "Clinics",
+const clinicsCatgotySclice = createSlice({
+  name: "clinicsCatgoty",
   initialState,
   reducers: {
     categoriesRecordsCleanUp: (state) => {
-      state.clinics = [];
+      state.clinicsCatgoty = [];
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(actClinics.pending, (state) => {
+    builder.addCase(actClinicsCatgoty.pending, (state) => {
       state.loading = "pending";
       state.error = null;
     });
-    builder.addCase(actClinics.fulfilled, (state, action) => {
+    builder.addCase(actClinicsCatgoty.fulfilled, (state, action) => {
       state.loading = "success";
 
-      state.clinics = action.payload;
+      state.clinicsCatgoty = action.payload;
     });
-    builder.addCase(actClinics.rejected, (state, action) => {
+    builder.addCase(actClinicsCatgoty.rejected, (state, action) => {
       state.loading = "failed";
       state.error = action.payload || action.error.message;
     });
   },
 });
 
-export default clinicsSlice.reducer;
-export { actClinics };
-export const { categoriesRecordsCleanUp } = clinicsSlice.actions;
+export default clinicsCatgotySclice.reducer;
+export { actClinicsCatgoty };
+export const { categoriesRecordsCleanUp } = clinicsCatgotySclice.actions;

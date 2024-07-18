@@ -29,7 +29,7 @@ import RestaurantsMenu from "./pages/RestaurantsMenu";
 import HomeMedical from "./pages/HomeMedical";
 import Clinics from "./pages/Clinics";
 import ClinicItem from "./pages/ClinicItem";
-import ShowAllClinics from "./pages/ShowAllClinics";
+import ShowClinicsCategoryById from "./pages/ShowClinicsByCategory";
 import ProfileDoctors from "./pages/ProfileDoctors";
 import LanguageProvider from "./context/LanguageProvider";
 import OrderPage from "./components/Order/OrderPage";
@@ -58,6 +58,10 @@ function App() {
                 <Route path="/HomeRestaurants" element={<HomeRestaurants />} />
                 <Route path="/HomeMedical" element={<HomeMedical />} />
                 <Route path="/CLinics" element={<Clinics />} />
+                <Route
+                  path="/ShowClinicsCategoryById/:id"
+                  element={<ShowClinicsCategoryById />}
+                />
                 <Route path="/CLinics/:id" element={<ClinicItem />} />
                 <Route path="//profileDoctor" element={<ProfileDoctors />} />
                 <Route path="/restaurants" element={<Restaurants />} />

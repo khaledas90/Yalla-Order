@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 import "./AllClinics.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { actClinics } from "../../store/Clinics/ClinicsSlice";
+import { actClinicsCatgoty } from "../../store/ClinicsCatgory/ClinicsCatgorySlice";
 
 function AllClinics() {
   const dispatch = useDispatch();
-  const { clinics } = useSelector((state) => state.clinics);
+  const { clinicsCatgoty } = useSelector((state) => state.clinicsCatgoty);
 
   useEffect(() => {
-    dispatch(actClinics());
+    dispatch(actClinicsCatgoty());
   }, [dispatch]);
 
   return (
@@ -22,10 +22,10 @@ function AllClinics() {
       <div className="ClinicList">
         <div className="container">
           <div className="row">
-            {clinics.map((e) => (
+            {clinicsCatgoty.map((e) => (
               <div key={e.id} className="col-12 col-md-6 col-lg-3 mb-5">
                 <div className="Clinic">
-                  <Link to={`/showAllClinics`}>
+                  <Link to={`/ShowClinicsCategoryById/${e.id}`}>
                     <img src={e.logo} alt="Clinic" />
                     <div className="details">
                       <div>

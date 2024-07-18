@@ -9,16 +9,19 @@ import Search from "../assets/search.svg";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { actAllClinicsDetails } from "../store/AllShowDetails/AllShowDetailsSlice";
+import { actClinicsCategoryById } from "../store/ClinicsCategoryById/ClinicsCategoryByIdSlice";
 
-function ShowAllClinics() {
-  const { allShowClincis } = useSelector((state) => state.allShowClincis);
+function ShowClinicsByCategory() {
+  const { ClinicsCategoryById } = useSelector(
+    (state) => state.ClinicsCategoryById
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(actAllClinicsDetails());
+    dispatch(actClinicsCategoryById());
   }, [dispatch]);
 
+  console.log(ClinicsCategoryById);
   return (
     <>
       <Helmet>
@@ -51,7 +54,7 @@ function ShowAllClinics() {
           <div className="ClinicList">
             <div className="container">
               <div className="row">
-                {allShowClincis.map((e) => (
+                {ClinicsCategoryById.map((e) => (
                   <div key={e.id} className="col-12 col-md-6 col-lg-3 mb-5">
                     <div className="Clinic">
                       <Link to={`/CLinics/${e.id}`}>
@@ -77,4 +80,4 @@ function ShowAllClinics() {
   );
 }
 
-export default ShowAllClinics;
+export default ShowClinicsByCategory;

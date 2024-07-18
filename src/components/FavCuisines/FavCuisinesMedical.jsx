@@ -2,115 +2,83 @@ import Slider from "react-slick";
 import "./FavCuisines.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import img1 from "../../assets/dental.svg";
-import img2 from "../../assets/childs.svg";
-import img3 from "../../assets/eye.svg";
-import img4 from "../../assets/nerology.svg";
-import img5 from "../../assets/dermatology.svg";
-import img6 from "../../assets/physical.svg";
+
 import back from "../../assets/bg.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { actClinicsCatgoty } from "../../store/ClinicsCatgory/ClinicsCatgorySlice";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
 function FavCuisinesMedical() {
-    var settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 6,
-        slidesToScroll: 6,
-        initialSlide: 0,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 2,
-                    infinite: true,
-                    dots: true
-                }
-            },
-            {
-                breakpoint: 600,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2,
-                    initialSlide: 2
-                }
-            },
-            {
-                breakpoint: 480,
-                settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1
-                }
-            }
-        ]
-    };
-    return (
-        <div className="FavContainer">
-            <div className="container">
-                <div className="mainFav">
-                    <img className="back" src={back} alt="back" />
-                    <h1>Customer Favorite Cuisines</h1>
-                    <div className="slider-container">
-                        <Slider {...settings}>
-                            <div>
-                                <div className="item">
-                                    <div>
-                                        <img src={img1} alt="" />
-                                    </div>
-                                    <p>Dental</p>
-                                </div>
-                            </div>
-                            <div>
-                                <div className="item">
-                                    <div>
-                                        <img src={img2} alt="" />
-                                    </div>
-                                    <p>Children's</p>
-                                </div>
+  const dispatch = useDispatch();
+  const { clinicsCatgoty } = useSelector((state) => state.clinicsCatgoty);
 
-                            </div>
-                            <div>
-                                <div className="item">
-                                    <div>
-                                        <img src={img3} alt="" />
-                                    </div>
-                                    <p>Eye</p>
-                                </div>
+  useEffect(() => {
+    dispatch(actClinicsCatgoty());
+  }, [dispatch]);
 
-                            </div>
-                            <div>
-                                <div className="item">
-                                    <div>
-                                        <img src={img4} alt="" />
-                                    </div>
-                                    <p>Neurology</p>
-                                </div>
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 6,
+    slidesToScroll: 6,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 2,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
 
-                            </div>
-                            <div>
-                                <div className="item">
-                                    <div>
-                                        <img src={img5} alt="" />
-                                    </div>
-                                    <p>Dermatology</p>
-                                </div>
+  console.log(clinicsCatgoty);
 
-                            </div>
-                            <div>
-                                <div className="item">
-                                    <div>
-                                        <img src={img6} alt="" />
-                                    </div>
-                                    <p>Psychiatric</p>
-                                </div>
-
-                            </div>
-                        </Slider>
+  return (
+    <div className="FavContainer">
+      <div className="container">
+        <div className="mainFav">
+          <img className="back" src={back} alt="back" />
+          <h1>Customer Favorite Cuisines</h1>
+          <div className="slider-container">
+            <Slider {...settings}>
+              {clinicsCatgoty.map((e) => (
+                <Link to={`/ShowClinicsCategoryById/${e.id}`} key={e.id}>
+                  <div>
+                    <div className="item">
+                      <div>
+                        <img src={e.logo} className="w-100" alt="" />
+                      </div>
+                      <p>{e.name}</p>
                     </div>
-                </div>
-            </div>
+                  </div>
+                </Link>
+              ))}
+            </Slider>
+          </div>
         </div>
-    )
+      </div>
+    </div>
+  );
 }
 
-export default FavCuisinesMedical
+export default FavCuisinesMedical;

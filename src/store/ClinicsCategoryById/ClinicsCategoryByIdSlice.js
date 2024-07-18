@@ -4,26 +4,27 @@ import axios from "axios";
 const initialState = {
   error: null,
   loading: "pending",
-  allShowClincis: [],
+  ClinicsCategoryById: [],
 };
 
-const actAllClinicsDetails = createAsyncThunk(
-  "places/clinic/show/list",
-  async (_, { rejectWithValue }) => {
+const actClinicsCategoryById = createAsyncThunk(
+  "places/clinic/list/ ",
+  async (id, thunkAPI) => {
+    const { rejectWithValue, signal } = thunkAPI;
     try {
       const res = await axios.get(
-        `https://insta-order-site.web-allsafeeg.com/api/places/clinic/show/list`,
+        `https://insta-order-site.web-allsafeeg.com/api/places/clinic/list/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
             lang: localStorage.getItem("i18nextLng"),
           },
+          signal,
         }
       );
-      console.log(res.data.data, "show");
+
       return res.data.data;
     } catch (error) {
-      console.log(error, "error");
       return rejectWithValue(
         error.response ? error.response.data : error.message
       );
@@ -31,26 +32,25 @@ const actAllClinicsDetails = createAsyncThunk(
   }
 );
 
-const allClinicDetailsSlice = createSlice({
-  name: "allShowClincis",
+const ClinicsCategoryByIdSlice = createSlice({
+  name: "ClinicsCategoryById",
   initialState: initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(actAllClinicsDetails.pending, (state) => {
+    builder.addCase(actClinicsCategoryById.pending, (state) => {
       state.loading = "pending";
       state.error = null;
     });
-    builder.addCase(actAllClinicsDetails.fulfilled, (state, action) => {
+    builder.addCase(actClinicsCategoryById.fulfilled, (state, action) => {
       state.loading = "success";
-      state.allShowClincis = action.payload;
+      state.ClinicsCategoryById = action.payload;
     });
-    builder.addCase(actAllClinicsDetails.rejected, (state, action) => {
-      console.log(action, "action");
+    builder.addCase(actClinicsCategoryById.rejected, (state, action) => {
       state.loading = "failed";
       state.error = action.payload || action.error.message;
     });
   },
 });
 
-export default allClinicDetailsSlice.reducer;
-export { actAllClinicsDetails };
+export default ClinicsCategoryByIdSlice.reducer;
+export { actClinicsCategoryById };
