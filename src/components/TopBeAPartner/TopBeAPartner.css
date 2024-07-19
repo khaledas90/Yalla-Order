@@ -1,81 +1,84 @@
 */ .Home .content {
-  margin-top: 40px;
+    margin-top: 40px;
 }
 
 .Home .content .text h1 {
-  color: #fd7e7e;
-  font-weight: 500;
-  font-size: 52px;
-  line-height: 1;
-  font-family: "Cabin Sketch", sans-serif;
+    color: #fd7e7e;
+    font-weight: 500;
+    font-size: 52px;
+    line-height: 1;
+    font-family: "Cabin Sketch", sans-serif;
 }
 
-.Home .content .text h1 span {
-  color: #3a98ea;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+.Home .content .text h1 .dc {
+    color: #3a98ea;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+}
+
+.ar {
+    direction: rtl;
+    unicode-bidi: bidi-override;
 }
 
 .Home .content .text p {
-  color: #fefefe;
-  font-weight: 400;
-  margin-top: 20px;
-  font-size: 24px;
+    color: #fefefe;
+    font-weight: 400;
+    margin-top: 20px;
+    font-size: 24px;
 }
 
 .Home .img-home {
-  margin-top: 70px;
+    margin-top: 70px;
 }
 
 .Home .img-home img {
-  max-width: 100%;
+    max-width: 100%;
 }
 
 .Home .Commission .content {
-  margin-bottom: 80px;
-  border-radius: 20px;
+    margin-bottom: 80px;
+    border-radius: 20px;
 }
 
 .Home .Commission h4 {
-  font-size: 29px;
-  font-weight: 500;
+    font-size: 29px;
+    font-weight: 500;
 }
 
 .Home .Commission input {
-  margin-bottom: 12px;
+    margin-bottom: 12px;
 }
 
 .Home .Commission .Code_country {
-  border: 1px solid #7c7b7b;
-  padding: 17px;
-  border-radius: 50px;
-  margin-right: 10px;
-  margin-top: -17px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #7c7b7b;
+    border: 1px solid #7c7b7b;
+    padding: 17px;
+    border-radius: 50px;
+    margin-right: 10px;
+    margin-top: -17px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #7c7b7b;
 }
 
 .Home .Commission .btn-Commission {
-  padding: 10px 131px;
-  font-size: 16px;
-  border: none;
-  background-color: #fd7e7e;
-  color: #fefefe;
-  transition: all 0.4s;
-  font-weight: 600;
+    padding: 10px 131px;
+    font-size: 16px;
+    border: none;
+    background-color: #fd7e7e;
+    color: #fefefe;
+    transition: all 0.4s;
+    font-weight: 600;
 }
 
 .Home .Commission .btn-Commission:hover {
-  background-color: #3a98ea;
+    background-color: #3a98ea;
 }
 
 @media screen and (max-width: 991.2px) {
-  .Home .content .text {
-    text-align: center;
-  }
-  .Home .img-home {
-    display: none;
-  }
+    .Home .content .text {
+        text-align: center;
+    }
+    .Home .img-home {
+        display: none;
+    }
 }

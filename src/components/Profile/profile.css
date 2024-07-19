@@ -208,6 +208,10 @@
     background-color: #fefefe;
 }
 
+.profMenu li {
+    margin-left: -16px;
+}
+
 .profMenu::before {
     content: "";
     position: absolute;

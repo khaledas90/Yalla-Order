@@ -10,6 +10,7 @@ const initialState = {
     status: 'idle',
     error: null,
     token: read_cookie('token') || '',
+    tokenGoogle: read_cookie('tokenGoogle') || '',
     type: 'restaurant',
     typePage: 'restaurant',
 };
@@ -35,6 +36,16 @@ const userSlice = createSlice({
         },
         changeTypePage(state, action) {
             state.typePage = action.payload;
+        },
+        setUser(state, action) {
+            state.user = action.payload;
+            bake_cookie('user', action.payload);
+            localStorage.setItem('user', JSON.stringify(action.payload));
+        },
+        setTokenGoogle(state, action) {
+            state.tokenGoogle = action.payload;
+            bake_cookie('tokenGoogle', action.payload);
+            localStorage.setItem('tokenGoogle', action.payload);
         },
     },
     extraReducers: (builder) => {
@@ -80,10 +91,13 @@ const userSlice = createSlice({
                 state.status = 'succeeded';
                 state.user = [];
                 state.token = '';
+                state.tokenGoogle = '';
                 bake_cookie('user', []);
                 bake_cookie('token', '');
+                bake_cookie('tokenGoogle', '');
                 localStorage.removeItem('user');
                 localStorage.removeItem('token');
+                localStorage.removeItem('tokenGoogle');
                 apiAuthenticate.defaults.headers['Authorization'] = '';
             })
             .addCase(logoutUser.rejected, (state, action) => {
@@ -93,6 +107,6 @@ const userSlice = createSlice({
     },
 });
 
-export const { changeType, clearToken, setToken, changeTypePage } = userSlice.actions;
+export const { changeType, clearToken, setToken, changeTypePage, setUser, setTokenGoogle } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,72 +1,85 @@
 .Login .card {
-  border-radius: 25px;
-  margin-top: 125px;
+    border-radius: 25px;
+    margin-top: 125px;
 }
 
 .Login form h2 {
-  font-weight: 700;
-  font-size: 35px;
+    font-weight: 700;
+    font-size: 35px;
 }
 
 .Login form .forgetPass {
-  margin: 0 0 20px 0;
+    margin: 0 0 20px 0;
 }
 
 .Login form .forgetPass a {
-  text-decoration: none;
-  color: #737373;
+    text-decoration: none;
+    color: #737373;
 }
 
 .Login form .btnLogin {
-  padding: 14px 0;
-  font-size: 16px;
-  border: none;
-  background-color: #fd7e7e;
-  color: #fefefe;
-  transition: all 0.4s;
-  font-weight: 600;
-  border-radius: 50px;
+    padding: 14px 0;
+    font-size: 16px;
+    border: none;
+    background-color: #fd7e7e;
+    color: #fefefe;
+    transition: all 0.4s;
+    font-weight: 600;
+    border-radius: 50px;
 }
 
 .Login form .btnLogin:hover {
-  background-color: #3a98ea;
+    background-color: #3a98ea;
 }
 
 .Login .separator {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-  color: #8b8e98;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    color: #8b8e98;
 }
 
 .Login .separator .line {
-  display: block;
-  width: 100%;
-  height: 1px;
-  border: 0;
-  background-color: #3d3d3d;
+    display: block;
+    width: 100%;
+    height: 1px;
+    border: 0;
+    background-color: #3d3d3d;
 }
 
 .Login .social-icon {
-  font-size: 30px;
-  margin-right: 10px;
+    font-size: 30px;
+    margin-right: 10px;
 }
 
 .Login .social-icon2 {
-  color: #000;
+    color: #000;
 }
 
 .Login .SignUp {
-  margin: 25px 0;
+    margin: 25px 0;
 }
 
 .Login .SignUp span {
-  color: #868686;
-  font-size: 17px;
+    color: #868686;
+    font-size: 17px;
 }
 
 .Login .SignUp a {
-  text-decoration: none;
+    text-decoration: none;
+}
+
+.endEye {
+    right: 15px;
+}
+
+.startEye {
+    left: 15px;
+}
+
+.ar {
+    direction: rtl;
+    unicode-bidi: bidi-override;
 }

@@ -1,4 +1,9 @@
 .AboutUs .card {
-  border-radius: 25px;
-  margin-top: 125px;
+    border-radius: 25px;
+    margin-top: 125px;
+}
+
+.ar {
+    direction: rtl;
+    unicode-bidi: bidi-override;
 }

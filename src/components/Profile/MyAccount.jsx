@@ -38,7 +38,7 @@ export default function MyAccount() {
           phone: values.phone,
         });
         toast.success("Profile updated successfully!");
-        setIsUpdate(false);
+
       } catch (err) {
         toast.error("Error updating profile.");
       }
@@ -74,7 +74,7 @@ export default function MyAccount() {
   return (
     <>
       <Toaster />
-      <div className="Profile">
+      <div className="Profile" >
         <div className="Main_bg_profile">
           {typePage === "restaurant" ? (
             <NavRestaurants />
@@ -171,7 +171,7 @@ export default function MyAccount() {
                             <div className="form-group row mb-3">
                               <div className="col-lg-12 d-flex justify-content-center text-center">
                                 {isUpdate ? (
-                                  <button type="submit" className="btn btn-primary text-white btnAccount btnAccountSave">
+                                  <button type="submit" onClick={() => setIsUpdate(false)} className="btn btn-primary text-white btnAccount btnAccountSave">
                                     Update
                                   </button>
                                 ) : (

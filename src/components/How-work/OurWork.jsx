@@ -4,15 +4,16 @@ import OurWork_img1 from "../../assets/OurWork_part1.png";
 import OurWork_img2 from "../../assets/OurWork_part2.png";
 import OurWork_img3 from "../../assets/OurWork_part3.png";
 import OurWork_img4 from "../../assets/OurWork_part4.png";
-// import OurWork_img_bg from "../../assets/OurWork_bg.png";
+import { useTranslation } from "react-i18next";
 export default function OurWork() {
+  const { t } = useTranslation()
   return (
     <>
       <div className="OurWork">
         <div className="container">
           <h1 className="font-bold">
-            How We Will Work <span className="span-1">Together</span>{" "}
-            <span className="span-2">Side by Side</span>
+            {t('How We Will Work ')}<span className="span-1">{t("Together")}</span>{" "}
+            <span className="span-2">{t("Side by Side")}</span>
           </h1>
           <div className="row">
             <div className="col-md-6 px-4 my-4">
@@ -27,15 +28,14 @@ export default function OurWork() {
                     className="text-danger"
                     style={{ fontSize: "25px", fontFamily: "Roboto" }}
                   >
-                    Customer Orders
+                    {t("Customer Orders")}
                     <br />
                   </span>
                   <span
                     className="text-dark"
                     style={{ fontSize: "18px", fontFamily: "Roboto" }}
                   >
-                    The customer places an order or books a consultation through
-                    the app.
+                    {t('The customer places an order or books a consultation through  the app.')}
                   </span>
                 </h4>
               </div>
@@ -52,15 +52,14 @@ export default function OurWork() {
                     className="text-danger"
                     style={{ fontSize: "25px", fontFamily: "Roboto" }}
                   >
-                    You Prepare
+                    {t('You Prepare')}
                     <br />
                   </span>
                   <span
                     className="text-dark"
                     style={{ fontSize: "18px", fontFamily: "Roboto" }}
                   >
-                    You'll receive a notification to start preparing your order
-                    or consultation.
+                    {t('You will receive a notification to start preparing your order or consultation.')}
                   </span>
                 </h4>
               </div>
@@ -77,16 +76,15 @@ export default function OurWork() {
                     className="text-primary"
                     style={{ fontSize: "25px", fontFamily: "Roboto" }}
                   >
-                    We Deliver
+                    {t('We Deliver')}
                     <br />
                   </span>
                   <span
                     className="text-dark"
                     style={{ fontSize: "18px", fontFamily: "Roboto" }}
                   >
-                    A driver will soon come to pick up the order and deliver it
-                    to the customer &<br />
-                    arrive on time for your medical consultation.
+                    <span>{t('A driver will soon come to pick up the order and deliver it to the customer &')}</span><br />
+                    {t('arrive on time for your medical consultation.')}
                   </span>
                 </h4>
               </div>
@@ -103,16 +101,14 @@ export default function OurWork() {
                     className="text-primary"
                     style={{ fontSize: "25px", fontFamily: "Roboto" }}
                   >
-                    Watch Your Business Grow
+                    {t('Watch Your Business Grow')}
                     <br />
                   </span>
                   <span
                     className="text-dark"
                     style={{ fontSize: "18px", fontFamily: "Roboto" }}
                   >
-                    Track your sales, monitor orders, clinic bookings,
-                    schedules, invest in marketing and more in your restaurant
-                    and personal clinic portal.
+                    {t('Track your sales, monitor orders, clinic bookings, schedules, invest in marketing and more in your restaurant  and personal clinic portal.')}
                   </span>
                 </h4>
               </div>
