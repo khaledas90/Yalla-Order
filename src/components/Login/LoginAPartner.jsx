@@ -7,21 +7,14 @@ import {
   faFacebook,
   faGoogle,
 } from "@fortawesome/free-brands-svg-icons";
-import Header from "../header/Header";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
-import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import NavRestaurants from "../NavRestaurants/NavRestaurants";
 
 export default function LoginAPartner() {
   return (
     <>
       <div className="Login LoginAPartner Main_bg">
-        <Header
-          MainPage={"Restaurants" ? "Restaurants" : "CLinics"}
-          IconOne={<FavoriteBorderOutlinedIcon />}
-          IconTwo={<LanguageOutlinedIcon />}
-          IconThree={<ShoppingBagOutlinedIcon />}
-        />
+
+        <NavRestaurants />
 
         <div className="container p-5">
           <div className="row justify-content-center">

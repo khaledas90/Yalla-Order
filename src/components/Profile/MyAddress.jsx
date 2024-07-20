@@ -1,26 +1,24 @@
 import React, { useEffect, useState } from "react";
-
-import { Button, Card } from "react-bootstrap";
-
-import "./profile.css";
-import Header from "../header/Header";
+import { Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-
 import {
     faBagShopping,
+    faCalendar,
     faMapLocation,
     faPen,
     faPenToSquare,
     faRightFromBracket,
     faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import NavRestaurants from "../NavRestaurants/NavRestaurants";
+import { logoutUser } from "../../store/thunk/logoutThunk";
 import Modal from "../modal/Modal";
-import { Link } from "react-router-dom";
-import imgEmptyAddress from "../../assets/EmptyAddress.png";
 import GoogleMapComponent from "./GoogleMapComponent";
+import imgEmptyAddress from "../../assets/EmptyAddress.png";
+import "./profile.css";
+import NavClinics from "../NavClinics/NavClinics";
 
 const Addresses = [
     {
@@ -29,69 +27,96 @@ const Addresses = [
             "Alexandria, Smouha, Smouha Circle, Zohour Bargout Building, floor 4, Apartment 2",
     },
     {
-        id: 1,
+        id: 2,
         address:
             "Alexandria, Smouha, Smouha Circle, Zohour Bargout Building, floor 4, Apartment 2",
     },
 ];
+
 export default function MyAddress() {
+    const { typePage } = useSelector((state) => state.User);
     const [isAddresses, SetIsAddresses] = useState(Addresses.length > 0);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         SetIsAddresses(Addresses.length > 0);
-    }, [isAddresses]);
+    }, [Addresses]);
+
+    const handleLogOut = async () => {
+        const resultAction = await dispatch(logoutUser());
+        if (logoutUser.fulfilled.match(resultAction)) {
+            navigate("/login");
+        }
+    };
+
     return (
         <>
-            <div className="Profile Main_bg_profile">
-                <Header MainPage={"Restaurants" ? "restaurants" : "CLinics"} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
-
-
+            <div className="Profile">
+                <div className="Main_bg_profile">
+                    {typePage === "restaurant" ? (
+                        <NavRestaurants />
+                    ) : (
+                        <NavClinics />
+                    )}
+                </div>
                 <div className="MyAccount">
-                    <h1> My Profile </h1>{" "}
+                    <h1>My Profile</h1>
                     <div className="container">
                         <div className="row d-flex justify-content-center">
                             <div className="col-lg-10">
                                 <div className="card">
                                     <div className="card-body p-0">
                                         <div className="row">
-                                            <div className="col-lg-4 ">
+                                            <div className="col-lg-4">
                                                 <div className="List_group">
                                                     <ul>
-                                                        <li> My Account </li>{" "}
+                                                        <li>My Account</li>
                                                         <li>
                                                             <FontAwesomeIcon
                                                                 icon={faPenToSquare}
-                                                                className=" profile-icon"
-                                                            />
-                                                            <Link to="/MyAccount"> Edit Profile </Link>{" "}
-                                                        </li>{" "}
-                                                        <li>
-                                                            <FontAwesomeIcon
-                                                                icon={faBagShopping}
                                                                 className="profile-icon"
                                                             />
-                                                            <Link to="/MyOrder"> My Order </Link>{" "}
+                                                            <Link to="/MyAccount"> Edit Profile</Link>
                                                         </li>
+                                                        {typePage === "restaurant" ? (
+                                                            <li>
+                                                                <FontAwesomeIcon
+                                                                    icon={faBagShopping}
+                                                                    className="profile-icon"
+                                                                />
+                                                                <Link to="/MyOrder"> My Order</Link>
+                                                            </li>
+                                                        ) : (
+                                                            <li>
+                                                                <FontAwesomeIcon
+                                                                    icon={faCalendar}
+                                                                    className="profile-icon"
+                                                                />
+                                                                <Link to="/MyReservations">
+                                                                    My Reservations
+                                                                </Link>
+                                                            </li>
+                                                        )}
                                                         <li className="active">
                                                             <FontAwesomeIcon
                                                                 icon={faMapLocation}
                                                                 className="profile-icon"
                                                             />
-                                                            <Link to="/MyAddress"> Saved Address </Link>{" "}
-                                                        </li>{" "}
-                                                        <li>
+                                                            <Link to="/MyAddress"> Saved Address</Link>
+                                                        </li>
+                                                        <li onClick={handleLogOut}>
                                                             <FontAwesomeIcon
                                                                 icon={faRightFromBracket}
-                                                                className=" profile-icon"
+                                                                className="profile-icon"
                                                             />
-                                                            <Link> Log Out </Link>{" "}
-                                                        </li>{" "}
-                                                    </ul>{" "}
-                                                </div>{" "}
-                                            </div>{" "}
-                                            <div className="col-lg-8 ">
+                                                            <Link to="#"> Log Out</Link>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div className="col-lg-8">
                                                 <div className="content">
-                                                    {" "}
                                                     {isAddresses ? (
                                                         Addresses.map((Address) => (
                                                             <Card
@@ -106,23 +131,23 @@ export default function MyAddress() {
                                                                                     icon={faPen}
                                                                                     className="address-icon"
                                                                                 />
-                                                                                Edit{" "}
-                                                                            </div>{" "}
+                                                                                Edit
+                                                                            </div>
                                                                             <div className="iconGorp">
                                                                                 <FontAwesomeIcon
                                                                                     icon={faTrash}
                                                                                     className="address-icon"
                                                                                 />
-                                                                                Delete{" "}
-                                                                            </div>{" "}
+                                                                                Delete
+                                                                            </div>
                                                                         </div>
-                                                                    </Card.Title>{" "}
+                                                                    </Card.Title>
                                                                     <Card.Text>
                                                                         <div className="d-flex justify-content-between">
-                                                                            <p> {Address.address} </p>{" "}
-                                                                        </div>{" "}
-                                                                    </Card.Text>{" "}
-                                                                </Card.Body>{" "}
+                                                                            <p>{Address.address}</p>
+                                                                        </div>
+                                                                    </Card.Text>
+                                                                </Card.Body>
                                                             </Card>
                                                         ))
                                                     ) : (
@@ -132,34 +157,32 @@ export default function MyAddress() {
                                                                     src={imgEmptyAddress}
                                                                     alt="Address is empty"
                                                                 />
-                                                            </div>{" "}
-                                                            <h6> There are no saved addresses to display </h6>{" "}
+                                                            </div>
+                                                            <h6>There are no saved addresses to display</h6>
                                                         </div>
-                                                    )}{" "}
-                                                    <div className="text-center mt-5 mb-2  ">
-                                                        
-                                                            <Link exact="true" to="">
-                                                            <Modal>
+                                                    )}
+                                                    <div className="text-center mt-5 mb-2">
+                                                        <Modal>
                                                             <Modal.Open opens="add-address">
-                                                              <button className="btnAccounts">Add Address</button>
+                                                                <button className="btnAccounts">
+                                                                    Add Address
+                                                                </button>
                                                             </Modal.Open>
                                                             <Modal.Window name="add-address">
-                                                                <GoogleMapComponent apiKey = "AIzaSyBCUdcDFvWmHDl94vcWToYa5vD3ukF8rG8"/>
+                                                                <GoogleMapComponent apiKey="YOUR_GOOGLE_MAP_API_KEY" />
                                                             </Modal.Window>
-                                                          </Modal>
-                                                            </Link>{" "}
-                                                     
-                                                    </div>{" "}
-                                                </div>{" "}
-                                            </div>{" "}
-                                        </div>{" "}
-                                    </div>{" "}
-                                </div>{" "}
-                            </div>{" "}
-                        </div>{" "}
-                    </div>{" "}
-                </div>{" "}
-            </div>{" "}
+                                                        </Modal>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     );
 }

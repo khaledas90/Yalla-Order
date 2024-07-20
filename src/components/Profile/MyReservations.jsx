@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 
 import { Button, Card } from "react-bootstrap";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 
 import "./profile.css";
-import Header from "../header/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBagShopping,
+  faCalendar,
   faMapLocation,
   faPenToSquare,
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import imgEmpty from "../../assets/shopping-bag.png";
+import { useDispatch, useSelector } from "react-redux";
+import NavRestaurants from "../NavRestaurants/NavRestaurants";
+import { logoutUser } from "../../store/thunk/logoutThunk";
+import NavClinics from "../NavClinics/NavClinics";
 const orders = [
   {
     id: 1,
@@ -29,18 +30,30 @@ const orders = [
     totalAmount: "106.99 EGP",
   },
 ];
-export default function MyOrder() {
-  const [isOrders, SetIsOrders] = useState(orders.length > 0);
+export default function MyReservations() {
+  const { typePage } = useSelector((state) => state.User);
 
+  const [isOrders, SetIsOrders] = useState(orders.length > 0);
+  const { token } = useSelector((state) => state.User);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
   useEffect(() => {
     SetIsOrders(orders.length > 0);
+    setIsLoggedIn(!!token);
   }, [isOrders]);
+  const handleLogOut = async () => {
+    const resultAction = await dispatch(logoutUser());
+    if (logoutUser.fulfilled.match(resultAction)) {
+      navigate("/login");
+    }
+  };
   return (
     <>
-      <div className="Profile Main_bg_profile">
-        <Header MainPage={"Restaurants" ? "restaurants" : "CLinics"} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
-
-
+      <div className="Profile ">
+        <div className="Main_bg_profile">
+          {typePage === "restaurant" ? <NavRestaurants /> : <NavClinics />}
+        </div>
 
         <div className="MyAccount">
           <h1>My Profile</h1>
@@ -63,10 +76,10 @@ export default function MyOrder() {
                             </li>
                             <li className="active">
                               <FontAwesomeIcon
-                                icon={faBagShopping}
+                                icon={faCalendar}
                                 className="profile-icon"
                               />
-                              <Link to="/MyOrder"> My Order</Link>
+                              <Link to="/MyReservations">My reservations</Link>
                             </li>
 
                             <li>
@@ -76,7 +89,7 @@ export default function MyOrder() {
                               />
                               <Link to="/MyAddress"> Saved Address</Link>
                             </li>
-                            <li>
+                            <li onClick={handleLogOut}>
                               <FontAwesomeIcon
                                 icon={faRightFromBracket}
                                 className=" profile-icon"

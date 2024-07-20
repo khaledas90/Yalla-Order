@@ -1,13 +1,8 @@
-
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Helmet from "react-helmet";
-import Header from "../components/header/Header";
 import RestaurantMenu from "../components/RestaurantMenu/RestaurantMenu";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import NavRestaurants from "../components/NavRestaurants/NavRestaurants";
-
 function RestaurantsMenu() {
     return (
         <div className="Restaurants">
@@ -16,7 +11,7 @@ function RestaurantsMenu() {
                 <meta name="description" content="Discover the best restaurants around you." />
             </Helmet>
             <div className="Main_bg">
-                <NavRestaurants/>
+                <NavRestaurants />
             </div>
             <RestaurantMenu />
         </div>

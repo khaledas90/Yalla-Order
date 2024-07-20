@@ -2,17 +2,13 @@ import React from "react";
 import "./successPass.css";
 import { Link } from "react-router-dom";
 import imgSuccess from "../../assets/success.png";
-import Header from "../header/Header";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import NavRestaurants from "../NavRestaurants/NavRestaurants";
 
 export default function SuccessPass() {
   return (
     <>
       <div className="SuccessPass Main_bg">
-        <Header MainPage={"Restaurants" ? "Restaurants" : "CLinics"} IconOne={< FavoriteBorderOutlinedIcon />} IconTwo={<LanguageOutlinedIcon />} IconThree={<ShoppingBagOutlinedIcon />} />
-
+        <NavRestaurants />
         <div className="container p-5">
           <div className="row justify-content-center">
             <div className=" col-lg-7 ">

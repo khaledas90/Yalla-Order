@@ -4,7 +4,7 @@ import axios from "axios";
 const initialState = {
   error: null,
   loading: "pending",
-  clinicsCatgoty: [],
+  ClinicsCategory: [],
 };
 
 const actClinicsCatgoty = createAsyncThunk(
@@ -21,7 +21,7 @@ const actClinicsCatgoty = createAsyncThunk(
           },
         }
       ); // Replace with your actual API endpoint
-
+      console.log(res);
       return res.data.data;
     } catch (error) {
       return rejectWithValue(
@@ -31,12 +31,12 @@ const actClinicsCatgoty = createAsyncThunk(
   }
 );
 
-const clinicsCatgotySclice = createSlice({
-  name: "clinicsCatgoty",
+const ClinicsCategorySlice = createSlice({
+  name: "ClinicsCategory",
   initialState,
   reducers: {
     categoriesRecordsCleanUp: (state) => {
-      state.clinicsCatgoty = [];
+      state.ClinicsCategory = [];
     },
   },
   extraReducers: (builder) => {
@@ -47,7 +47,7 @@ const clinicsCatgotySclice = createSlice({
     builder.addCase(actClinicsCatgoty.fulfilled, (state, action) => {
       state.loading = "success";
 
-      state.clinicsCatgoty = action.payload;
+      state.ClinicsCategory = action.payload;
     });
     builder.addCase(actClinicsCatgoty.rejected, (state, action) => {
       state.loading = "failed";
@@ -56,6 +56,6 @@ const clinicsCatgotySclice = createSlice({
   },
 });
 
-export default clinicsCatgotySclice.reducer;
+export default ClinicsCategorySlice.reducer;
 export { actClinicsCatgoty };
-export const { categoriesRecordsCleanUp } = clinicsCatgotySclice.actions;
+export const { categoriesRecordsCleanUp } = ClinicsCategorySlice.actions;

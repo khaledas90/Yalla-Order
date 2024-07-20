@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 function FavCuisinesMedical() {
   const dispatch = useDispatch();
-  const { clinicsCatgoty } = useSelector((state) => state.clinicsCatgoty);
+  const { ClinicsCategory } = useSelector((state) => state.ClinicsCategory);
 
   useEffect(() => {
     dispatch(actClinicsCatgoty());
@@ -51,7 +51,7 @@ function FavCuisinesMedical() {
     ],
   };
 
-  console.log(clinicsCatgoty);
+  console.log(ClinicsCategory, "clinc");
 
   return (
     <div className="FavContainer">
@@ -61,7 +61,7 @@ function FavCuisinesMedical() {
           <h1>Customer Favorite Cuisines</h1>
           <div className="slider-container">
             <Slider {...settings}>
-              {clinicsCatgoty.map((e) => (
+              {ClinicsCategory?.map((e) => (
                 <Link to={`/ShowClinicsCategoryById/${e.id}`} key={e.id}>
                   <div>
                     <div className="item">

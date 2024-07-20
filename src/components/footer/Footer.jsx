@@ -3,10 +3,10 @@ import facebook from "../../assets/faceBook.svg";
 import instagram from "../../assets/instagram.svg";
 import appStore from "../../assets/logo appstore.png";
 import googlePlay from "../../assets/logo googlestore.png";
-import logo from "../../assets/logo.png";
-import logoImg from "../../assets/Insta Order.svg"
+import logoImg from "../../assets/logo.png";
 
 import "./footer.css";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -20,7 +20,7 @@ const Footer = () => {
           </div>
           <div className="footer-icon d-flex flex-column gap-3 gap-lg-5 mt-3 mt-lg-5">
             <div className="contact text-white d-flex gap-3 align-items-center justify-content-center justify-content-lg-start ms-0 ms-lg-3">
-              <p className="mb-0 ps-0">Contact us</p>
+              <p className="mb-0 ps-0"><Link to={"/ContactUs"}>Contact us</Link></p>
               <p className="mb-0 ps-0">Follow Us</p>
               <img src={facebook} alt="facebook" />
               <img src={instagram} alt="instagram" />

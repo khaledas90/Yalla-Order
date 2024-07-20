@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 import "./Explore.css";
 import { useDispatch } from "react-redux";
-import { changeType } from "../../store/UserSlice";
+import { changeTypePage } from "../../store/SliceUser";
 function Explore() {
     const dispatch = useDispatch()
 
     const handleClickExploreClinic = () => {
         window.scrollTo(0, 0);
-        dispatch(changeType('clinic'))
+        dispatch(changeTypePage('clinic'))
     }
     const handleClickExploreMedical = () => {
         window.scrollTo(0, 0);
-        dispatch(changeType('restaurant'))
+        dispatch(changeTypePage('restaurant'))
     }
 
 

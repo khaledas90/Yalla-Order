@@ -2,19 +2,19 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  ClinicsCategoryById: [],
+  clinicsDetails: [],
   error: null,
   loading: "idle",
 };
 
-export const actClinicsCategoryById = createAsyncThunk(
-  "places/clinic/list",
+export const actShowClinicsDetails = createAsyncThunk(
+  "places/clinic/show/details",
   async (id, thunkAPI) => {
     const { rejectWithValue, signal } = thunkAPI;
     try {
       console.log(id);
       const res = await axios.get(
-        `https://insta-order-site.web-allsafeeg.com/api/places/clinic/list/${id}`,
+        `https://insta-order-site.web-allsafeeg.com/api/places/clinic/show/details/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -34,8 +34,8 @@ export const actClinicsCategoryById = createAsyncThunk(
   }
 );
 
-const ClinicsCategoryByIdSlice = createSlice({
-  name: "ClinicsCategoryById",
+const showClinicsDetailsSlice = createSlice({
+  name: "clinicsDetails",
   initialState,
   reducers: {
     categoriesRecordsCleanUp: (state) => {
@@ -44,20 +44,20 @@ const ClinicsCategoryByIdSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(actClinicsCategoryById.pending, (state) => {
+      .addCase(actShowClinicsDetails.pending, (state) => {
         state.loading = "pending";
         state.error = null;
       })
-      .addCase(actClinicsCategoryById.fulfilled, (state, action) => {
+      .addCase(actShowClinicsDetails.fulfilled, (state, action) => {
         state.loading = "success";
-        state.ClinicsCategoryById = action.payload;
+        state.clinicsDetails = action.payload;
       })
-      .addCase(actClinicsCategoryById.rejected, (state, action) => {
+      .addCase(actShowClinicsDetails.rejected, (state, action) => {
         state.loading = "failed";
         state.error = action.payload || action.error.message;
       });
   },
 });
 
-export default ClinicsCategoryByIdSlice.reducer;
-export const { categoriesRecordsCleanUp } = ClinicsCategoryByIdSlice.actions;
+export default showClinicsDetailsSlice.reducer;
+export const { categoriesRecordsCleanUp } = showClinicsDetailsSlice.actions;

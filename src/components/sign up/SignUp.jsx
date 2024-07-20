@@ -1,32 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   faApple,
   faFacebook,
   faGoogle,
 } from "@fortawesome/free-brands-svg-icons";
-import Header from "../header/Header";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
-import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import "./signUp.css";
-import { registerUser } from "../../store/UserSlice.js";
-import { useNavigate } from "react-router-dom";
+import { registerUser } from "../../store/thunk/registerThunk";
+import NavRestaurants from "../NavRestaurants/NavRestaurants";
 
 const SignUp = () => {
-  // استخدام useDispatch لإرسال الإجراءات إلى مخزن Redux
   const dispatch = useDispatch();
-  // استخدام useNavigate للتنقل بين الصفحات
   const navigate = useNavigate();
-  // استخدام useSelector للوصول إلى الحالة الحالية من مخزن Redux
   const { status, error } = useSelector((state) => state.User);
-  console.log(status, error, "store");
+  const [showPassword, setShowPassword] = useState(false);
 
-  // إعداد formik لإدارة حالة النموذج والتحقق من صحة البيانات
   const formik = useFormik({
     initialValues: {
       Name: "",
@@ -35,31 +28,22 @@ const SignUp = () => {
       Password: "",
     },
     validationSchema: Yup.object({
-      Name: Yup.string().required("Name is required"),
-      Email: Yup.string()
-        .email("Invalid email address")
-        .required("Email is required"),
-      Phone: Yup.string().required("Phone is required"),
-      Password: Yup.string().required("Password is required"),
+      Name: Yup.string().required('Name is required'),
+      Email: Yup.string().email('Invalid email address').required('Email is required'),
+      Phone: Yup.string().required('Phone is required'),
+      Password: Yup.string().required('Password is required'),
     }),
     onSubmit: async (values) => {
-      // تخزين رمز مميز في التخزين المحلي
-      localStorage.setItem("token", "token");
-      // إرسال إجراء تسجيل المستخدم إلى مخزن Redux
+      localStorage.setItem('token', 'token');
       dispatch(registerUser(values));
-      // التنقل إلى صفحة تسجيل الدخول
-      navigate("/login");
+      navigate('/login')
     },
   });
 
   return (
     <div className="SignUp Main_bg">
-      <Header
-        MainPage={"Restaurants"}
-        IconOne={<FavoriteBorderOutlinedIcon />}
-        IconTwo={<LanguageOutlinedIcon />}
-        IconThree={<ShoppingBagOutlinedIcon />}
-      />
+
+      <NavRestaurants />
       <div className="container p-5">
         <div className="row justify-content-center">
           <div className="col-lg-7">
@@ -71,10 +55,10 @@ const SignUp = () => {
                     type="text"
                     placeholder="Name"
                     className="form-control rounded-pill px-4 py-3 border-secondary"
-                    {...formik.getFieldProps("Name")}
+                    {...formik.getFieldProps('Name')}
                   />
                   {formik.touched.Name && formik.errors.Name ? (
-                    <span className="error">{formik.errors.Name}</span>
+                    <span className="error  text-danger">{formik.errors.Name}</span>
                   ) : null}
                 </div>
                 <div className="form-group my-4">
@@ -82,10 +66,10 @@ const SignUp = () => {
                     type="email"
                     placeholder="Email"
                     className="form-control rounded-pill px-4 py-3 border-secondary"
-                    {...formik.getFieldProps("Email")}
+                    {...formik.getFieldProps('Email')}
                   />
                   {formik.touched.Email && formik.errors.Email ? (
-                    <span className="error">{formik.errors.Email}</span>
+                    <span className="error  text-danger">{formik.errors.Email}</span>
                   ) : null}
                 </div>
                 <div className="form-group my-4">
@@ -93,21 +77,30 @@ const SignUp = () => {
                     type="text"
                     placeholder="Phone"
                     className="form-control rounded-pill px-4 py-3 border-secondary"
-                    {...formik.getFieldProps("Phone")}
+                    {...formik.getFieldProps('Phone')}
                   />
                   {formik.touched.Phone && formik.errors.Phone ? (
-                    <span className="error">{formik.errors.Phone}</span>
+                    <span className="error  text-danger">{formik.errors.Phone}</span>
                   ) : null}
                 </div>
-                <div className="form-group my-2">
+                <div className="form-group my-2 position-relative">
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     placeholder="Password"
                     className="form-control rounded-pill px-4 py-3 border-secondary"
-                    {...formik.getFieldProps("Password")}
+                    {...formik.getFieldProps('Password')}
                   />
+                  <span
+                    className="position-absolute top-50 end-0 translate-middle-y pe-4"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                  </span>
+                </div>
+                <div className="">
                   {formik.touched.Password && formik.errors.Password ? (
-                    <span className="error">{formik.errors.Password}</span>
+                    <span className="error text-danger">{formik.errors.Password}</span>
                   ) : null}
                 </div>
                 <div className="d-grid gap-2 mt-4">
@@ -151,8 +144,8 @@ const SignUp = () => {
                   </span>
                 </div>
               </form>
-              {status === "loading" && <p>Loading...</p>}
-              {status === "failed" && <p>Error: {error}</p>}
+              {status === 'loading' && <p>Loading...</p>}
+              {status === 'failed' && <p>Error: {error}</p>}
             </div>
           </div>
         </div>

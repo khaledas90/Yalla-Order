@@ -9,12 +9,14 @@ import { Link, NavLink } from "react-router-dom";
 import FavRestaurant from "../favorite-restaurants/FavRestaurant";
 import Bag from "../bag/Bag";
 import LanguageMenu from "../LanguageSwitch/LanguageMenu";
-import ProfileMenu from "../ProfileResturant/ProfileMenu";
-// import { useOrders } from '../../context/OrderProvider';
+import ProfileMenu from "../Profile/ProfileMenu";
 import { fetchFavoritesList } from "../../services/apiRestaurant";
+
+
 function NavRestaurants() {
+
+  const token = localStorage.getItem("token");
   const [menuOpen, setMenuOpen] = useState(false);
-  // const {getCount} = useOrders();
   const [dropdownOpen, setDropdownOpen] = useState({
     favorite: false,
     bag: false,
@@ -64,63 +66,97 @@ function NavRestaurants() {
           <img src={logoImg} alt="insta order" />
         </Link>
       </div>
-      <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
-        <li>
-          <NavLink to="/HomeRestaurants">Home</NavLink>
-        </li>
-        <li>
-          <NavLink to="/restaurants">Restaurants</NavLink>
-        </li>
-        <li>
-          <NavLink to="/BecomeAPartner">Become a Partner</NavLink>
-        </li>
-        <li>
-          <NavLink to="/trackOrders">Track Orders</NavLink>
-        </li>
-        <li>
-          <NavLink to="/AboutUs">About Us</NavLink>
-        </li>
-      </ul>
+      {token ? (
+        <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
+          <li>
+            <NavLink to="/HomeRestaurants">Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="/restaurants">Restaurants</NavLink>
+          </li>
+          <li>
+            <NavLink to="/BecomeAPartner">Become a Partner</NavLink>
+          </li>
+          <li>
+            <NavLink to="/trackOrders">Track Orders</NavLink>
+          </li>
+          <li>
+            <NavLink to="/AboutUs">About Us</NavLink>
+          </li>
+        </ul>
+      ) : null}
+
       <div className="icons">
-        {["favorite", "bag", "language", "profile"].map((icon) => (
-          <div className="icon" key={icon} onClick={() => toggleDropdown(icon)}>
-            {icon === "favorite" && (
-              <div className="iconContainer" onClick={handleFetchFavorites}>
-                <FavoriteBorderOutlinedIcon />
-                {favCount !== 0 && <span className="Count">{favCount}</span>}
-              </div>
-            )}
-            {icon === "bag" && (
-              <div className="iconContainer">
-                <ShoppingBagOutlinedIcon />{" "}
-                {bagCount !== 0 && <span className="Count">{bagCount}</span>}
-              </div>
-            )}
-            {icon === "language" && <LanguageOutlinedIcon />}
-            {icon === "profile" && <AccountCircleOutlinedIcon />}
-            <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
+        {token ? (
+          ["favorite", "bag", "language", "profile"].map((icon) => (
+            <div className="icon" key={icon} onClick={() => toggleDropdown(icon)}>
               {icon === "favorite" && (
-                <FavRestaurant
-                  favorites={favorites}
-                  loadingFavorites={loadingFavorites}
-                  favoritesError={favoritesError}
-                />
+                <div className="iconContainer" onClick={handleFetchFavorites}>
+                  <FavoriteBorderOutlinedIcon />
+                  {favCount !== 0 && <span className="Count">{favCount}</span>}
+                </div>
               )}
               {icon === "bag" && (
-                <Bag
-                  bagItems={bagItems}
-                  setBagItems={setBagItems}
-                  loadingBagItems={loadingBagItems}
-                  setLoadingBagItems={setLoadingBagItems}
-                  bagItemsError={bagItemsError}
-                  setBagItemsError={setBagItemsError}
-                />
+                <div className="iconContainer">
+                  <ShoppingBagOutlinedIcon />
+                  {bagCount !== 0 && <span className="Count">{bagCount}</span>}
+                </div>
               )}
-              {icon === "language" && <LanguageMenu />}
-              {icon === "profile" && <ProfileMenu />}
+              {icon === "language" && <LanguageOutlinedIcon />}
+              {icon === "profile" && <AccountCircleOutlinedIcon />}
+              <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
+                {icon === "favorite" && (
+                  <FavRestaurant
+                    favorites={favorites}
+                    loadingFavorites={loadingFavorites}
+                    favoritesError={favoritesError}
+                  />
+                )}
+                {icon === "bag" && (
+                  <Bag
+                    bagItems={bagItems}
+                    setBagItems={setBagItems}
+                    loadingBagItems={loadingBagItems}
+                    setLoadingBagItems={setLoadingBagItems}
+                    bagItemsError={bagItemsError}
+                    setBagItemsError={setBagItemsError}
+                  />
+                )}
+                {icon === "language" && <LanguageMenu />}
+                {icon === "profile" && <ProfileMenu />}
+              </div>
             </div>
+          ))
+        ) : (
+          ["favorite", "language"].map((icon) => (
+            <div className="icon" key={icon} onClick={() => toggleDropdown(icon)}>
+              {icon === "favorite" && (
+                <div className="iconContainer" onClick={handleFetchFavorites}>
+                  <FavoriteBorderOutlinedIcon />
+                  {favCount !== 0 && <span className="Count">{favCount}</span>}
+                </div>
+              )}
+              {icon === "language" && <LanguageOutlinedIcon />}
+              <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
+                {icon === "favorite" && (
+                  <FavRestaurant
+                    favorites={favorites}
+                    loadingFavorites={loadingFavorites}
+                    favoritesError={favoritesError}
+                  />
+                )}
+                {icon === "language" && <LanguageMenu />}
+              </div>
+            </div>
+          ))
+        )}
+        {!token && (
+          <div className="icon">
+            <Link to="/login">
+              <button className="loginBtn">Login</button>
+            </Link>
           </div>
-        ))}
+        )}
       </div>
       <div className="menu-icon" onClick={toggleMenu}>
         {menuOpen ? "✖" : "☰"}

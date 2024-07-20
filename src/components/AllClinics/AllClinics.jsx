@@ -6,7 +6,7 @@ import { actClinicsCatgoty } from "../../store/ClinicsCatgory/ClinicsCatgorySlic
 
 function AllClinics() {
   const dispatch = useDispatch();
-  const { clinicsCatgoty } = useSelector((state) => state.clinicsCatgoty);
+  const { ClinicsCategory } = useSelector((state) => state.ClinicsCategory);
 
   useEffect(() => {
     dispatch(actClinicsCatgoty());
@@ -22,7 +22,7 @@ function AllClinics() {
       <div className="ClinicList">
         <div className="container">
           <div className="row">
-            {clinicsCatgoty.map((e) => (
+            {ClinicsCategory?.map((e) => (
               <div key={e.id} className="col-12 col-md-6 col-lg-3 mb-5">
                 <div className="Clinic">
                   <Link to={`/ShowClinicsCategoryById/${e.id}`}>

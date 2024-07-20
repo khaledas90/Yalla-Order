@@ -2,7 +2,10 @@ import React from "react";
 import "./TopBeAPartner.css";
 import ImgHome from "../../assets/img-home.png";
 import Spinner from "../loader/Spinner";
+import { useTranslation } from "react-i18next";
+
 export default function TopBeAPartner() {
+    const { t } = useTranslation();
     return (
         <>
             <div className="Home py-5">

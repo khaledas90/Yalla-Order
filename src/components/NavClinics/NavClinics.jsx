@@ -1,0 +1,158 @@
+import React, { useState } from "react";
+import "./NavClinics.css";
+import logoImg from "../../assets/Insta Order.svg";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
+import { Link, NavLink } from "react-router-dom";
+import FavRestaurant from "../favorite-restaurants/FavRestaurant";
+import LanguageMenu from "../LanguageSwitch/LanguageMenu";
+import ProfileMenu from "../Profile/ProfileMenu";
+import { fetchFavoritesList } from "../../services/apiRestaurant";
+
+function NavClinics() {
+  const token = localStorage.getItem("token");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState({
+    favorite: false,
+    calendar: false,
+    language: false,
+    profile: false,
+  });
+  const [loadingFavorites, setLoadingFavorites] = useState(false);
+  const [favoritesError, setFavoritesError] = useState(null);
+  const [favorites, setFavorites] = useState([]);
+
+  const handleFetchFavorites = async () => {
+    try {
+      setLoadingFavorites(true);
+      setFavoritesError(null);
+
+      const data = await fetchFavoritesList();
+
+      setFavorites(data.data[0].items);
+      console.log("Favorites list:", data.data[0].items);
+    } catch (error) {
+      console.error("Error fetching favorites list:", error);
+      setFavoritesError("Failed to fetch favorites list");
+    } finally {
+      setLoadingFavorites(false);
+    }
+  };
+
+  const favCount = favorites.length;
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  const toggleDropdown = (dropdown) => {
+    setDropdownOpen({
+      ...dropdownOpen,
+      [dropdown]: !dropdownOpen[dropdown],
+    });
+  };
+
+  return (
+    <div className="navBar">
+      <div className="logo">
+        <Link to="/">
+          <img src={logoImg} alt="insta order" />
+        </Link>
+      </div>
+      {token ? (
+        <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
+          <li>
+            <NavLink to="/HomeMedical">Home</NavLink>
+          </li>
+          <li>
+            <NavLink to="/CLinics">Clinics</NavLink>
+          </li>
+          <li>
+            <NavLink to="/BecomeAPartner">Become a Partner</NavLink>
+          </li>
+          <li>
+            <NavLink to="/AboutUs">About Us</NavLink>
+          </li>
+        </ul>
+      ) : null}
+
+      <div className="icons">
+        {token
+          ? ["favorite", "calendar", "language", "profile"].map((icon) => (
+              <div
+                className="icon"
+                key={icon}
+                onClick={() => toggleDropdown(icon)}
+              >
+                {icon === "favorite" && (
+                  <div className="iconContainer" onClick={handleFetchFavorites}>
+                    <FavoriteBorderOutlinedIcon />
+                    {favCount !== 0 && (
+                      <span className="Count">{favCount}</span>
+                    )}
+                  </div>
+                )}
+                {icon === "calendar" && (
+                  <div className="iconContainer">
+                    <EventOutlinedIcon />
+                  </div>
+                )}
+                {icon === "language" && <LanguageOutlinedIcon />}
+                {icon === "profile" && <AccountCircleOutlinedIcon />}
+                <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
+                  {icon === "favorite" && (
+                    <FavRestaurant
+                      favorites={favorites}
+                      loadingFavorites={loadingFavorites}
+                      favoritesError={favoritesError}
+                    />
+                  )}
+                  {icon === "language" && <LanguageMenu />}
+                  {icon === "profile" && <ProfileMenu />}
+                </div>
+              </div>
+            ))
+          : ["favorite", "language"].map((icon) => (
+              <div
+                className="icon"
+                key={icon}
+                onClick={() => toggleDropdown(icon)}
+              >
+                {icon === "favorite" && (
+                  <div className="iconContainer" onClick={handleFetchFavorites}>
+                    <FavoriteBorderOutlinedIcon />
+                    {favCount !== 0 && (
+                      <span className="Count">{favCount}</span>
+                    )}
+                  </div>
+                )}
+                {icon === "language" && <LanguageOutlinedIcon />}
+                <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
+                  {icon === "favorite" && (
+                    <FavRestaurant
+                      favorites={favorites}
+                      loadingFavorites={loadingFavorites}
+                      favoritesError={favoritesError}
+                    />
+                  )}
+                  {icon === "language" && <LanguageMenu />}
+                </div>
+              </div>
+            ))}
+        {!token && (
+          <div className="icon">
+            <Link to="/login">
+              <button className="loginBtn">Login</button>
+            </Link>
+          </div>
+        )}
+      </div>
+      <div className="menu-icon" onClick={toggleMenu}>
+        {menuOpen ? "✖" : "☰"}
+      </div>
+    </div>
+  );
+}
+
+export default NavClinics;

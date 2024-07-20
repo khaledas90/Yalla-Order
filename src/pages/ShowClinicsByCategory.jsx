@@ -1,27 +1,32 @@
 import { Helmet } from "react-helmet";
-import Header from "../components/header/Header";
 import SearchRestaurants from "../components/SearchRestaurants/SearchRestaurants";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
-import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+
 import Search from "../assets/search.svg";
 
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { actClinicsCategoryById } from "../store/ClinicsCategoryById/ClinicsCategoryByIdSlice";
+import NavClinics from "../components/NavClinics/NavClinics";
 
 function ShowClinicsByCategory() {
+  const params = useParams();
+  const id = params.id;
+  const dispatch = useDispatch();
   const { ClinicsCategoryById } = useSelector(
     (state) => state.ClinicsCategoryById
   );
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(actClinicsCategoryById());
-  }, [dispatch]);
+    const controller = new AbortController();
+    const signal = controller.signal;
+    dispatch(actClinicsCategoryById(id, { signal }));
+    return () => {
+      controller.abort();
+    };
+  }, [dispatch, id]);
 
-  console.log(ClinicsCategoryById);
+  // console.log(ClinicsCategoryById, "show");
   return (
     <>
       <Helmet>
@@ -32,12 +37,7 @@ function ShowClinicsByCategory() {
         />
       </Helmet>
       <div className="Main_bg">
-        <Header
-          MainPage={"Clinic"}
-          IconOne={<FavoriteBorderOutlinedIcon />}
-          IconTwo={<LanguageOutlinedIcon />}
-          IconThree={<ShoppingBagOutlinedIcon />}
-        />
+        <NavClinics />
 
         <SearchRestaurants
           pageAddress={"Clinics"}
@@ -54,16 +54,18 @@ function ShowClinicsByCategory() {
           <div className="ClinicList">
             <div className="container">
               <div className="row">
-                {ClinicsCategoryById.map((e) => (
+                {ClinicsCategoryById?.map((e) => (
                   <div key={e.id} className="col-12 col-md-6 col-lg-3 mb-5">
                     <div className="Clinic">
                       <Link to={`/CLinics/${e.id}`}>
                         <img src={e.logo} alt="Clinic" />
-                        <div className="details">
+                        <div className="details b-5 ">
                           <div>
                             <p>{e.name}</p>
+                            <p>address: {e.address}</p>
                             <p>{e.descrption}</p>
-                            <p> starttime</p>: <span>{e.starttime}</span>
+                            <p className="pb-5"> starttime : {e.starttime}</p>
+                            <p> endtime</p>: <span>{e.endtime}</span>
                           </div>
                         </div>
                       </Link>

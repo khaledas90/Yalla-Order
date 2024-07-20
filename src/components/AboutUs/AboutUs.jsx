@@ -1,18 +1,17 @@
 import React from "react";
 
 import "./AboutUs.css";
-import Header from "../header/Header";
-import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import Lang from "./Lang.js";
-import NavRestaurants from "../NavRestaurants/NavRestaurants.jsx";
+import NavRestaurants from "../NavRestaurants/NavRestaurants";
+import { useSelector } from "react-redux";
+import NavClinics from "../NavClinics/NavClinics";
 
 export default function AboutUs() {
+  const { typePage } = useSelector((state) => state.User);
+
   return (
     <>
       <div className="AboutUs Main_bg">
-      <NavRestaurants/>
+        {typePage === "restaurant" ? <NavRestaurants /> : <NavClinics />}
         <div className="container p-5">
           <div className="row justify-content-center">
             <div className=" col-lg-7 ">
@@ -37,7 +36,6 @@ export default function AboutUs() {
           </div>
         </div>
       </div>
-      <Lang/>
     </>
   );
 }
