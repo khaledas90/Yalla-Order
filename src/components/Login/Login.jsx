@@ -14,6 +14,8 @@ import apiAuthenticate from "../../services/authentication/apiAuthenticate";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { Toaster } from "react-hot-toast";
 import NavRestaurants from "../NavRestaurants/NavRestaurants";
+import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -43,22 +45,23 @@ export default function Login() {
       }
     },
   });
-
+  const { t } = useTranslation()
+  const lang = localStorage.getItem("i18nextLng")
   return (
     <>
       <div className="Login Main_bg">
 
         <NavRestaurants />
-        <div className="container p-5">
+        <div className={`container p-5 ${lang === "ar" ? "ar" : ""}`}>
           <div className="row justify-content-center">
             <div className="col-lg-7">
               <div className="card p-4">
                 <form className="py-2 px-2" onSubmit={formik.handleSubmit}>
-                  <h2 className="text-center mb-5">LOGIN</h2>
+                  <h2 className="text-center mb-5">{t("Login")}</h2>
                   <div className="form-group my-4">
                     <input
                       type="text"
-                      placeholder="Email Address "
+                      placeholder={`${t("Enter your Email")}`}
                       className="form-control rounded-pill px-4 py-3 border-secondary"
                       {...formik.getFieldProps('Email')}
                     />
@@ -69,12 +72,12 @@ export default function Login() {
                   <div className="form-group my-2 position-relative">
                     <input
                       type={showPassword ? "text" : "password"}
-                      placeholder="Password"
+                      placeholder={`${t("Enter your Password")}`}
                       className="form-control rounded-pill px-4 py-3 border-secondary"
                       {...formik.getFieldProps('Password')}
                     />
                     <span
-                      className="position-absolute top-50 end-0 translate-middle-y pe-4"
+                      className={`position-absolute top-50  translate-middle-y pe-4 ${lang === "ar" ? "startEye" : "endEye"}`}
                       onClick={() => setShowPassword(!showPassword)}
                       style={{ cursor: "pointer" }}
                     >
@@ -83,20 +86,20 @@ export default function Login() {
 
                   </div>
                   <div className="text-end forgetPass mb-3">
-                    <Link to="/Forgot_password">Forgot password?</Link>
+                    <Link to="/Forgot_password">{t("Forgot Password?")}</Link>
                   </div>
                   <div className="d-grid gap-2">
                     <button
                       type="submit"
                       className="btn btn-primary btnLogin btn-block"
                     >
-                      Login
+                      {t("Login")}
                     </button>
                   </div>
                   <div className="text-center mt-4">
                     <div className="separator">
                       <hr className="line" />
-                      <span>Or</span>
+                      <span>{t("or")}</span>
                       <hr className="line" />
                     </div>
                   </div>
@@ -122,8 +125,8 @@ export default function Login() {
                   </div>
                   <div className="text-center SignUp">
                     <span>
-                      Don’t have an account?{" "}
-                      <Link to="/Sign Up">Sign Up</Link>
+                      {t("Don't have an account?")}
+                      <Link to="/SignUp">{t("Sign Up")}</Link>
                     </span>
                   </div>
                 </form>

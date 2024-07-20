@@ -1,60 +1,66 @@
 .work {
-  padding: 80px 0;
-  margin-top: 90px;
+    padding: 80px 0;
+    margin-top: 90px;
 }
 
 .work img {
-  width: 100%;
+    width: 100%;
 }
 
-.work .row > div:last-child {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 2;
+.work .row>div:last-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 2;
 }
 
 .work .header {
-  font-family: "Cabin Sketch", sans-serif;
-  font-size: 2.5rem;
-  font-weight: 700;
+    font-family: "Cabin Sketch", sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.ar {
+    direction: rtl;
+    unicode-bidi: bidi-override;
 }
 
 .work .subHeader {
-  font-size: 2.3rem;
-  font-weight: 500;
-  width: 340px;
+    font-size: 2.3rem;
+    font-weight: 500;
+    width: 340px;
 }
 
 .work .subHeaderMedical {
-  width: 100%;
+    width: 100%;
 }
 
 .work .subHeaderMedical .text {
-  color: var(--secondary-color);
+    color: var(--secondary-color);
 }
 
 .work .subHeader span {
-  color: var(--main-color);
+    color: var(--main-color);
 }
 
 .work ul {
-  padding-left: 0;
+    padding-left: 0;
 }
 
 .work ul li {
-  font-size: 2rem;
-  font-weight: 400;
+    font-size: 2rem;
+    font-weight: 400;
 }
 
 @media screen and (max-width: 992px) {
-  /* .work{
+    /* .work{
           margin-top: 180vh;
       } */
-  .work .subHeader {
-    margin: 0 auto;
-  }
+    .work .subHeader {
+        margin: 0 auto;
+    }
 }
+
 
 /* @media screen and (max-width : 767px) {
       .work{

@@ -13,6 +13,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import "./signUp.css";
 import { registerUser } from "../../store/thunk/registerThunk";
 import NavRestaurants from "../NavRestaurants/NavRestaurants";
+import { useTranslation } from "react-i18next";
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -39,59 +40,60 @@ const SignUp = () => {
       navigate('/login')
     },
   });
+  const { t } = useTranslation();
+  const lang = localStorage.getItem("i18nextLng");
 
   return (
     <div className="SignUp Main_bg">
-
       <NavRestaurants />
-      <div className="container p-5">
+      <div className={`container p-5 ${lang === "ar" ? "ar" : ""}`}>
         <div className="row justify-content-center">
           <div className="col-lg-7">
             <div className="card p-4">
               <form className="py-2 px-2" onSubmit={formik.handleSubmit}>
-                <h2 className="text-center mb-5">Create Account</h2>
+                <h2 className="text-center mb-5">{t('Create Account')}</h2>
                 <div className="form-group my-4">
                   <input
                     type="text"
-                    placeholder="Name"
+                    placeholder={`${t('Name *')}`}
                     className="form-control rounded-pill px-4 py-3 border-secondary"
                     {...formik.getFieldProps('Name')}
                   />
                   {formik.touched.Name && formik.errors.Name ? (
-                    <span className="error  text-danger">{formik.errors.Name}</span>
+                    <span className="error text-danger">{formik.errors.Name}</span>
                   ) : null}
                 </div>
                 <div className="form-group my-4">
                   <input
                     type="email"
-                    placeholder="Email"
+                    placeholder={`${t('Email *')}`}
                     className="form-control rounded-pill px-4 py-3 border-secondary"
                     {...formik.getFieldProps('Email')}
                   />
                   {formik.touched.Email && formik.errors.Email ? (
-                    <span className="error  text-danger">{formik.errors.Email}</span>
+                    <span className="error text-danger">{formik.errors.Email}</span>
                   ) : null}
                 </div>
                 <div className="form-group my-4">
                   <input
                     type="text"
-                    placeholder="Phone"
+                    placeholder={`${t('Phone *')}`}
                     className="form-control rounded-pill px-4 py-3 border-secondary"
                     {...formik.getFieldProps('Phone')}
                   />
                   {formik.touched.Phone && formik.errors.Phone ? (
-                    <span className="error  text-danger">{formik.errors.Phone}</span>
+                    <span className="error text-danger">{formik.errors.Phone}</span>
                   ) : null}
                 </div>
                 <div className="form-group my-2 position-relative">
                   <input
                     type={showPassword ? "text" : "password"}
-                    placeholder="Password"
+                    placeholder={`${t('Password *')}`}
                     className="form-control rounded-pill px-4 py-3 border-secondary"
                     {...formik.getFieldProps('Password')}
                   />
                   <span
-                    className="position-absolute top-50 end-0 translate-middle-y pe-4"
+                    className={`position-absolute top-50 ${lang === "ar" ? "startEye" : "endEye"} translate-middle-y`}
                     onClick={() => setShowPassword(!showPassword)}
                     style={{ cursor: "pointer" }}
                   >
@@ -108,13 +110,13 @@ const SignUp = () => {
                     type="submit"
                     className="btn btn-primary btnLogin btn-block"
                   >
-                    Sign Up
+                    {t('Sign Up')}
                   </button>
                 </div>
                 <div className="text-center mt-4">
                   <div className="separator">
                     <hr className="line" />
-                    <span>Or</span>
+                    <span>{t('or')}</span>
                     <hr className="line" />
                   </div>
                 </div>
@@ -140,7 +142,7 @@ const SignUp = () => {
                 </div>
                 <div className="text-center SignUp">
                   <span>
-                    Already have an account? <Link to="/Login">Log in</Link>
+                    {t('Already have an account?')} <Link to="/Login">{t('Log in')}</Link>
                   </span>
                 </div>
               </form>
@@ -149,8 +151,8 @@ const SignUp = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 

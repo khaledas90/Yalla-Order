@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { actClinicsCategoryById } from "../store/ClinicsCategoryById/ClinicsCategoryByIdSlice";
 import NavClinics from "../components/NavClinics/NavClinics";
+import "../components/AllClinics/AllClinics.css";
 
 function ShowClinicsByCategory() {
   const params = useParams();
@@ -57,15 +58,18 @@ function ShowClinicsByCategory() {
                 {ClinicsCategoryById?.map((e) => (
                   <div key={e.id} className="col-12 col-md-6 col-lg-3 mb-5">
                     <div className="Clinic">
-                      <Link to={`/CLinics/${e.id}`}>
+                      <Link
+                        to={`/CLinics/${e.id}`}
+                        className="text-decoration-none"
+                      >
                         <img src={e.logo} alt="Clinic" />
-                        <div className="details b-5 ">
+                        <div className="details ">
                           <div>
                             <p>{e.name}</p>
                             <p>address: {e.address}</p>
                             <p>{e.descrption}</p>
-                            <p className="pb-5"> starttime : {e.starttime}</p>
-                            <p> endtime</p>: <span>{e.endtime}</span>
+                            <p> starttime : {e.starttime}</p>
+                            <p> endtime: {e.endtime}</p>
                           </div>
                         </div>
                       </Link>

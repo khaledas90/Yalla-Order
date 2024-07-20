@@ -1,75 +1,80 @@
 .explore {
-  padding: 85px 0;
-  margin-top: 90px;
+    padding: 85px 0;
+    margin-top: 90px;
 }
 
 .explore .box {
-  max-width: 574px;
-  border-radius: 20px;
-  background-color: var(--dark-color);
-  color: var(--white-color);
-  display: flex;
-  border-radius: 22px;
-  height: 284px;
-  overflow: hidden;
-  margin: 0 auto;
+    max-width: 574px;
+    border-radius: 20px;
+    background-color: var(--dark-color);
+    color: var(--white-color);
+    display: flex;
+    border-radius: 22px;
+    height: 284px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.ar {
+    direction: rtl;
+    unicode-bidi: bidi-override;
 }
 
 .explore .box .details {
-  width: 70%;
-  border-radius: 22px;
-  padding: 30px 20px;
-  overflow: hidden;
+    width: 70%;
+    border-radius: 22px;
+    padding: 30px 20px;
+    overflow: hidden;
 }
 
 .explore .box .details p {
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 23px;
-  margin: 20px 0;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 23px;
+    margin: 20px 0;
 }
 
 .explore .box h1 {
-  font-weight: 500;
-  font-size: 32px;
-  margin-top: 20px;
+    font-weight: 500;
+    font-size: 32px;
+    margin-top: 20px;
 }
 
 .explore .box a {
-  text-decoration: none;
-  font-weight: 400;
-  font-size: 20px;
+    text-decoration: none;
+    font-weight: 400;
+    font-size: 20px;
 }
 
 .explore .details .rose {
-  color: var(--main-color);
+    color: var(--main-color);
 }
 
 .explore .details .blue {
-  color: var(--secondary-color);
+    color: var(--secondary-color);
 }
 
 .explore .box .image {
-  width: 30%;
-  overflow: hidden;
+    width: 30%;
+    overflow: hidden;
 }
 
 .explore .box .image-food {
-  background-image: url("../../assets/unsplash_LV2p9Utbkbw.png");
-  background-position: 70% 50%;
+    background-image: url("../../assets/unsplash_LV2p9Utbkbw.png");
+    background-position: 70% 50%;
 }
 
 .explore .box .image-doc {
-  background-image: url("../../assets/cb0927f62bc12bb2873b131a64ff92d5.png");
-  background-position: 70% 50%;
-  background-size: cover;
+    background-image: url("../../assets/cb0927f62bc12bb2873b131a64ff92d5.png");
+    background-position: 70% 50%;
+    background-size: cover;
 }
 
 @media screen and (max-width: 767px) {
-  .explore .box h1 {
-    font-size: 25px;
-  }
-  .explore .box .details p {
-    font-size: 14px;
-  }
+    .explore .box h1 {
+        font-size: 25px;
+    }
+    .explore .box .details p {
+        font-size: 14px;
+    }
 }

@@ -13,7 +13,10 @@ import { fetchCategories } from "../../services/apiRestaurant";
 import { useEffect, useState } from "react";
 import Loader from "../loader/Loader";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 function FavCuisinesRestaurant() {
+  const { t } = useTranslation();
+  const lang = localStorage.getItem("i18nextLng");
   var settings = {
     dots: false,
     infinite: true,
@@ -75,11 +78,11 @@ function FavCuisinesRestaurant() {
   console.log(categories);
   if (loadingCategories) return <Loader />;
   return (
-    <div className="FavContainer">
+    <div className={`FavContainer ${lang === "ar" ? "rtl" : ""}`}>
       <div className="container">
         <div className="mainFav">
           <img className="back" src={back} alt="back" />
-          <h1>Customer Favorite Cuisines</h1>
+          <h1>{t("Customer Favorite Cuisines")}</h1>
           <div className="slider-container">
             <Slider {...settings}>
               {categories?.map((category) => (

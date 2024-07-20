@@ -8,26 +8,35 @@
     flex-direction: column;
     height: 420px;
     font-size: 20px;
-  }
-  .dish .dishImg {
+}
+
+.dish .dishImg {
     width: 100%;
     height: 50%;
-  }
-  .dish .dishImg img {
+}
+
+.dish .dishImg img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     object-position: center;
-  }
-  .dish .dish-name,.dish .price {
+}
+
+.dish .dish-name,
+.dish .price {
     font-weight: 500;
-  }
-  
-  .dish .dish-details {
+}
+
+.ar {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+}
+
+.dish .dish-details {
     padding: 15px;
-  }
-  
-  a{
+}
+
+a {
     text-decoration: none;
     color: var(--dark-color);
-  }
+}
