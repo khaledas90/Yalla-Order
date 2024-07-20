@@ -3,16 +3,20 @@ import appStore from "../../assets/logo appstore.png";
 import googlePlay from "../../assets/logo googlestore.png";
 import mobile from "../../assets/OnePlusD 10T.png";
 import './DownloadApp.css';
+import { useTranslation } from 'react-i18next';
 export default function DownloadAppMedical() {
+    const { t } = useTranslation();
+
+    const lang = localStorage.getItem("i18nextLng")
     return (
         <>
-            <div className={`mobileSec position-relative`}>
+            <div className={`mobileSec position-relative `}>
                 <div className="d-flex flex-column justify-content-center h-100 align-items-md-center align-items-lg-start content " >
-                    <h2 className={`cabinSketchRegular  text-light pt-4`}>
-                        Download our <br /> application now!
+                    <h2 className={`cabinSketchRegular ${lang === "ar" ? "ar" : ""}  text-light pt-4`}>
+                        {t('Download our')} <br />  {t('application now!')}
                     </h2>
-                    <p className="text-light pt-4">
-                        <span className="text-info ">Enjoy</span> the best meals some?
+                    <p className={` ${lang === "ar" ? "ar" : ""} text-light pt-4`}>
+                        <span className="text-info ">{t('Enjoy')}</span>{t('the best foods some?')}
                     </p>
                     <div className="d-flex gap-4 pt-4 ">
                         <>
