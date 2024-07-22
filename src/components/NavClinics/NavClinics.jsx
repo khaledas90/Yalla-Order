@@ -8,7 +8,7 @@ import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
 import { Link, NavLink } from "react-router-dom";
 import FavRestaurant from "../favorite-restaurants/FavRestaurant";
 import LanguageMenu from "../LanguageSwitch/LanguageMenu";
-import ProfileMenu from "../Profile/ProfileMenu";
+import ProfileMenuClinic from "../Profile/ProfileMenuClinic";
 import { fetchFavoritesList } from "../../services/apiRestaurant";
 
 function NavClinics() {
@@ -80,66 +80,66 @@ function NavClinics() {
       <div className="icons">
         {token
           ? ["favorite", "calendar", "language", "profile"].map((icon) => (
-              <div
-                className="icon"
-                key={icon}
-                onClick={() => toggleDropdown(icon)}
-              >
-                {icon === "favorite" && (
-                  <div className="iconContainer" onClick={handleFetchFavorites}>
-                    <FavoriteBorderOutlinedIcon />
-                    {favCount !== 0 && (
-                      <span className="Count">{favCount}</span>
-                    )}
-                  </div>
-                )}
-                {icon === "calendar" && (
-                  <div className="iconContainer">
-                    <EventOutlinedIcon />
-                  </div>
-                )}
-                {icon === "language" && <LanguageOutlinedIcon />}
-                {icon === "profile" && <AccountCircleOutlinedIcon />}
-                <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
-                  {icon === "favorite" && (
-                    <FavRestaurant
-                      favorites={favorites}
-                      loadingFavorites={loadingFavorites}
-                      favoritesError={favoritesError}
-                    />
+            <div
+              className="icon"
+              key={icon}
+              onClick={() => toggleDropdown(icon)}
+            >
+              {icon === "favorite" && (
+                <div className="iconContainer" onClick={handleFetchFavorites}>
+                  <FavoriteBorderOutlinedIcon />
+                  {favCount !== 0 && (
+                    <span className="Count">{favCount}</span>
                   )}
-                  {icon === "language" && <LanguageMenu />}
-                  {icon === "profile" && <ProfileMenu />}
                 </div>
+              )}
+              {icon === "calendar" && (
+                <div className="iconContainer">
+                  <EventOutlinedIcon />
+                </div>
+              )}
+              {icon === "language" && <LanguageOutlinedIcon />}
+              {icon === "profile" && <AccountCircleOutlinedIcon />}
+              <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
+                {icon === "favorite" && (
+                  <FavRestaurant
+                    favorites={favorites}
+                    loadingFavorites={loadingFavorites}
+                    favoritesError={favoritesError}
+                  />
+                )}
+                {icon === "language" && <LanguageMenu />}
+                {icon === "profile" && <ProfileMenuClinic />}
               </div>
-            ))
+            </div>
+          ))
           : ["favorite", "language"].map((icon) => (
-              <div
-                className="icon"
-                key={icon}
-                onClick={() => toggleDropdown(icon)}
-              >
-                {icon === "favorite" && (
-                  <div className="iconContainer" onClick={handleFetchFavorites}>
-                    <FavoriteBorderOutlinedIcon />
-                    {favCount !== 0 && (
-                      <span className="Count">{favCount}</span>
-                    )}
-                  </div>
-                )}
-                {icon === "language" && <LanguageOutlinedIcon />}
-                <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
-                  {icon === "favorite" && (
-                    <FavRestaurant
-                      favorites={favorites}
-                      loadingFavorites={loadingFavorites}
-                      favoritesError={favoritesError}
-                    />
+            <div
+              className="icon"
+              key={icon}
+              onClick={() => toggleDropdown(icon)}
+            >
+              {icon === "favorite" && (
+                <div className="iconContainer" onClick={handleFetchFavorites}>
+                  <FavoriteBorderOutlinedIcon />
+                  {favCount !== 0 && (
+                    <span className="Count">{favCount}</span>
                   )}
-                  {icon === "language" && <LanguageMenu />}
                 </div>
+              )}
+              {icon === "language" && <LanguageOutlinedIcon />}
+              <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
+                {icon === "favorite" && (
+                  <FavRestaurant
+                    favorites={favorites}
+                    loadingFavorites={loadingFavorites}
+                    favoritesError={favoritesError}
+                  />
+                )}
+                {icon === "language" && <LanguageMenu />}
               </div>
-            ))}
+            </div>
+          ))}
         {!token && (
           <div className="icon">
             <Link to="/login">

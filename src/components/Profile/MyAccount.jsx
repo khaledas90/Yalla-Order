@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBagShopping, faCalendar, faMapLocation, faPenToSquare, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBagShopping, faCalendar, faMapLocation, faPenToSquare, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { Link, useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../store/thunk/logoutThunk';
 import apiAuthenticate from '../../services/authentication/apiAuthenticate';
 import toast, { Toaster } from 'react-hot-toast';
@@ -32,24 +32,22 @@ export default function MyAccount() {
     }),
     onSubmit: async (values) => {
       try {
-        await apiAuthenticate.post("/user/edit/profile", {
+        await apiAuthenticate.post('/user/edit/profile', {
           name: values.Name,
           email: values.email,
           phone: values.phone,
         });
-        toast.success("Profile updated successfully!");
-
+        toast.success('Profile updated successfully!');
       } catch (err) {
-        toast.error("Error updating profile.");
+        toast.error('Error updating profile.');
       }
     },
   });
 
   useEffect(() => {
-    console.log(typePage);
     const fetchProfileData = async () => {
       try {
-        const res = await apiAuthenticate.get("/user/show/profile");
+        const res = await apiAuthenticate.get('/user/show/profile');
         setProfileData(res.data.data);
         formik.setValues({
           Name: res.data.data.name || '',
@@ -57,7 +55,7 @@ export default function MyAccount() {
           phone: res.data.data.phone || '',
         });
       } catch (err) {
-        toast.error("Error fetching profile data.");
+        toast.error('Error fetching profile data.');
       }
     };
 
@@ -69,18 +67,14 @@ export default function MyAccount() {
     if (logoutUser.fulfilled.match(resultAction)) {
       navigate('/login');
     }
-  }
+  };
 
   return (
     <>
       <Toaster />
-      <div className="Profile" >
+      <div className="Profile">
         <div className="Main_bg_profile">
-          {typePage === "restaurant" ? (
-            <NavRestaurants />
-          ) : (
-            <NavClinics />
-          )}
+          {typePage === 'restaurant' ? <NavRestaurants /> : <NavClinics />}
         </div>
         <div className="MyAccount">
           <h1>My Profile</h1>
@@ -98,7 +92,7 @@ export default function MyAccount() {
                               <FontAwesomeIcon icon={faPenToSquare} className="profile-icon" />
                               <Link to="/MyAccount"> Edit Profile</Link>
                             </li>
-                            {typePage === "restaurant" ? (
+                            {typePage === 'restaurant' ? (
                               <li>
                                 <FontAwesomeIcon icon={faBagShopping} className="profile-icon" />
                                 <Link to="/MyOrder"> My Order</Link>

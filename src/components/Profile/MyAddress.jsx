@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense, lazy } from "react";
 import { Card } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,33 +15,24 @@ import { useDispatch, useSelector } from "react-redux";
 import NavRestaurants from "../NavRestaurants/NavRestaurants";
 import { logoutUser } from "../../store/thunk/logoutThunk";
 import Modal from "../modal/Modal";
-import GoogleMapComponent from "./GoogleMapComponent";
 import imgEmptyAddress from "../../assets/EmptyAddress.png";
 import "./profile.css";
 import NavClinics from "../NavClinics/NavClinics";
-
-const Addresses = [
-    {
-        id: 1,
-        address:
-            "Alexandria, Smouha, Smouha Circle, Zohour Bargout Building, floor 4, Apartment 2",
-    },
-    {
-        id: 2,
-        address:
-            "Alexandria, Smouha, Smouha Circle, Zohour Bargout Building, floor 4, Apartment 2",
-    },
-];
+import Loader from "../loader/Loader";
+import { deleteAddress } from "../../store/LocationSlice";
+import MapUpdate from "./MapUpdate";
+const MapAdd = lazy(() => import("./MapAdd"));
 
 export default function MyAddress() {
     const { typePage } = useSelector((state) => state.User);
-    const [isAddresses, SetIsAddresses] = useState(Addresses.length > 0);
+    const { locations } = useSelector((state) => state.location);
+    const [isAddresses, setIsAddresses] = useState(locations.length > 0);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
-        SetIsAddresses(Addresses.length > 0);
-    }, [Addresses]);
+        setIsAddresses(locations.length > 0);
+    }, [locations]);
 
     const handleLogOut = async () => {
         const resultAction = await dispatch(logoutUser());
@@ -49,6 +40,12 @@ export default function MyAddress() {
             navigate("/login");
         }
     };
+
+    const handleDeleteAddress = (id) => {
+        dispatch(deleteAddress(id));
+    };
+
+
 
     return (
         <>
@@ -118,22 +115,33 @@ export default function MyAddress() {
                                             <div className="col-lg-8">
                                                 <div className="content">
                                                     {isAddresses ? (
-                                                        Addresses.map((Address) => (
+                                                        locations.map((address) => (
                                                             <Card
-                                                                key={Address.id}
+                                                                key={address.id}
                                                                 className="address-summary my-3 p-3 rounded"
                                                             >
                                                                 <Card.Body>
                                                                     <Card.Title className="mb-2">
                                                                         <div className="d-flex mb-3">
-                                                                            <div className="iconGorp">
-                                                                                <FontAwesomeIcon
-                                                                                    icon={faPen}
-                                                                                    className="address-icon"
-                                                                                />
-                                                                                Edit
-                                                                            </div>
-                                                                            <div className="iconGorp">
+                                                                            <Modal>
+                                                                                <Modal.Open opens="add-address">
+
+                                                                                    <div className="iconGorp" >
+                                                                                        <FontAwesomeIcon
+                                                                                            icon={faPen}
+                                                                                            className="address-icon"
+                                                                                        />
+                                                                                        Edit
+                                                                                    </div>
+                                                                                </Modal.Open>
+                                                                                <Modal.Window name="add-address">
+                                                                                    <Suspense fallback={<Loader />}>
+                                                                                        <MapUpdate address={address.id} />
+                                                                                    </Suspense>
+                                                                                </Modal.Window>
+                                                                            </Modal>
+
+                                                                            <div onClick={() => handleDeleteAddress(address.id)} className="iconGorp">
                                                                                 <FontAwesomeIcon
                                                                                     icon={faTrash}
                                                                                     className="address-icon"
@@ -144,7 +152,7 @@ export default function MyAddress() {
                                                                     </Card.Title>
                                                                     <Card.Text>
                                                                         <div className="d-flex justify-content-between">
-                                                                            <p>{Address.address}</p>
+                                                                            <p>{address.placeName}</p>
                                                                         </div>
                                                                     </Card.Text>
                                                                 </Card.Body>
@@ -169,7 +177,9 @@ export default function MyAddress() {
                                                                 </button>
                                                             </Modal.Open>
                                                             <Modal.Window name="add-address">
-                                                                <GoogleMapComponent apiKey="YOUR_GOOGLE_MAP_API_KEY" />
+                                                                <Suspense fallback={<Loader />}>
+                                                                    <MapAdd />
+                                                                </Suspense>
                                                             </Modal.Window>
                                                         </Modal>
                                                     </div>

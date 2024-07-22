@@ -15,8 +15,8 @@ function ClinicItem() {
       <div className="Main_bg">
         <NavRestaurants />
         <SearchRestaurants
-          Pagetext={"Select your area to see the clinics near you"}
           pageAddress={"Clinics"}
+          Pagetext={"Select your area to see the clinics near you"}
           placeholder={"Find your Location.."}
           btnText={"View Doctors"}
           icon={Search}

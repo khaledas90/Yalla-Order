@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../store/thunk/logoutThunk';
 
-function ProfileMenu() {
+function ProfileMenuRestaurant() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleLogOut = async () => {
@@ -32,4 +32,4 @@ function ProfileMenu() {
   )
 }
 
-export default ProfileMenu;
+export default ProfileMenuRestaurant;
