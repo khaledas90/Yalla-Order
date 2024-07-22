@@ -14,6 +14,10 @@ import CommentIcon from "../../assets/commentsIcon.svg";
 import "./ProfileDoctor.css";
 import { useState } from "react";
 
+import HomeIcon from "@mui/icons-material/Home";
+import MedicationIcon from "@mui/icons-material/Medication";
+import FemaleIcon from "@mui/icons-material/Female";
+import MaleIcon from "@mui/icons-material/Male";
 const ProfileDoctor = () => {
   const { id } = useParams();
   const [rating, setRating] = useState(0);
@@ -135,20 +139,20 @@ const ProfileDoctor = () => {
             aria-labelledby="exampleModalLabel"
             aria-hidden="true"
           >
-            <div className="modal-dialog ">
+            <div className="modal-dialog w-100 ">
               <div className={`modal-content `}>
-                <div className="modal-header Book ">
+                <div className="modal-header Bookg bgBooking ">
                   <h1
-                    className="modal-title fw-bold px-5"
+                    className="modal-title fw-bold px-5  text-white"
                     id="exampleModalLabel"
                   >
                     Booking
                   </h1>
                 </div>
-                <div className="modal-body my-4">
+                <div className="modal-body my-2">
                   <div className="container">
                     <div className="row">
-                      <div className="col-lg-12 mb-4">
+                      <div className="col-lg-12 mb-4 gap-5">
                         <div className="from-group d-flex align-items-center justify-content-around">
                           <label
                             htmlFor="exampleInputName"
@@ -158,13 +162,13 @@ const ProfileDoctor = () => {
                           </label>
                           <input
                             type="text"
-                            className="w-75 rounded-2 input-group px-2"
+                            className="w-75 rounded-2 form-control input-group px-2"
                             id="exampleInputName"
                             placeholder="ahmed naser"
                           />
                         </div>
                       </div>
-                      <div className="col-lg-12 mb-4">
+                      <div className="col-lg-12 mb-4 ">
                         <div className="from-group d-flex align-items-center justify-content-around">
                           <label
                             htmlFor="exampleInputNumber"
@@ -174,14 +178,14 @@ const ProfileDoctor = () => {
                           </label>
                           <input
                             type="text"
-                            className="w-25 rounded-3 mx-1 px-2 input-group"
+                            className="w-25 rounded-3 form-control mx-1 px-2 input-group"
                             id="exampleInputNumber"
                             aria-describedby="emailHelp"
                             placeholder="+20"
                           />
                           <input
                             type="text"
-                            className="w-50 rounded-2 input-group px-2"
+                            className="w-50 rounded-2 form-control input-group px-2"
                             id="exampleInputNumber"
                             aria-describedby="emailHelp"
                             placeholder="1142399186"
@@ -189,7 +193,41 @@ const ProfileDoctor = () => {
                         </div>
                       </div>
                       <div className="col-lg-12 mb-4">
-                        <div className="from-group d-flex align-items-center justify-content-around">
+                        <div className="from-group  d-flex align-items-center justify-content-around">
+                          <label
+                            htmlFor="exampleInputAge"
+                            className="fs-6 fw-normal w-25"
+                          >
+                            Gender
+                          </label>
+                          <div class="select_time_wrapper">
+                            <label class="rounded-0 text-white">
+                              <input
+                                type="radio"
+                                name="toggle"
+                                class="d-none"
+                              />
+                              <span class="text-center d-block py-3">
+                                <MaleIcon />
+                                Male
+                              </span>
+                            </label>
+                            <label class="rounded-0 text-white">
+                              <input
+                                type="radio"
+                                name="toggle"
+                                class="d-none"
+                              />
+                              <span class="text-center d-block py-3">
+                                <FemaleIcon />
+                                Female
+                              </span>
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-lg-12 mb-4">
+                        <div className="from-group  d-flex align-items-center justify-content-around">
                           <label
                             htmlFor="exampleInputAge"
                             className="fs-6 fw-normal w-25"
@@ -198,10 +236,42 @@ const ProfileDoctor = () => {
                           </label>
                           <input
                             type="text"
-                            className="w-75 rounded-2 input-group px-2"
+                            className="w-75 rounded-2 form-control input-group px-2"
                             id="exampleInputAge"
                             placeholder="20"
                           />
+                        </div>
+                      </div>
+                      <div className="col-lg-12 mb-4">
+                        <div className="from-group  d-flex align-items-center justify-content-around">
+                          <label
+                            htmlFor="exampleInputAge"
+                            className="fs-6 fw-normal w-25"
+                          >
+                            Detection Type
+                          </label>
+                          <div class="select_time_wrapper">
+                            <label class="rounded-0 text-white">
+                              <input
+                                type="radio"
+                                name="toggle"
+                                class="d-none"
+                              />
+                              <span class="text-center d-block py-3">
+                                normal
+                              </span>
+                            </label>
+                            <label class="rounded-0 text-white">
+                              <input
+                                type="radio"
+                                name="toggle"
+                                class="d-none"
+                              />
+                              <span class="text-center d-block py-3">
+                                urgent
+                              </span>
+                            </label>
+                          </div>
                         </div>
                       </div>
                       <div className="col-lg-12 mb-4">
@@ -226,7 +296,7 @@ const ProfileDoctor = () => {
                               htmlFor="home"
                               className="w-100 d-flex align-items-center mx-1"
                             >
-                              <i class="fa-solid  fa-house mx-1"></i>
+                              <HomeIcon />
                               <span className="">Home</span>
                             </label>
                           </div>
@@ -244,7 +314,7 @@ const ProfileDoctor = () => {
                               htmlFor="clinic"
                               className="w-100 d-flex align-items-center mx-1"
                             >
-                              <i class="fa-regular fa-hospital mx-1"></i>
+                              <MedicationIcon />
                               <span className="">Clinic</span>
                             </label>
                           </div>
@@ -257,7 +327,7 @@ const ProfileDoctor = () => {
                           </label>
                           <input
                             type="date"
-                            className="w-75 rounded-2 px-2"
+                            className="w-75 rounded-2 form-control px-2"
                             selected={formData.bookingDate}
                             onChange={handleDateChange}
                             dateFormat="MM/dd/yyyy"
@@ -271,50 +341,11 @@ const ProfileDoctor = () => {
                           </label>
                           <input
                             type="time"
-                            className="w-75 rounded-2 px-2"
+                            className="w-75 rounded-2 form-control px-2"
                             name="bookingTime"
                             value={formData.bookingTime}
                             onChange={handleChange}
                           />
-                        </div>
-                      </div>
-                      <div className="col-lg-12 mb-4">
-                        <div className="form-input d-flex align-items-center justify-content-around ">
-                          <label
-                            htmlFor="defaultCheck2"
-                            className="fs-6 fw-normal w-50 me-auto"
-                          >
-                            Detection Type
-                          </label>
-
-                          <div className=" ms-auto  d-flex align-items-center justify-content-center">
-                            <input
-                              type="radio"
-                              id="normal"
-                              name="type"
-                              value="normal"
-                              checked={type === "normal"}
-                              onChange={handleTypeChange}
-                              className="w-100"
-                            />
-                            <label htmlFor="normal" className="btn">
-                              normal
-                            </label>
-                          </div>
-                          <div className=" d-flex justify-content-center align-items-center ">
-                            <input
-                              className=""
-                              type="radio"
-                              id="urgent"
-                              name="type"
-                              value="urgent"
-                              checked={type === "urgent"}
-                              onChange={handleTypeChange}
-                            />
-                            <label htmlFor="urgent" className="btn me-auto">
-                              urgent
-                            </label>
-                          </div>
                         </div>
                       </div>
                     </div>
@@ -323,7 +354,7 @@ const ProfileDoctor = () => {
                 <div className="text-center mb-5 ro">
                   <button
                     type="button"
-                    className="btnConfirm w-50 rounded-pill"
+                    className="btnReservation w-50 rounded-pill"
                     data-bs-dismiss="modal"
                   >
                     confirm Reservation
