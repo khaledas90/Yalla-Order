@@ -1,64 +1,69 @@
 .ContactUs .card {
-  border-radius: 25px;
-  margin-top: 125px;
+    border-radius: 25px;
+    margin-top: 125px;
 }
 
 .ContactUs h1 {
-  font-weight: 700;
-  margin-bottom: 25px;
+    font-weight: 700;
+    margin-bottom: 25px;
 }
 
 .ContactUs h6 {
-  text-align: center;
-  font-size: 23px;
-  margin-bottom: 10px;
-  color: #fd7e7e;
-  text-transform: capitalize;
+    text-align: center;
+    font-size: 23px;
+    margin-bottom: 10px;
+    color: #fd7e7e;
+    text-transform: capitalize;
+}
+
+.ar {
+    text-align: right;
+    direction: rtl;
 }
 
 .ContactUs h6 span {
-  color: #3a98ea;
+    color: #3a98ea;
 }
 
 .ContactUs input {
-  margin-bottom: 18px;
+    margin-bottom: 18px;
 }
 
 .ContactUs textarea {
-  border-radius: 10px !important;
-  margin-bottom: 15px;
+    border-radius: 10px !important;
+    margin-bottom: 15px;
 }
 
 .ContactUs .Code_country {
-  border: 1px solid #7c7b7b;
-  padding: 17px 15px;
-  border-radius: 50px;
-  margin-right: 10px;
-  margin-top: -22px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #7c7b7b;
+    border: 1px solid #7c7b7b;
+    padding: 17px 15px;
+    border-radius: 50px;
+    margin-right: 10px;
+    margin-top: -22px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #7c7b7b;
 }
 
 .ContactUs .btn-contact {
-  padding: 10px;
-  font-size: 16px;
-  border: none;
-  background-color: #fd7e7e;
-  color: #fefefe;
-  transition: all 0.4s;
-  font-weight: 600;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    background-color: #fd7e7e;
+    color: #fefefe;
+    transition: all 0.4s;
+    font-weight: 600;
 }
 
 .ContactUs .btn-contact:hover {
-  background-color: #3a98ea;
+    background-color: #3a98ea;
 }
 
 .ContactUs .Btn a {
-  display: contents;
+    display: contents;
 }
 
 .ContactUs .img_contact img {
-  width: 220px;
-  margin: 21px 0;
+    width: 220px;
+    margin: 21px 0;
 }

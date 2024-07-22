@@ -6,6 +6,7 @@ import apiAuthenticate from "../../services/authentication/apiAuthenticate";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import NavRestaurants from "../NavRestaurants/NavRestaurants";
+import { useTranslation } from "react-i18next";
 
 export default function ContactUs() {
   const navigate = useNavigate();
@@ -74,21 +75,25 @@ export default function ContactUs() {
   const getInputClassName = (touched, error) =>
     `form-control rounded-pill px-4 py-3 ${touched && error ? 'border-danger' : touched ? 'border-info' : 'border-secondary'}`;
 
+  // { t('') }
+  const { t } = useTranslation();
+
+  const lang = localStorage.getItem("i18nextLng");
   return (
     <>
-      <div className="ContactUs Main_bg">
+      <div className={` ContactUs Main_bg  `}>
         <NavRestaurants />
         <div className="container p-5">
           <div className="row justify-content-center">
             <div className="col-lg-7">
               <div className="card p-4">
-                <h1 className="text-center my-2">CONTACT US</h1>
-                <h6>Need <span>help?</span></h6>
-                <form className="py-5 px-4" onSubmit={formik.handleSubmit}>
+                <h1 className="text-center my-2">{t('CONTACT US')}</h1>
+                <h6>{t('Need')} <span>{t('help?')}</span></h6>
+                <form className={`py-5 px-4 ${lang === "ar" ? "ar" : ""}`} onSubmit={formik.handleSubmit}>
                   <div className="form-group my-2">
                     <input
                       type="text"
-                      placeholder="First Name"
+                      placeholder={t('First Name *')}
                       className={getInputClassName(formik.touched.firstName, formik.errors.firstName)}
                       {...formik.getFieldProps('firstName')}
                     />
@@ -99,7 +104,7 @@ export default function ContactUs() {
                   <div className="form-group my-2">
                     <input
                       type="text"
-                      placeholder="Last Name"
+                      placeholder={t('Last Name *')}
                       className={getInputClassName(formik.touched.lastName, formik.errors.lastName)}
                       {...formik.getFieldProps('lastName')}
                     />
@@ -110,7 +115,7 @@ export default function ContactUs() {
                   <div className="form-group my-2">
                     <input
                       type="email"
-                      placeholder="Business Email *"
+                      placeholder={t('Email *')}
                       className={getInputClassName(formik.touched.email, formik.errors.email)}
                       {...formik.getFieldProps('email')}
                     />
@@ -123,7 +128,7 @@ export default function ContactUs() {
                     <input
                       type="tel"
                       required
-                      placeholder="Phone Number *"
+                      placeholder={t('Phone *')}
                       className={getInputClassName(formik.touched.phone, formik.errors.phone)}
                       {...formik.getFieldProps('phone')}
                     />
@@ -134,7 +139,7 @@ export default function ContactUs() {
                   <div className="form-group my-2">
                     <textarea
                       required
-                      placeholder="Message"
+                      placeholder={t('Message *')}
                       className={getInputClassName(formik.touched.message, formik.errors.message)}
                       {...formik.getFieldProps('message')}
                     />
@@ -144,7 +149,7 @@ export default function ContactUs() {
                   </div>
                   <div className="Btn d-grid">
                     <button type="submit" className="btn btn-primary btn-contact btn-block rounded-pill py-3 font-weight-bold display-6">
-                      Send
+                      {t('Send')}
                     </button>
                   </div>
                 </form>

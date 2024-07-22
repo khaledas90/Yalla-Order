@@ -43,7 +43,7 @@ a {
     background-image: url("./assets/bg-home.png");
     background-repeat: no-repeat;
     background-size: cover;
-    min-height: 60vh;
+    min-height: 85vh;
 }
 
 .Main_bg_profile {

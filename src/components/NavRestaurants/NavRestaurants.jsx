@@ -9,7 +9,7 @@ import { Link, NavLink } from "react-router-dom";
 import FavRestaurant from "../favorite-restaurants/FavRestaurant";
 import Bag from "../bag/Bag";
 import LanguageMenu from "../LanguageSwitch/LanguageMenu";
-import ProfileMenu from "../Profile/ProfileMenu";
+import ProfileMenuRestaurant from "../Profile/ProfileMenuResturant";
 import { fetchFavoritesList } from "../../services/apiRestaurant";
 
 
@@ -123,7 +123,7 @@ function NavRestaurants() {
                   />
                 )}
                 {icon === "language" && <LanguageMenu />}
-                {icon === "profile" && <ProfileMenu />}
+                {icon === "profile" && <ProfileMenuRestaurant />}
               </div>
             </div>
           ))

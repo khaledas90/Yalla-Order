@@ -109,6 +109,7 @@
     "What": "What",
     "are you waiting for some?": "are you waiting for some?",
     "are you hungry?": "are you hungry?",
+    "Do you have a cold?": "Do you have a cold?",
     "Our team is always ready to prepare your food at any time. Discover our restaurants now!  We have delivery, offers and discounts.": "Our team is always ready to prepare your food at any time. Discover our restaurants now!  We have delivery, offers and discounts.",
     "Explore": "Explore",
     "Do not worry, we are here to help you. Book your consultation quickly and easily.": "Do not worry, we are here to help you. Book your consultation quickly and easily.",
@@ -130,7 +131,23 @@
     "Login": "Login",
     "Enter your Email": "Enter your Email",
     "Enter your Password": "Enter your Password",
-    "Don't have an account?": "Don't have an account?"
-
+    "Don't have an account?": "Don't have an account?",
+    "Book your medical consultation now and enjoy comfort and safety": "Book your medical consultation now and enjoy comfort and safety",
+    "Book easily": "Book easily",
+    "100+ Clinics": "100+ Clinics",
+    "1000+ Doctors": "1000+ Doctors",
+    "We value": "We value",
+    "our patients": "our patients",
+    "and doctors": "and doctors",
+    "Register or log in to our portal": "Register or log in to our portal",
+    "Find the clinic you want": "Find the clinic you want",
+    "Choose the appropriate doctor and appointment": "Choose the appropriate doctor and appointment",
+    "Arrive on time and receive excellent medical care": "Arrive on time and receive excellent medical care",
+    "Login a partner": "Login a partner",
+    "CONTACT US": "CONTACT US",
+    "Need": "Need",
+    "help?": "help?",
+    "Message *": "Message *",
+    "Send": "Send"
 
 }

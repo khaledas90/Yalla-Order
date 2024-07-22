@@ -15,7 +15,7 @@
 
 .ar {
     direction: rtl;
-    unicode-bidi: bidi-override;
+    text-align: center;
 }
 
 .cabinSketchRegular {

@@ -10,18 +10,23 @@ import location from "../../assets/Location.svg";
 import welcomeImg from "../../assets/Welcome.svg";
 import { Col, Container, Row } from "react-bootstrap";
 
+import { useTranslation } from "react-i18next";
+
 function HeroMedical() {
+
+  const { t } = useTranslation();
+
+  const lang = localStorage.getItem("i18nextLng")
   return (
-    <div className="hero">
+    <div className={`hero ${lang === "ar" ? "ar" : ""}`}>
       <div className="container">
         <div className="row">
           <div className="col-12 col-lg-6">
             <div className="content">
               <div className="left-hero">
                 <h1 className="text-center text-lg-start m-auto mb-5">
-                  {" "}
-                  Book your medical consultation now and enjoy comfort and
-                  safety.
+                  {t("Book your medical consultation now and enjoy comfort and safety")}
+
                 </h1>
                 <div className="inputDiv inputDivHome ">
                   <SearchRestaurants
@@ -56,7 +61,7 @@ function HeroMedical() {
                   >
                     <div className="item d-flex align-items-center">
                       <img src={book} alt="features" />
-                      <p>Book easily</p>
+                      <p>  {t('Book easily')}</p>
                     </div>
                   </Col>
                   <Col
@@ -67,7 +72,7 @@ function HeroMedical() {
                   >
                     <div className="item d-flex align-items-center">
                       <img src={homeImg} alt="features" />
-                      <p>Daily Discount</p>
+                      <p> {t('Daily Discount')}</p>
                     </div>
                   </Col>
                   <Col
@@ -78,7 +83,7 @@ function HeroMedical() {
                   >
                     <div className="item d-flex align-items-center">
                       <img src={daily} alt="features" />
-                      <p>100+ Clinics</p>
+                      <p> {t('100+ Clinics')}</p>
                     </div>
                   </Col>
                   <Col
@@ -89,7 +94,7 @@ function HeroMedical() {
                   >
                     <div className="item d-flex align-items-center">
                       <img src={doctors} alt="features" />
-                      <p>1000+ Doctors</p>
+                      <p> {t('1000+ Doctors')}</p>
                     </div>
                   </Col>
                 </Row>
