@@ -363,7 +363,7 @@ const ProfileDoctor = () => {
               </div>
             </div>
           </div>
-          ]
+
           <div className="reviews px-5">
             <div className="reviewsHeader">
               {lang === "ar" ? <p>{t("Reviews")}</p> : <p>{t("Reviews")}</p>}
@@ -423,15 +423,15 @@ const ProfileDoctor = () => {
                   </div>
                   <div className="userDetails">
                     <div>
-                      <p style={{ fontWeight: "500" }}>ssssssssssssssssss</p>
+                      <p style={{ fontWeight: "500" }}>f</p>
                       <p style={{ color: "#ddd", fontWeight: "500" }}>
                         {t("customer")}
                       </p>
                     </div>
                   </div>
                   <div className="comment">
-                    <p>ddddddd</p>
-                    <p>bbbbbbbbbbbbbb</p>
+                    <p>r</p>
+                    <p>12</p>
                   </div>
                 </div>
               </div>

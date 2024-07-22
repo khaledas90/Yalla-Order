@@ -14,7 +14,6 @@ const ClinicsItems = () => {
   const { clinicsDetails } = useSelector((state) => state.clinicsDetails);
 
   useEffect(() => {
-    console.log(clinicsDetails);
     const controller = new AbortController();
     const signal = controller.signal;
     dispatch(actShowClinicsDetails(id, { signal }));
