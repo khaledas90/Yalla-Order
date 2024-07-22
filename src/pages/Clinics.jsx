@@ -10,17 +10,19 @@ function Clinics() {
     <div className="Clinics">
       <Helmet>
         <title>Clinics</title>
-        <meta name="description" content="Discover the best Clinics around you." />
+        <meta
+          name="description"
+          content="Discover the best Clinics around you."
+        />
       </Helmet>
       <div className="Main_bg">
         <NavClinics />
-        <div className='inputDiv'>
+        <div className="inputDiv">
           <SearchRestaurants
             pageAddress={"Clinics"}
             placeholder={"Find your Clinics.."}
             btnText={"Search"}
             icon={Search}
-
           />
         </div>
       </div>

@@ -1,16 +1,30 @@
 import { configureStore } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
+import { persistReducer } from "redux-persist";
+import { combineReducers } from "@reduxjs/toolkit";
 import UserSlice from "./SliceUser";
 import ClinicsCategorySlice from "./ClinicsCatgory/ClinicsCatgorySlice";
 import ClinicsCategoryByIdSlice from "./ClinicsCategoryById/ClinicsCategoryByIdSlice";
 import showClinicsDetailsSlice from "./showClinicsDetails/showClinicsDetailsSlice";
+import profileDoctorsSlice from "./ProfilsDoctors/profileDoctorsSlice";
 
-const store = configureStore({
-  reducer: {
-    User: UserSlice,
-    ClinicsCategory: ClinicsCategorySlice,
-    ClinicsCategoryById: ClinicsCategoryByIdSlice,
-    clinicsDetails: showClinicsDetailsSlice,
-  },
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const reducer = combineReducers({
+  User: UserSlice,
+  ClinicsCategory: ClinicsCategorySlice,
+  ClinicsCategoryById: ClinicsCategoryByIdSlice,
+  clinicsDetails: showClinicsDetailsSlice,
+  doctorData: profileDoctorsSlice,
+});
+
+const persistedReducer = persistReducer(persistConfig, reducer);
+
+export const store = configureStore({
+  reducer: persistedReducer,
 });
 
 export default store;

@@ -1,16 +1,33 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import Helmet from "react-helmet";
 import ProfileDoctor from "../components/ProfileDoctor/ProfileDoctor";
-import doctor1 from "../assets/drRamy.svg";
-import iconRate from "../assets/iconRate.svg";
-import iconlight from "../assets/imdIconLight.svg";
+import ReactStars from "react-rating-stars-component";
+// import loction from "../assets/locationDoctor.svg";
 import "../components/ProfileDoctor/ProfileDoctor.css";
 
-import Loading from "../components/Loading/Loading";
-
 import NavClinics from "../components/NavClinics/NavClinics";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { actProfileDoctors } from "../store/ProfilsDoctors/profileDoctorsSlice";
 
 function ProfileDoctors() {
+  const [clinicRating, setClinicRating] = useState();
+  const dispatch = useDispatch();
+  const params = useParams();
+  const id = params.id;
+  const doctorData = useSelector(
+    (state) => state.doctorData.profileDoctors.Doctordetails
+  );
+
+  const ratingChanged = (newRating) => {
+    setClinicRating(newRating);
+  };
+
+  useEffect(() => {
+    dispatch(actProfileDoctors(id));
+  }, [dispatch, id]);
+
   return (
     <div className="ProfileDoctors">
       <Helmet>
@@ -28,27 +45,56 @@ function ProfileDoctors() {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <img
-                //   src={clinicDetails[0].logo}
-                alt=""
-                className={"imgdoctor"}
-              />
+              <img src={doctorData.image} alt="" className="w-100" />
+
+              <img src="" alt="" className="w-25 mt-5" />
               <div className="pt-5 d-flex align-items-center justify-content-center">
-                <span className="text-black-50 fs-6 fw-light">4.0 Rating</span>
-                <img src={iconRate} className={"imgicon"} alt="" />
+                <div className="rating">
+                  <div className="rating">
+                    <span className="fw-blod text-warning">
+                      {clinicRating} Rating
+                    </span>
+                    <ReactStars
+                      count={5}
+                      onChange={ratingChanged}
+                      size={40}
+                      a11y={true}
+                      isHalf={true}
+                      emptyIcon={<i className="far fa-star" />}
+                      halfIcon={<i className="fa fa-star-half-alt" />}
+                      fullIcon={<i className="fa fa-star" />}
+                      activeColor="#ffd700"
+                      value={4}
+                    />
+                  </div>
+                </div>
               </div>
-              <img src={doctor1} alt="" className={"imgdoctor"} />
-              <div className="pt-5 d-flex align-items-center justify-content-center">
-                <span className="text-black-50 fs-6 fw-light">4.0 Rating</span>
-                <img src={iconRate} className={"imgicon"} alt="" />
+              <h4 className="mt-2 lh-1 fs-3">Dr. {doctorData.name}</h4>
+              <div className="fw-blod">
+                <p>General ophthalmologist</p>
+                <p>Days: {doctorData.days} </p>
+                <p>startTime: {doctorData.starttime}</p>
+                <p>endTime: {doctorData.endtime}</p>
+                <p>Detection per: {doctorData.waitingtime}</p>
               </div>
-              <h4 className="mt-2 lh-1 fs-3">Dr. Ramy Shokry</h4>
-              <p>General ophthalmologist</p>
-              <p>Sut,Sun,Mon 10:30 AM-3:30</p>
-              <p>Detection per: 20min</p>
-              <p className="fw-bold text-black-50">fees: 200 L.E (Clinic)</p>
-              <img src={iconlight} alt="" className={"rateLight"} />
-              <img src={iconlight} alt="" className={"rateLight"} />
+              <p className="fw-bold text-black-50">
+                fees: {doctorData.fees} L.E
+              </p>
+            </div>
+          </div>
+          <div className=" my-5">
+            <div className="ps-3 ">
+              <h3>Clinic address</h3>
+            </div>
+            <div className="pt-3  d-flex align-items-center     ">
+              <img src="" className="pe-3" alt="" />
+              <span className={"textSpan"}>{doctorData.Addressclinic}</span>
+            </div>
+            <div className="pt-3 ps-2">
+              <h3 className="mb-3 mt-4">Overview Specialty Dr</h3>
+              <p className={"textP"}>
+                Dr. {doctorData.name}, {doctorData.overview}
+              </p>
             </div>
           </div>
         </div>

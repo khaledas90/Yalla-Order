@@ -16,7 +16,7 @@ function FavCuisinesMedical() {
     dispatch(actClinicsCatgoty());
   }, [dispatch]);
 
-  var settings = {
+  const settings = {
     dots: true,
     infinite: true,
     speed: 500,

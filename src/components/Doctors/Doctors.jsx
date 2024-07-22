@@ -28,7 +28,7 @@ const Doctors = () => {
             <div className="col-lg-3 col-sm-12 col-md-6" key={e.id}>
               <Link
                 className="text-decoration-none"
-                to={`/profileDoctor/${id}`}
+                to={`/profileDoctor/${e.id}`}
               >
                 <div className="card px-3 rounded-5 pb-3">
                   <div className="d-flex justify-content-between mt-3 mb-2">

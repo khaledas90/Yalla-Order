@@ -2,18 +2,19 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  clinicsDetails: [],
+  profileDoctors: [],
   error: null,
   loading: "idle",
 };
 
-export const actShowClinicsDetails = createAsyncThunk(
-  "places/clinic/show/details",
+export const actProfileDoctors = createAsyncThunk(
+  "places/clinic/doctor/list",
   async (id, thunkAPI) => {
     const { rejectWithValue, signal } = thunkAPI;
     try {
+      //   console.log(id);
       const res = await axios.get(
-        `https://insta-order-site.web-allsafeeg.com/api/places/clinic/show/details/${id}`,
+        `https://insta-order-site.web-allsafeeg.com/api/places/clinic/doctor/list/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -22,40 +23,41 @@ export const actShowClinicsDetails = createAsyncThunk(
           signal,
         }
       );
-
+      //   console.log(res.data.data);
       return res.data.data;
     } catch (error) {
+      console.error(error, "API call error");
       return rejectWithValue(
-        error.response ? error.response.data : error.message
+        error.response ? error.response.data.message : error.message
       );
     }
   }
 );
 
-const showClinicsDetailsSlice = createSlice({
-  name: "clinicsDetails",
+const profileDoctorsSlice = createSlice({
+  name: "profileDoctors",
   initialState,
   reducers: {
     categoriesRecordsCleanUp: (state) => {
-      state.ClinicsCategoryById = [];
+      state.profileDoctors = [];
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(actShowClinicsDetails.pending, (state) => {
+      .addCase(actProfileDoctors.pending, (state) => {
         state.loading = "pending";
         state.error = null;
       })
-      .addCase(actShowClinicsDetails.fulfilled, (state, action) => {
+      .addCase(actProfileDoctors.fulfilled, (state, action) => {
         state.loading = "success";
-        state.clinicsDetails = action.payload;
+        state.profileDoctors = action.payload; // Corrected to profileDoctors
       })
-      .addCase(actShowClinicsDetails.rejected, (state, action) => {
+      .addCase(actProfileDoctors.rejected, (state, action) => {
         state.loading = "failed";
         state.error = action.payload || action.error.message;
       });
   },
 });
 
-export default showClinicsDetailsSlice.reducer;
-export const { categoriesRecordsCleanUp } = showClinicsDetailsSlice.actions;
+export default profileDoctorsSlice.reducer;
+export const { categoriesRecordsCleanUp } = profileDoctorsSlice.actions;

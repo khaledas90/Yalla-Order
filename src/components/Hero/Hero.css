@@ -79,8 +79,11 @@
     .features {
         bottom: -500px;
     }
+    .HomeMedical .left-hero .inputDivHome{
+        margin-top: 23pc;
+    }
     .hero {
-        height: 160vh;
+        height: 135vh;
     }
     .hero h1 {
         height: 280px;
