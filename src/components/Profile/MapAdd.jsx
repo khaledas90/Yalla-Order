@@ -7,6 +7,7 @@ import "leaflet/dist/leaflet.css";
 import Loader from "../loader/Loader";
 import toast, { Toaster } from "react-hot-toast";
 import './profile.css';
+import { addUserAddress } from "../../services/apiRestaurant";
 
 const markerIcon = new L.Icon({
   iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
@@ -48,6 +49,11 @@ const MapAdd = () => {
   const [placeName, setPlaceName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [searchLocation, setSearchLocation] = useState(null);
+  const [address, setAddress] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -78,6 +84,22 @@ const MapAdd = () => {
       toast.error("Error fetching search location");
     }
   };
+  const handleAddAddress = async (address) => {
+    setLoading(true);
+    setError(null);
+    setSuccessMessage(null);
+
+    try {
+      const response = await addUserAddress(address);
+      setSuccessMessage('Address added successfully!');
+      console.log('Address added:', response);
+    } catch (error) {
+      console.error('Error adding address:', error);
+      setError('Failed to add address');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSaveLocation = async () => {
     if (markerPosition) {
@@ -96,6 +118,8 @@ const MapAdd = () => {
         } else {
           const id = getNextId(); // Get the next ID
           dispatch(saveLocation({ id, placeName: place }));
+          console.log(place)
+          handleAddAddress(place)
           toast.success("Location saved successfully");
         }
       } catch (error) {

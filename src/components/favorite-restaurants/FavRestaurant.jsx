@@ -4,7 +4,6 @@ import { fetchFavoritesList } from "../../services/apiRestaurant";
 import EmptyFav from "./EmptyFav";
 import { Spinner } from "react-bootstrap";
 function FavRestaurant({ favorites, loadingFavorites, favoritesError }) {
-  // console.log("fav from fav",favorites)
   if (favorites.length === 0) return <EmptyFav />;
   if (loadingFavorites) return <Spinner />;
   return (
@@ -12,14 +11,14 @@ function FavRestaurant({ favorites, loadingFavorites, favoritesError }) {
       <p className="favHeader">My Favorite</p>
       <div className="fav-content">
         {favorites?.map((fav) => (
-          <>
-            <p key={fav.product_name} className="restaurant-name">
+          <div key={favorites.indexOf(fav)}>
+            <p  className="restaurant-name">
               {fav.restaurant_name}- <span>{fav.restaurant_address}</span>
             </p>
-            <div key={fav.product_name} className="favItem">
+            <div  className="favItem">
               <p>{fav.product_name}</p>
             </div>
-          </>
+          </div>
         ))}
       </div>
     </div>

@@ -12,11 +12,13 @@ import SausageHawawshi2 from "../../assets/Sausage Hawawshi2.png";
 import rate from "../../assets/rate.svg";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import { addItemToFavorites, fetchAllCategories, fetchAllMenuItems, fetchMenuItems, fetchRestaurantById } from "../../services/apiRestaurant";
+import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
+import { addItemToFavorites, fetchAllCategories, fetchAllMenuItems, fetchFavoritesList, fetchMenuItems, fetchRestaurantById } from "../../services/apiRestaurant";
 import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
 import { useTranslation } from "react-i18next";
 import Loader from "../loader/Loader";
 import Spinner from "../loader/Spinner";
+import toast, { Toaster } from "react-hot-toast";
 const Menu = [
     {
         id: 1, DishName: "Sausage Hawawshi", category: "Hawawshi", image: SausageHawawshi1, ingradiantes: "Dough stuffed with Oriental susage , Mozzarella cheese , Roumi cheese and vegetables", price: "EGP 95.00"
@@ -53,6 +55,10 @@ function RestaurantMenu() {
     const [loadingFavorite, setLoadingFavorite] = useState(false);
     const [favoriteError, setFavoriteError] = useState(null);
     const [favoriteSuccess, setFavoriteSuccess] = useState(false);
+
+    const [favoriteItems, setFavoriteItems] = useState([]);
+  const [isLoadingFavorites, setIsLoadingFavorites] = useState(false);
+  const [fetchFavoritesError, setFetchFavoritesError] = useState(null);
   
     const {t} = useTranslation()
     const lang = localStorage.getItem("i18nextLng");
@@ -74,16 +80,53 @@ function RestaurantMenu() {
         const response = await addItemToFavorites(productId);
   
         setFavoriteSuccess(true);
-        console.log('Product added to favorites successfully');
+        handleFetchFavorites()
+        toast.success('Product added to favorites successfully!')
         return response;
       } catch (error) {
         console.error('Error adding product to favorites:', error);
+        toast.error("Failed to add product to favorites!")
         setFavoriteError('Failed to add product to favorites');
         throw error;
       } finally {
         setLoadingFavorite(false);
       }
     }
+    useEffect(() => {
+      const fetchFavorites = async () => {
+        try {
+          setIsLoadingFavorites(true);
+          setFetchFavoritesError(null);
+  
+          const data = await fetchFavoritesList();
+  
+          setFavoriteItems(data.data[0].items);
+        } catch (error) {
+          console.error("Error fetching favorites list:", error);
+          setFetchFavoritesError("Failed to fetch favorites list");
+        } finally {
+          setIsLoadingFavorites(false);
+        }
+      };
+  
+      fetchFavorites();
+    }, []); 
+
+    async function handleFetchFavorites(){
+      try {
+        setIsLoadingFavorites(true);
+        setFetchFavoritesError(null);
+  
+        const data = await fetchFavoritesList();
+  
+        setFavoriteItems(data.data[0].items);
+      } catch (error) {
+        console.error("Error fetching favorites list:", error);
+        setFetchFavoritesError("Failed to fetch favorites list");
+      } finally {
+        setIsLoadingFavorites(false);
+      }
+    };
   
 
 
@@ -94,6 +137,7 @@ function RestaurantMenu() {
             setLoading(true); 
             const data = await fetchRestaurantById(id);
             setRestaurant(data.data);
+            console.log(data.data)
             setError(null); 
           } catch (error) {
             console.error('Error fetching restaurant:', error);
@@ -189,11 +233,15 @@ function RestaurantMenu() {
         //       setLoadingMenu(false);
         //     }
         //   };
-    
+    if(error) return (<h1>Bad Connection</h1>)
 
     return (
 
         <div className="restaurantsMenu">
+         <Toaster
+          position="top-center"
+          reverseOrder={false}
+                />
             <Helmet>
             {lang === "ar"? <title>{t("Menu")} {restaurantInfo.name}</title> : 
             <title>{restaurantInfo.name} {t("Menu")}</title>
@@ -211,12 +259,12 @@ function RestaurantMenu() {
 
             <div className="restaurant-overview">
                 <div className="img-wrapper">
-                    <img src={CurrentRestaurant.image} alt={CurrentRestaurant.name} />
+                    <img src={restaurantInfo.logo} alt={restaurantInfo.name} />
                 </div>
 
             </div>
             <div className="rating">
-                <span>{RestaurantRating} Rating</span>
+                <span>{totalRate} Rating</span>
                 <ReactStars
                     count={5}
                     onChange={ratingChanged}
@@ -227,7 +275,7 @@ function RestaurantMenu() {
                     halfIcon={<i className="fa fa-star-half-alt" />}
                     fullIcon={<i className="fa fa-star" />}
                     activeColor="#ffd700"
-                    value={4}
+                    value={3}
                 />
 
             </div>
@@ -280,7 +328,7 @@ function RestaurantMenu() {
                                                     <p className="ingradiantes">{el['product descrption']}</p>
                                                     <p className="price">{el['product price']} EGP</p>
                                                 </div>
-                                                <button onClick={(e)=> handleAddToFavorites(e,el.id) } className="favBtn"><FavoriteBorderOutlinedIcon /></button>
+                                                <button onClick={(e)=> handleAddToFavorites(e,el.id) } className="favBtn">{favoriteItems?.some((item => item.product_name === el['product name'])) ? <FavoriteOutlinedIcon/> : <FavoriteBorderOutlinedIcon /> }</button>
 
                                             </div>
                                             </Link>

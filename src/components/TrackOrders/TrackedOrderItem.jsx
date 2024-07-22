@@ -15,7 +15,7 @@ function TrackedOrderItem() {
     const [orderStatus, setOrderStatus] = useState(null);
     const {id} = useParams();
     const {t} = useTranslation();
-    console.log(orderStatus)
+
 
     function handleStatus(data){
     data.accept_statue === "1" ? 
@@ -34,9 +34,7 @@ function TrackedOrderItem() {
     
             const data = await trackOrder(id);
             handleStatus(data.data);
-            console.log('Track order response:', data);
           } catch (error) {
-            console.error('Error tracking order:', error);
             setError('Failed to track order');
           } finally {
             setLoading(false);

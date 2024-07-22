@@ -16,6 +16,7 @@ import { addReview, fetchRestaurantById } from "../../services/apiRestaurant";
 import { useTranslation } from "react-i18next";
 import Modal from "../modal/Modal";
 import Loader from "../loader/Loader";
+import toast, { Toaster } from "react-hot-toast";
 
 function RestaurantItems() {
   // slick slider
@@ -76,7 +77,8 @@ function RestaurantItems() {
     event.preventDefault();
     try {
       const result = await addReview(id, comment, RestaurantRating);
-      console.log("Review added successfully:", result);
+      toast.success('Review added successfully!')
+
       setComment("");
       setRestaurantRating(0);
     } catch (error) {
@@ -114,10 +116,12 @@ function RestaurantItems() {
     navigate(`/restaurants/${id}/menu?restaurant=${restaurantInfo.name}`);
   };
 
-  console.log(restaurant);
-  console.log(restaurantInfo.name);
   return (
     <div className={`Restaurant-item ${lang === "ar" ? "ar" : ""}`}>
+    <Toaster
+    position="top-center"
+    reverseOrder={false}
+    />
       <Helmet>
         {lang === "ar" ? (
           <title>
@@ -132,7 +136,7 @@ function RestaurantItems() {
       <div className="inputDiv inputDivRestaurantItem">
         <SearchRestaurants
           Pagetext={t("Select your area to see the restaurant menu")}
-          pageAddress={"RESTAURANTES"}
+          pageAddress={t("Restaurant")}
           placeholder={"Find your Restaurant.."}
           btnText={"Branch Menu"}
           icon={locationOne}

@@ -13,6 +13,10 @@
     font-weight: bold;
     width: 150px;
 }
+.navBar .nav-links.ar{
+    direction: rtl;
+    unicode-bidi: bidi-override;
+}
 
 .navBar .logo img {
     width: 100%;

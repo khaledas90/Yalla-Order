@@ -15,12 +15,14 @@
 .hero .left-hero {
     margin-top: 125px;
 }
-
-.ar {
+.hero.ar{
     direction: rtl;
     unicode-bidi: bidi-override;
-    text-align: right;
 }
+/* .ar {
+    
+    text-align: right;
+} */
 
 .cardIcons {
     position: relative;
@@ -87,7 +89,9 @@
     }
     .hero h1 {
         height: 280px;
+        font-size: 45px;
     }
+    
     .contentImg img {
         display: none;
     }

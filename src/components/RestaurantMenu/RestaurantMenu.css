@@ -1,6 +1,23 @@
 .restaurantsMenu .img-wrapper {
-  margin-top: 60px;
+  width: 375px;
+  height: 331px;
+  margin: -20px auto 0;
+  border-radius: 22px;
+  border: 3px solid var(--white-color);
+  overflow: hidden;
 }
+.restaurantsMenu .img-wrapper img{
+  width: 100%;
+  height: 100%;
+}
+.restaurantsMenu .rating{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
 
 .restaurantsMenu .TitleMenuPage h1 {
   font-family: "Cabin Sketch", sans-serif;
@@ -276,6 +293,9 @@
   margin-top: 40px;
   color: #ddd;
   font-weight: 500;
+}
+.favBtn svg{
+  color: var(--main-color);
 }
 
 @media screen and (min-width: 993px) and (max-width: 1200px) {

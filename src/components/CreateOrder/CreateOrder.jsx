@@ -3,6 +3,7 @@ import "./CreateOrder.css";
 import { addToCart } from "../../services/apiRestaurant";
 import { useOrders } from "../../context/OrderProvider";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
     section: {
@@ -33,12 +34,9 @@ function CreateOrder({orderDetails,productName,productId}) {
     const [successMessage, setSuccessMessage] = useState('');
     const {t} = useTranslation()
     const lang = localStorage.getItem("i18nextLng");
+    const Navigate = useNavigate();
     const {orders,addOrder} = useOrders();
-    console.log(size_id)
-    console.log(sizes)
-    console.log(checkedExtras)
-    console.log(resturant)
-    console.log(orders)
+
     function handleChangeExtras(e){
         const {value,checked} = e.target;
         if (checked) {
@@ -86,11 +84,11 @@ function CreateOrder({orderDetails,productName,productId}) {
             item : checkedExtras,
             sauce:checkedSauce
           });
-    
+          Navigate(`/HomeRestaurants`)
           setSuccessMessage('Item added to cart successfully!');
           const newOrder = {...data.data,resturant,productName}
           addOrder(newOrder)
-          console.log('Add to cart response:', data);
+
         } catch (error) {
           console.error('Error adding to cart:', error);
           setError('Failed to add item to cart');

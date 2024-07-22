@@ -27,6 +27,7 @@ function OrderPage() {
           setLoading(true); // Start loading
           const data = await fetchOrderDetails(restaurantId,productId );
           setOrderDetails(data.data);
+          console.log(data.data)
           setError(null); // Clear any previous errors
         } catch (error) {
           console.error('Error fetching order details:', error);
@@ -38,7 +39,6 @@ function OrderPage() {
   
       getOrderDetails();
     }, [restaurantId, productId]);
-    console.log(orderDetails)
 
     if(loading) return <Loader/>
     const {additem,addsaui,resturant,sizes} = orderDetails;
@@ -62,21 +62,6 @@ function OrderPage() {
         <div className="img-wrapper">
             <img src="" alt="" />
         </div>
-
-    </div>
-    <div className="rating">
-        <span> Rating</span>
-        <ReactStars
-            count={5}
-            size={40}
-            a11y={true}
-            isHalf={true}
-            emptyIcon={<i className="far fa-star" />}
-            halfIcon={<i className="fa fa-star-half-alt" />}
-            fullIcon={<i className="fa fa-star" />}
-            activeColor="#ffd700"
-            value={4}
-        />
 
     </div>
 

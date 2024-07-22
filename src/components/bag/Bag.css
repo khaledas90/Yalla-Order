@@ -1,5 +1,5 @@
 .bag {
-    max-width: 522px;
+    width: 322px;
     border-radius: 22px;
     font-size: 22px;
     font-weight: 500;
@@ -79,7 +79,8 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 10px;
-    padding-right: 55px;
+  
+    
 }
 
 .bag .bagOverview li .value {
@@ -105,6 +106,15 @@
     border-left: 15px solid transparent;
     border-right: 15px solid transparent;
     border-bottom: 30px solid var(--main-color);
+}
+.bagBtns{
+    display: flex;
+    gap: 10px;
+}
+.bagBtns .delBtn{
+    border: none;
+    background-color: transparent;
+    
 }
 
 .emptyBag {

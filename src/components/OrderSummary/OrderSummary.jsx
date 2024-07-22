@@ -15,6 +15,7 @@ import PaymentOutlinedIcon from '@mui/icons-material/PaymentOutlined';
 import { use } from "i18next";
 import { useConfirmedOrder } from "../../context/ConfirmedOrderProvider";
 import { useOrders } from "../../context/OrderProvider";
+import { read_cookie } from "sfcookies";
 function OrderSummary() {
   const [orderSummary, setOrderSummary] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -34,20 +35,15 @@ const [confirmError, setConfirmError] = useState(null);
 const [successMessage, setSuccessMessage] = useState('');
 const {confirmedOrders,addConfirmedOrder} = useConfirmedOrder();
 const {deleteOrder} = useOrders();
+const address = read_cookie('locations');
+const Lastaddress = address[address.length-1]
 // const TotalPrice = selectedDeliveryMethod === "delivery" ? Number(orderSummary.Total) + Number(orderSummary['Delivery Fee']) : Number(orderSummary.Total);
-// console.log(orderId)
-// console.log(orderSummary)
-// console.log(selectedDeliveryMethod)
-// console.log(selectedPayMethod)
-// console.log(specail_request)
-console.log("confirmedOrders",confirmedOrders)
 useEffect(() => {
   const getOrderSummary = async () => {
     try {
       setLoading(true); // Start loading
       const data = await fetchOrderSummary(orderId);
       setOrderSummary(data.data);
-      console.log("summary : ",data.data)
       setError(null); // Clear any previous errors
     } catch (error) {
       console.error('Error fetching order summary:', error);
@@ -73,10 +69,10 @@ const handleConfirmOrder = async (e) => {
       specail_request: specail_request,
       delivery_method: selectedDeliveryMethod,
       pay_method: selectedPayMethod,
+      address : Lastaddress.placeName
     });
 
     setSuccessMessage('Order confirmed successfully!');
-    console.log('Confirm order response:', data);
     addConfirmedOrder({...data.data,restaurantName,productName})
     deleteOrder(data.data.id)
     Navigate(`/trackOrders/${data.data.id}`)
@@ -113,21 +109,6 @@ if (loading) {
         <div className="img-wrapper">
             <img src={orderSummary.Resturant_image} alt={orderSummary['Resturant Name']} />
         </div>
-
-    </div>
-    <div className="rating">
-        <span> Rating</span>
-        <ReactStars
-            count={5}
-            size={40}
-            a11y={true}
-            isHalf={true}
-            emptyIcon={<i className="far fa-star" />}
-            halfIcon={<i className="fa fa-star-half-alt" />}
-            fullIcon={<i className="fa fa-star" />}
-            activeColor="#ffd700"
-            value={4}
-        />
 
     </div>
 
@@ -172,7 +153,7 @@ if (loading) {
           <button>{t("Add New Address")}</button>
         </div>
         <div className="Address">
-          Alexandria, Smouha, Smouha Circle, Zohour Bargout Building, fourth 4, Apartment 2
+            {Lastaddress.placeName}
         </div>
       </div>
       <div className="requests">

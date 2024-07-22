@@ -64,7 +64,6 @@ function FavCuisinesRestaurant() {
         const data = await fetchCategories();
 
         setCategories(data.data);
-        console.log("Categories list:", data);
       } catch (error) {
         console.error("Error fetching categories list:", error);
         setCategoriesError("Failed to fetch categories list");
@@ -75,7 +74,6 @@ function FavCuisinesRestaurant() {
 
     fetchCategoriesList();
   }, []);
-  console.log(categories);
   if (loadingCategories) return <Loader />;
   return (
     <div className={`FavContainer ${lang === "ar" ? "rtl" : ""}`}>

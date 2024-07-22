@@ -148,6 +148,13 @@
     "Need": "Need",
     "help?": "help?",
     "Message *": "Message *",
-    "Send": "Send"
+    "Send": "Send",
+    "Home" : "Home",
+    "Become a Partner" : "Become a Partner",
+    "About us" : "About us",
+    "Edit Profile" : "Edit Profile",
+    "Log Out" : "Log Out",
+    "Saved Address" : "Saved Address",
+    "My Orders" : "My Orders"
 
 }
