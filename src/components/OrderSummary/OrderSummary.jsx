@@ -35,7 +35,7 @@ const [confirmError, setConfirmError] = useState(null);
 const [successMessage, setSuccessMessage] = useState('');
 const {confirmedOrders,addConfirmedOrder} = useConfirmedOrder();
 const {deleteOrder} = useOrders();
-const address = read_cookie('locations');
+const address = localStorage.getItem('locations');
 const Lastaddress = address[address.length-1]
 // const TotalPrice = selectedDeliveryMethod === "delivery" ? Number(orderSummary.Total) + Number(orderSummary['Delivery Fee']) : Number(orderSummary.Total);
 useEffect(() => {
@@ -153,7 +153,7 @@ if (loading) {
           <button>{t("Add New Address")}</button>
         </div>
         <div className="Address">
-            {Lastaddress.placeName}
+            {Lastaddress?.placeName}
         </div>
       </div>
       <div className="requests">

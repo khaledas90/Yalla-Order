@@ -12,6 +12,7 @@ import LanguageMenu from "../LanguageSwitch/LanguageMenu";
 import ProfileMenuRestaurant from "../Profile/ProfileMenuResturant";
 import { fetchFavoritesList } from "../../services/apiRestaurant";
 import { useTranslation } from "react-i18next";
+import { useLocalStorageState } from "../../hooks/useLocalStorageState";
 
 
 function NavRestaurants() {
@@ -26,10 +27,10 @@ function NavRestaurants() {
   });
   const [loadingFavorites, setLoadingFavorites] = useState(false);
   const [favoritesError, setFavoritesError] = useState(null);
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useLocalStorageState([],"FavItems");
   const [loadingBagItems, setLoadingBagItems] = useState(false);
   const [bagItemsError, setBagItemsError] = useState(null);
-  const [bagItems, setBagItems] = useState([]);
+  const [bagItems, setBagItems] = useLocalStorageState([],"BagItems");
   const {t} = useTranslation();
   const lang = localStorage.getItem('i18nextLng');
   console.log(lang)
