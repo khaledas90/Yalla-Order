@@ -16,7 +16,7 @@ export default function DownloadAppMedical() {
                         {t('Download our')} <br />  {t('application now!')}
                     </h2>
                     <p className={` ${lang === "ar" ? "ar" : ""} text-light pt-4`}>
-                        <span className="text-info ">{t('Enjoy')}</span>{t('the best foods some?')}
+                        <span className="text-info ">{t('Enjoy')} </span>{t('the best foods some?')}
                     </p>
                     <div className="d-flex gap-4 pt-4 ">
                         <>

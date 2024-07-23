@@ -1,5 +1,5 @@
 .fav {
-    max-width: 522px;
+    width: 322px;
     border-radius: 22px;
     font-size: 22px;
     font-weight: 500;
@@ -32,6 +32,8 @@
     align-items: center;
     gap: 30px;
     margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
 }
 
 .fav .favItem button {

@@ -10,8 +10,8 @@ function NavToPartnerRestaurant() {
             <div className="To-Partner">
                 <div className="details">
                     <h1>{t('BECOME ONE OF US?')}</h1>
-                    <p><span>{t('What')}</span>{t('are you waiting for some?')}</p>
-                    <Link to={"/LoginAPartner"} className="btn btn-primary BtnGoToLoginPartner btn-contact rounded-pill py-3 font-weight-bold display-6">Login a partner</Link>
+                    <p><span>{t('What')}</span> {t('are you waiting for some?')}</p>
+                    <Link to={"/LoginAPartner"} className="btn btn-primary BtnGoToLoginPartner btn-contact rounded-pill py-3 font-weight-bold display-6">{t("Login a partner")}</Link>
                 </div>
                 <img src={pizzaImg} alt="pizza" />
             </div>

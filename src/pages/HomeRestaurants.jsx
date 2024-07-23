@@ -7,6 +7,7 @@ import NavToPartnerRestaurant from "../components/NavToPartner/NavToPartnerResta
 import DownloadAppRestaurant from "../components/DownloadApp/DownloadAppRestaurant.jsx";
 import Explore from "../components/Explore/Explore.jsx";
 import NavRestaurants from "../components/NavRestaurants/NavRestaurants.jsx";
+import { Toaster } from "react-hot-toast";
 
 
 
@@ -14,7 +15,10 @@ function HomeRestaurants() {
 
     return (
         <main className="HomeRestaurants">
-
+        <Toaster
+  position="top-center"
+  reverseOrder={false}
+/>
             <Helmet>
                 <title>insta Order</title>
                 <meta name="description" content="Welcome to our service. Here you can find the best restaurants and clinics." />

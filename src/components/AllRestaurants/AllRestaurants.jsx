@@ -30,7 +30,6 @@ function AllRestaurants({restaurants,loading,error,setRestaurants,setLoading,set
 
     getRestaurants();
   }, []);
-  console.log(restaurants)
 
     function handleIncrease() {
         if (numToShow <= restaurants.length) {

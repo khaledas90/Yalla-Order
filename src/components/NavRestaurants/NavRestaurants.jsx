@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./NavRestaurants.css";
 import logoImg from "../../assets/Insta Order.svg";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -11,6 +11,8 @@ import Bag from "../bag/Bag";
 import LanguageMenu from "../LanguageSwitch/LanguageMenu";
 import ProfileMenuRestaurant from "../Profile/ProfileMenuResturant";
 import { fetchFavoritesList } from "../../services/apiRestaurant";
+import { useTranslation } from "react-i18next";
+import { useLocalStorageState } from "../../hooks/useLocalStorageState";
 
 
 function NavRestaurants() {
@@ -25,27 +27,32 @@ function NavRestaurants() {
   });
   const [loadingFavorites, setLoadingFavorites] = useState(false);
   const [favoritesError, setFavoritesError] = useState(null);
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useLocalStorageState([],"FavItems");
   const [loadingBagItems, setLoadingBagItems] = useState(false);
   const [bagItemsError, setBagItemsError] = useState(null);
-  const [bagItems, setBagItems] = useState([]);
+  const [bagItems, setBagItems] = useLocalStorageState([],"BagItems");
+  const {t} = useTranslation();
+  const lang = localStorage.getItem('i18nextLng');
+  console.log(lang)
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        setLoadingFavorites(true);
+        setFavoritesError(null);
 
-  const handleFetchFavorites = async () => {
-    try {
-      setLoadingFavorites(true);
-      setFavoritesError(null);
+        const data = await fetchFavoritesList();
 
-      const data = await fetchFavoritesList();
+        setFavorites(data.data[0].items);
+      } catch (error) {
+        console.error("Error fetching favorites list:", error);
+        setFavoritesError("Failed to fetch favorites list");
+      } finally {
+        setLoadingFavorites(false);
+      }
+    };
 
-      setFavorites(data.data[0].items);
-      console.log("Favorites list:", data.data[0].items);
-    } catch (error) {
-      console.error("Error fetching favorites list:", error);
-      setFavoritesError("Failed to fetch favorites list");
-    } finally {
-      setLoadingFavorites(false);
-    }
-  };
+    fetchFavorites();
+  }, []);
   const favCount = favorites.length;
   const bagCount = bagItems.length;
   const toggleMenu = () => {
@@ -67,21 +74,21 @@ function NavRestaurants() {
         </Link>
       </div>
       {token ? (
-        <ul className={`nav-links ${menuOpen ? "active" : ""}`}>
+        <ul className={`nav-links ${lang === "ar" ? "ar" : ""} ${menuOpen ? "active" : ""}`}>
           <li>
-            <NavLink to="/HomeRestaurants">Home</NavLink>
+            <NavLink to="/HomeRestaurants">{t("Home")}</NavLink>
           </li>
           <li>
-            <NavLink to="/restaurants">Restaurants</NavLink>
+            <NavLink to="/restaurants">{t("restaurants")}</NavLink>
           </li>
           <li>
-            <NavLink to="/BecomeAPartner">Become a Partner</NavLink>
+            <NavLink to="/BecomeAPartner">{t("Become a Partner")}</NavLink>
           </li>
           <li>
-            <NavLink to="/trackOrders">Track Orders</NavLink>
+            <NavLink to="/trackOrders">{t("TRACK ORDERS")}</NavLink>
           </li>
           <li>
-            <NavLink to="/AboutUs">About Us</NavLink>
+            <NavLink to="/AboutUs">{t("About us")}</NavLink>
           </li>
         </ul>
       ) : null}
@@ -91,7 +98,7 @@ function NavRestaurants() {
           ["favorite", "bag", "language", "profile"].map((icon) => (
             <div className="icon" key={icon} onClick={() => toggleDropdown(icon)}>
               {icon === "favorite" && (
-                <div className="iconContainer" onClick={handleFetchFavorites}>
+                <div className="iconContainer">
                   <FavoriteBorderOutlinedIcon />
                   {favCount !== 0 && <span className="Count">{favCount}</span>}
                 </div>
@@ -131,7 +138,7 @@ function NavRestaurants() {
           ["favorite", "language"].map((icon) => (
             <div className="icon" key={icon} onClick={() => toggleDropdown(icon)}>
               {icon === "favorite" && (
-                <div className="iconContainer" onClick={handleFetchFavorites}>
+                <div className="iconContainer">
                   <FavoriteBorderOutlinedIcon />
                   {favCount !== 0 && <span className="Count">{favCount}</span>}
                 </div>

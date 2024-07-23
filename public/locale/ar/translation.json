@@ -97,8 +97,8 @@
     "Daily Discount": "الخصم اليومي",
     "100+  Restaurants": "أكثر من 100 مطعم",
     "100+ Cuisines": "أكثر من 100 مطبخ",
-    "How We Work": "كيف نعمل مع",
-    "Our  Clients & Customers": "عملاءنا وعملاءنا",
+    "How We Work": "كيف نعمل ",
+    "Our  Clients & Customers": "عملاءنا و زبائننا",
     "Register or login in our portal": "قم بالتسجيل أو تسجيل الدخول في بوابتنا",
     "Search your location": "ابحث في موقعك",
     "Find your preferred restaurant": "ابحث عن مطعمك المفضل",
@@ -111,10 +111,10 @@
     "are you hungry?": "هل أنت جائع؟",
     "Do you have a cold?": "هل لديك صداع؟",
     "Our team is always ready to prepare your food at any time. Discover our restaurants now!  We have delivery, offers and discounts.": "فريقنا جاهز دائمًا لإعداد طعامك في أي وقت. اكتشف مطاعمنا الآن! يوجد لدينا توصيل وعروض وخصومات.",
-    "Explore": "يستكشف",
+    "Explore": " استكشف الان",
     "Do not worry, we are here to help you. Book your consultation quickly and easily.": "لا تقلق، نحن هنا لمساعدتك. احجز استشارتك بسرعة وسهولة.",
     "Download our": "حمل",
-    "application now!": "التطبيق  الخالص بنا الآن!",
+    "application now!": "التطبيق  الخاص بنا الآن!",
     "Enjoy": " استمتع",
     "the best foods some?": "بأفضل  الأطعمة بعض؟",
     "About Us": "عنا",
@@ -136,7 +136,7 @@
     "Book easily": "حجز بسهولة",
     "100+ Clinics": "100+ مستشفيات",
     "1000+ Doctors": "1000+ اطباء",
-    "We value": "نحن نرغب ب",
+    "We value": "نحن نقدر",
     "our patients": "حقيقيين",
     "and doctors": "والطباء",
     "Register or log in to our portal": "تسجيل او تسجيل الدخول في بوابتنا",
@@ -149,6 +149,7 @@
     "help?": "مساعدة؟",
     "Message *": "الرسالة *",
     "Send": "ارسال",
+<<<<<<< HEAD
     "Find your Location..": "ابحث عن موقعك..",
     "Contact us": "اتصل بنا",
      " Copyright © 2023 LOGO. Design & Develop by All Safe":" حقوق النشر © 2023 الشعار. تصميم وتطوير بواسطة All Safe",
@@ -159,4 +160,13 @@
     "Select your area to see the clinics near you":"اختر منطقتك لرؤية العيادات القريبة منك",
     "View Doctors": "عرض الأطباء",
     "address": "العنوان"
+=======
+    "Home" : "الصفحة الرئيسية",
+    "Become a Partner" : "كن شريكا",
+    "About us" : "معلومات عنا",
+    "Edit Profile" : "تعديل الملف الشخصى",
+    "Log Out" : "تسجيل الخروج",
+    "Saved Address" : "عنوانك",
+    "My Orders" : "طلباتك"
+>>>>>>> 19eed9db380bf4a4604a020e26824abe743d3f55
 }

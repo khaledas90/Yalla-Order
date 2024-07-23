@@ -2,7 +2,6 @@ import axios from "axios";
 import { read_cookie } from "sfcookies";
 
 const token = localStorage.getItem("token");
-console.log(token);
 const apiAuthenticate = axios.create({
     baseURL: "https://insta-order-site.web-allsafeeg.com/api",
     headers: {

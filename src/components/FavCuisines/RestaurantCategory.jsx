@@ -23,7 +23,6 @@ function RestaurantCategory() {
         const data = await fetchProductsByCategory(id);
 
         setProducts(data.data);
-        console.log('Products list:', data);
       } catch (error) {
         console.error('Error fetching products list:', error);
         setProductsError('Failed to fetch products list');
@@ -34,7 +33,6 @@ function RestaurantCategory() {
 
     fetchProducts();
   }, [id]);
-  console.log("products" , products)
   if(loadingProducts) return <Loader/>
   return (
     <div className='category'>

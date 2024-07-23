@@ -15,14 +15,14 @@ function HeroRestaurant() {
     const { t } = useTranslation();
     const lang = localStorage.getItem("i18nextLng")
     return (
-        <div className={`hero ${lang === "ar" ? "ar" : ""}`}>
+        <div className={`hero ${lang === "ar"? "ar" : ""}`}>
             <div className='container'>
                 <div className='row'>
                     <div className='col-12 col-lg-6'>
                         <div className="content">
                             <div className='left-hero'>
-                                <h1 className='text-center text-lg-start m-auto'>{t("A unique experience for food lovers")}</h1>
-                                <div className='inputDiv inputDivHome d-flex justify-content-center justify-content-lg-start'>
+                                <h1 className={`${lang === "ar"? "text-center text-lg-end" : "text-center text-lg-start" }  m-auto`}>{t("A unique experience for food lovers")}</h1>
+                                <div className={`inputDiv inputDivHome d-flex ${lang === "ar"? "justify-content-center justify-content-lg-center" : "justify-content-center justify-content-lg-start"} `}>
                                     <form
                                         className={`position-relative formStyle form-control rounded-pill bg-white py-2 px-4 mx-auto mx-md-0 locForm `}
                                     >

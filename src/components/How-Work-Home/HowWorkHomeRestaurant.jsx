@@ -14,10 +14,10 @@ function HowWorkHomeRestaurant() {
                         </div>
                     </div>
                     <div className='col-12 col-lg-6'>
-                        <div className='details text-center text-lg-start'>
+                        <div className={`details  ${lang === "ar" ? "text-center text-lg-end" : "text-center text-lg-start"}`}>
                             <h2 className='header'>{t('How We Work')}</h2>
                             <h3 className="subHeader">
-                                <span>{t('We Value')}</span> {t('Our  Clients & Customers')}
+                                <span>{t('We value')}</span> {t('Our  Clients & Customers')}
 
                             </h3>
                             <ul>

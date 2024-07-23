@@ -9,7 +9,6 @@ import { fetchOrdersList } from '../services/apiRestaurant';
 import Loader from '../components/loader/Loader';
 function TrackOrders() {
   const { confirmedOrders } = useConfirmedOrder();
-  console.log("confirmed", confirmedOrders)
   const { t } = useTranslation();
   const Navigate = useNavigate();
   const [loadingOrders, setLoadingOrders] = useState(false);
@@ -25,7 +24,6 @@ function TrackOrders() {
         const data = await fetchOrdersList();
 
         setOrders(data.data);
-        console.log('Orders list:', data);
       } catch (error) {
         console.error('Error fetching orders list:', error);
         setOrdersError('Failed to fetch orders list');
@@ -36,7 +34,6 @@ function TrackOrders() {
 
     fetchOrders();
   }, []);
-  console.log("orders", orders)
 
   if (loadingOrders) return <Loader />
 

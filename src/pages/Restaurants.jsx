@@ -46,9 +46,9 @@ function Restaurants() {
                 <NavRestaurants />
                 <div className='inputDiv'>
                     <SearchRestaurants
-                        pageAddress={"RESTAURANTES"}
+                        pageAddress={t("restaurants")}
                         placeholder={"Find your Restaurant.."}
-                        btnText={"Search"}
+                        btnText={t("Search")}
                         icon={Search}
                         onSearchResults={handleSearchResults}
 

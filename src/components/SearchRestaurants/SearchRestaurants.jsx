@@ -28,7 +28,6 @@ function SearchRestaurants({
 
     try {
       const results = await searchRestaurants(name, type);
-      console.log(results);
       onSearchResults(results.data);
       window.scrollTo(0, 742);
     } catch (error) {
