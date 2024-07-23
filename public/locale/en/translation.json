@@ -149,7 +149,6 @@
     "help?": "help?",
     "Message *": "Message *",
     "Send": "Send",
-<<<<<<< HEAD
     "Find your Location..": "Find your Location..",
     "Contact us": "Contact us",
     " Copyright © 2023 LOGO. Design & Develop by All Safe":" Copyright © 2023 LOGO. Design & Develop by All Safe",
@@ -159,8 +158,7 @@
     "Clinics":"Clinics",
     "Select your area to see the clinics near you":"Select your area to see the clinics near you",
     "View Doctors": "View Doctors",
-    "address":"address"
-=======
+    "address":"address",
     "Home" : "Home",
     "Become a Partner" : "Become a Partner",
     "About us" : "About us",
@@ -169,5 +167,4 @@
     "Saved Address" : "Saved Address",
     "My Orders" : "My Orders"
 
->>>>>>> 19eed9db380bf4a4604a020e26824abe743d3f55
 }
