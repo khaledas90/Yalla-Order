@@ -21,7 +21,7 @@ const actClinicsCatgoty = createAsyncThunk(
           },
         }
       ); // Replace with your actual API endpoint
-      console.log(res);
+
       return res.data.data;
     } catch (error) {
       return rejectWithValue(

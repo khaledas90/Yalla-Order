@@ -75,7 +75,6 @@ function FavCuisinesRestaurant() {
 
     fetchCategoriesList();
   }, []);
-  console.log(categories);
   if (loadingCategories) return <Loader />;
   return (
     <div className={`FavContainer ${lang === "ar" ? "rtl" : ""}`}>

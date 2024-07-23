@@ -3,6 +3,7 @@ import "./AllClinics.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { actClinicsCatgoty } from "../../store/ClinicsCatgory/ClinicsCatgorySlice";
+import { useTranslation } from "react-i18next";
 
 function AllClinics() {
   const dispatch = useDispatch();
@@ -12,11 +13,19 @@ function AllClinics() {
     dispatch(actClinicsCatgoty());
   }, [dispatch]);
 
+  const { t } = useTranslation();
+
+  const lang = localStorage.getItem("i18nextLng");
+
   return (
-    <div className="allClinics w-100 overflow-hidden">
+    <div
+      className={`allClinics w-100 overflow-hidden ${
+        lang === "ar" ? "ar" : ""
+      }`}
+    >
       <div className="container">
         <h1>
-          <span>All</span> Clinics
+          <span>{t(`All`)}</span> {t(`Clinics`)}
         </h1>
       </div>
       <div className="ClinicList">

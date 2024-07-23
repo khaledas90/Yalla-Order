@@ -43,7 +43,7 @@
 }
 
 .To-Partner .details p span {
-    color: var(--main-color);
+    color: var(--secondary-color);
 }
 
 .To-Partner .details .BtnGoToLoginPartner {

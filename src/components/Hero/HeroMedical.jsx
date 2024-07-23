@@ -13,10 +13,9 @@ import { Col, Container, Row } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 
 function HeroMedical() {
-
   const { t } = useTranslation();
 
-  const lang = localStorage.getItem("i18nextLng")
+  const lang = localStorage.getItem("i18nextLng");
   return (
     <div className={`hero ${lang === "ar" ? "ar" : ""}`}>
       <div className="container">
@@ -25,15 +24,16 @@ function HeroMedical() {
             <div className="content">
               <div className="left-hero">
                 <h1 className="text-center text-lg-start m-auto mb-5">
-                  {t("Book your medical consultation now and enjoy comfort and safety")}
-
+                  {t(
+                    "Book your medical consultation now and enjoy comfort and safety"
+                  )}
                 </h1>
                 <div className="inputDiv inputDivHome ">
                   <SearchRestaurants
-                    placeholder={"Find your Location.."}
-                    btnText={"Search"}
-                    icon={locationOne}
+                    btnText={t("Search")}
+                    placeholder={t(`Find your Location..`)}
                     locIcon={location}
+                    icon={locationOne}
                   />
                 </div>
               </div>
@@ -61,7 +61,7 @@ function HeroMedical() {
                   >
                     <div className="item d-flex align-items-center">
                       <img src={book} alt="features" />
-                      <p>  {t('Book easily')}</p>
+                      <p> {t("Book easily")}</p>
                     </div>
                   </Col>
                   <Col
@@ -72,7 +72,7 @@ function HeroMedical() {
                   >
                     <div className="item d-flex align-items-center">
                       <img src={homeImg} alt="features" />
-                      <p> {t('Daily Discount')}</p>
+                      <p> {t("Daily Discount")}</p>
                     </div>
                   </Col>
                   <Col
@@ -83,7 +83,7 @@ function HeroMedical() {
                   >
                     <div className="item d-flex align-items-center">
                       <img src={daily} alt="features" />
-                      <p> {t('100+ Clinics')}</p>
+                      <p> {t("100+ Clinics")}</p>
                     </div>
                   </Col>
                   <Col
@@ -94,7 +94,7 @@ function HeroMedical() {
                   >
                     <div className="item d-flex align-items-center">
                       <img src={doctors} alt="features" />
-                      <p> {t('1000+ Doctors')}</p>
+                      <p> {t("1000+ Doctors")}</p>
                     </div>
                   </Col>
                 </Row>

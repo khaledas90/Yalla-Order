@@ -52,19 +52,15 @@ function FavCuisinesMedical() {
     ],
   };
 
-  console.log(ClinicsCategory, "clinc");
-
-
-
   const { t } = useTranslation();
 
-  const lang = localStorage.getItem("i18nextLng")
+  const lang = localStorage.getItem("i18nextLng");
   return (
     <div className={`FavContainer ${lang === "ar" ? "ar" : ""}`}>
       <div className="container">
         <div className="mainFav">
           <img className="back" src={back} alt="back" />
-          <h1>{t('Customer Favorite Cuisines')}</h1>
+          <h1>{t("Customer Favorite Cuisines")}</h1>
           <div className="slider-container">
             <Slider {...settings}>
               {ClinicsCategory?.map((e) => (

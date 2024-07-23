@@ -36,11 +36,11 @@
 }
 
 .navBar .nav-links a.active {
-    color: var(--main-color);
+    color: var(--secondary-color);
 }
 
 .navBar .nav-links a:hover {
-    color: var(--main-color);
+    color: var(--secondary-color);
 }
 
 .navBar .icons {

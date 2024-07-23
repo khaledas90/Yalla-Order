@@ -45,6 +45,10 @@ const ShowClinicsCategoryById = lazy(() =>
 );
 const ProfileDoctors = lazy(() => import("./pages/ProfileDoctors"));
 const OrderPage = lazy(() => import("./components/Order/OrderPage"));
+const ConfirmBooking = lazy(() =>
+  import("./components/ConfirmBooking/ConfirmBooking")
+);
+
 const OrderSummary = lazy(() =>
   import("./components/OrderSummary/OrderSummary")
 );
@@ -122,6 +126,14 @@ function App() {
                       element={
                         <ProtectedRoute>
                           <ProfileDoctors />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/confirmBooking"
+                      element={
+                        <ProtectedRoute>
+                          <ConfirmBooking />
                         </ProtectedRoute>
                       }
                     />

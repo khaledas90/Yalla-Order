@@ -9,8 +9,12 @@ import { useEffect } from "react";
 import { actClinicsCategoryById } from "../store/ClinicsCategoryById/ClinicsCategoryByIdSlice";
 import NavClinics from "../components/NavClinics/NavClinics";
 import "../components/AllClinics/AllClinics.css";
+import { useTranslation } from "react-i18next";
 
 function ShowClinicsByCategory() {
+  const { t } = useTranslation();
+
+  const lang = localStorage.getItem("i18nextLng");
   const params = useParams();
   const id = params.id;
   const dispatch = useDispatch();
@@ -27,11 +31,10 @@ function ShowClinicsByCategory() {
     };
   }, [dispatch, id]);
 
-  // console.log(ClinicsCategoryById, "show");
   return (
     <>
       <Helmet>
-        <title>Clinics</title>
+        <title>{t(`Clinics`)}</title>
         <meta
           name="description"
           content="Discover the best Clinic around you."
@@ -41,15 +44,19 @@ function ShowClinicsByCategory() {
         <NavClinics />
 
         <SearchRestaurants
-          pageAddress={"Clinics"}
-          placeholder={"Find your Location.."}
-          btnText={"Search"}
+          pageAddress={t(`Clinics`)}
+          placeholder={t(`Find your Location..`)}
+          btnText={t(`Search`)}
           icon={Search}
         />
-        <div className="allClinics w-100 overflow-hidden bg-white">
+        <div
+          className={`allClinics w-100 overflow-hidden bg-white ${
+            lang === "ar" ? "ar" : ""
+          }`}
+        >
           <div className="container">
             <h1>
-              <span>All</span> Clinics
+              <span>{t(`All`)}</span> {t(`Clinics`)}
             </h1>
           </div>
           <div className="ClinicList">
@@ -66,7 +73,9 @@ function ShowClinicsByCategory() {
                         <div className="details ">
                           <div>
                             <p>{e.name}</p>
-                            <p>address: {e.address}</p>
+                            <p>
+                              {t(`address`)}: {e.address}
+                            </p>
                             <p>{e.descrption}</p>
                             <p> starttime : {e.starttime}</p>
                             <p> endtime: {e.endtime}</p>
