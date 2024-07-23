@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import Loader from "../loader/Loader";
 import Spinner from "../loader/Spinner";
 import toast, { Toaster } from "react-hot-toast";
+import NetworkError from "../loader/NetworkError";
 const Menu = [
     {
         id: 1, DishName: "Sausage Hawawshi", category: "Hawawshi", image: SausageHawawshi1, ingradiantes: "Dough stuffed with Oriental susage , Mozzarella cheese , Roumi cheese and vegetables", price: "EGP 95.00"
@@ -233,7 +234,7 @@ function RestaurantMenu() {
         //       setLoadingMenu(false);
         //     }
         //   };
-    if(error) return (<h1>Bad Connection</h1>)
+    if(error) return (<Loader/>)
 
     return (
 
