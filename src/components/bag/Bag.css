@@ -6,6 +6,8 @@
     color: var(--dark-color);
     background-color: #fff;
     position: relative;
+    height: 500px;
+    overflow: auto;
 }
 
 .bag .bagHeader {
