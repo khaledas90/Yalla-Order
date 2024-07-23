@@ -17,6 +17,10 @@
   justify-content: center;
   margin-bottom: 30px;
 }
+.restaurantsMenu .rating span{
+  color: #959595;
+  font-size: 1.2rem;
+}
 
 
 .restaurantsMenu .TitleMenuPage h1 {

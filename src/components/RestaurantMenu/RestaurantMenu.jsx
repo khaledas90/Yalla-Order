@@ -20,6 +20,7 @@ import Loader from "../loader/Loader";
 import Spinner from "../loader/Spinner";
 import toast, { Toaster } from "react-hot-toast";
 import NetworkError from "../loader/NetworkError";
+import stars from "../../assets/stars.png";
 const Menu = [
     {
         id: 1, DishName: "Sausage Hawawshi", category: "Hawawshi", image: SausageHawawshi1, ingradiantes: "Dough stuffed with Oriental susage , Mozzarella cheese , Roumi cheese and vegetables", price: "EGP 95.00"
@@ -265,19 +266,8 @@ function RestaurantMenu() {
 
             </div>
             <div className="rating">
-                <span>{totalRate} Rating</span>
-                <ReactStars
-                    count={5}
-                    onChange={ratingChanged}
-                    size={40}
-                    a11y={true}
-                    isHalf={true}
-                    emptyIcon={<i className="far fa-star" />}
-                    halfIcon={<i className="fa fa-star-half-alt" />}
-                    fullIcon={<i className="fa fa-star" />}
-                    activeColor="#ffd700"
-                    value={3}
-                />
+                <span>{parseFloat(totalRate).toFixed(1)} Rating</span>
+                <img src={stars} alt="rating"/>
 
             </div>
 
