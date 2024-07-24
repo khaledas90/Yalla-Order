@@ -3,33 +3,34 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import { useParams } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import Modal from "../modal/Modal";
 import { addReview } from "../../store/addReview/AddReview";
 import { useTranslation } from "react-i18next";
 import CommentIcon from "../../assets/commentsIcon.svg";
-
+import toast, { Toaster } from "react-hot-toast";
 import "./ProfileDoctor.css";
 import { useState } from "react";
-
+import { useDispatch } from "react-redux";
 import HomeIcon from "@mui/icons-material/Home";
 import MedicationIcon from "@mui/icons-material/Medication";
 import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
-const ProfileDoctor = () => {
+import { useNavigate } from "react-router-dom";
+import { ReservationClinic } from "../../store/BookingSlice";
+const ProfileDoctor = (DoctorAndClinicId) => {
   const { id } = useParams();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [RestaurantRating, setRestaurantRating] = useState(0);
   const [type, setType] = useState("");
-  const [location, setLoction] = useState("");
-  const [formData, setFormData] = useState({
-    bookingDate: new Date(),
-    bookingTime: "",
-  });
-
+  const [location, setLocation] = useState("");
+  const [DoctorId, setDoctorId] = useState();
+  const [placeId, setplaceId] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleStarClick = (value) => {
     setRating(value);
   };
@@ -67,23 +68,6 @@ const ProfileDoctor = () => {
   const lang = localStorage.getItem("i18nextLng");
   const { t } = useTranslation();
 
-  const handleTypeChange = (event) => {
-    setType(event.target.value);
-  };
-
-  const handleLoctionChange = (event) => {
-    setLoction(event.target.value);
-  };
-
-  const handleDateChange = (date) => {
-    setFormData({ ...formData, bookingDate: date });
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
   var settings = {
     dots: true,
     infinite: true,
@@ -118,251 +102,317 @@ const ProfileDoctor = () => {
       },
     ],
   };
+
+  // Reservations
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: '',
+    gender: "",
+    age: '',
+    detection_type: "",
+    detection_location: "",
+    day_booking: "",
+    time_booking: "",
+    doctore_id: DoctorAndClinicId.DoctorAndClinicId.doctorId,
+    place_id: parseInt(DoctorAndClinicId.DoctorAndClinicId.clinicId)
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    const parsedValue = name === "age" ? parseInt(value) || "" : value;
+    setFormData({ ...formData, [name]: parsedValue });
+  };
+
+  const handleTypeChange = (event) => {
+    const value = event.target.value;
+    setType(value);
+    setFormData({ ...formData, detection_type: value });
+  };
+
+  const handleLocationChange = (event) => {
+    const value = event.target.value;
+    setLocation(value);
+    setFormData({ ...formData, detection_location: value });
+  };
+
+  const handleDateChange = (e) => {
+    setFormData({ ...formData, day_booking: e.target.value });
+  };
+  const handleTimeChange = (e) => {
+    setFormData({ ...formData, time_booking: e.target.value });
+  };
+
+
+  const handleSubmit = () => {
+    console.log(formData);
+    if (formData.detection_type === "" || formData.detection_location === "" || formData.day_booking === "" || formData.time_booking === "") {
+      toast.error("Please fill all fields");
+      return;
+    } else if (formData.detection_type === "Select" || formData.detection_location === "Select" || formData.day_booking === "Select" || formData.time_booking === "Select") {
+      toast.error("Please fill all fields");
+      return;
+    } else {
+
+      setIsLoading(true);
+      dispatch(ReservationClinic({ formData, navigate }))
+        .then(() => {
+          setIsLoading(false);
+        })
+        .catch(() => {
+          toast.error("An error occurred. Please try again.");
+          setIsLoading(false);
+        });
+    }
+
+  };
+
+
+
+
   return (
     <>
       <div className="my-5 profileDoctor">
         <div className="row overflow-hidden w-100">
           <div className="text-center">
-            <button
-              type="button"
-              className={`btn ${"Bttn"}`}
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
+
+            <div className="text-center">
+              <button
+                type="button"
+                className={`btn ${"Bttn"}`}
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                Reservation now
+              </button>
+            </div>
+            <div
+              className="modal fade"
+              id="exampleModal"
+              tabIndex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
             >
-              Reservation now
-            </button>
-          </div>
-          <div
-            className="modal fade"
-            id="exampleModal"
-            tabIndex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true"
-          >
-            <div className="modal-dialog w-100 ">
-              <div className={`modal-content `}>
-                <div className="modal-header Bookg bgBooking ">
-                  <h1
-                    className="modal-title fw-bold px-5  text-white"
-                    id="exampleModalLabel"
-                  >
-                    Booking
-                  </h1>
-                </div>
-                <div className="modal-body my-2">
-                  <div className="container">
-                    <div className="row">
-                      <div className="col-lg-12 mb-4 gap-5">
-                        <div className="from-group d-flex align-items-center justify-content-around">
-                          <label
-                            htmlFor="exampleInputName"
-                            className="fs-6 fw-normal w-25"
-                          >
-                            Full Name
-                          </label>
-                          <input
-                            type="text"
-                            className="w-75 rounded-2 form-control input-group px-2"
-                            id="exampleInputName"
-                            placeholder="ahmed naser"
-                          />
-                        </div>
-                      </div>
-                      <div className="col-lg-12 mb-4 ">
-                        <div className="from-group d-flex align-items-center justify-content-around">
-                          <label
-                            htmlFor="exampleInputNumber"
-                            className="fs-6 fw-normal w-25"
-                          >
-                            phone number
-                          </label>
-                          <input
-                            type="text"
-                            className="w-25 rounded-3 form-control mx-1 px-2 input-group"
-                            id="exampleInputNumber"
-                            aria-describedby="emailHelp"
-                            placeholder="+20"
-                          />
-                          <input
-                            type="text"
-                            className="w-50 rounded-2 form-control input-group px-2"
-                            id="exampleInputNumber"
-                            aria-describedby="emailHelp"
-                            placeholder="1142399186"
-                          />
-                        </div>
-                      </div>
-                      <div className="col-lg-12 mb-4">
-                        <div className="from-group  d-flex align-items-center justify-content-around">
-                          <label
-                            htmlFor="exampleInputAge"
-                            className="fs-6 fw-normal w-25"
-                          >
-                            Gender
-                          </label>
-                          <div class="select_time_wrapper">
-                            <label class="rounded-0 text-white">
+              <div className="ModelBooking">
+                <div className="modal-dialog w-100" id="BookingModal">
+                  <div className="modal-content">
+                    <div className="modal-header Bookg bgBooking">
+                      <h1 className="modal-title fw-bold px-5 text-white" id="exampleModalLabel">
+                        Booking
+                      </h1>
+                      <button type="button" class="btn-close btnCloseModel" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div className="modal-body my-2">
+                      <div className="container">
+                        <div className="row">
+                          <div className="col-lg-12 mb-4 gap-5">
+                            <div className="from-group d-flex align-items-center justify-content-around">
+                              <label htmlFor="exampleInputName" className="fs-6 fw-normal w-25">
+                                Full Name
+                              </label>
                               <input
-                                type="radio"
-                                name="toggle"
-                                class="d-none"
+                                type="text"
+                                className="w-75 rounded-2 form-control input-group px-2"
+                                id="exampleInputName"
+                                placeholder="ahmed naser"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleInputChange}
                               />
-                              <span class="text-center d-block py-3">
-                                <MaleIcon />
-                                Male
-                              </span>
-                            </label>
-                            <label class="rounded-0 text-white">
+                            </div>
+                          </div>
+                          <div className="col-lg-12 mb-4">
+                            <div className="from-group d-flex align-items-center justify-content-around">
+                              <label htmlFor="exampleInputNumber" className="fs-6 fw-normal w-25">
+                                Phone Number
+                              </label>
                               <input
-                                type="radio"
-                                name="toggle"
-                                class="d-none"
+                                type="text"
+                                className="w-75 rounded-2 form-control input-group px-2"
+                                id="exampleInputNumber"
+                                placeholder="+20 1142399186"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleInputChange}
                               />
-                              <span class="text-center d-block py-3">
-                                <FemaleIcon />
-                                Female
-                              </span>
-                            </label>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-12 mb-4">
-                        <div className="from-group  d-flex align-items-center justify-content-around">
-                          <label
-                            htmlFor="exampleInputAge"
-                            className="fs-6 fw-normal w-25"
-                          >
-                            Age
-                          </label>
-                          <input
-                            type="text"
-                            className="w-75 rounded-2 form-control input-group px-2"
-                            id="exampleInputAge"
-                            placeholder="20"
-                          />
-                        </div>
-                      </div>
-                      <div className="col-lg-12 mb-4">
-                        <div className="from-group  d-flex align-items-center justify-content-around">
-                          <label
-                            htmlFor="exampleInputAge"
-                            className="fs-6 fw-normal w-25"
-                          >
-                            Detection Type
-                          </label>
-                          <div class="select_time_wrapper">
-                            <label class="rounded-0 text-white">
+                          <div className="col-lg-12 mb-4">
+                            <div className="from-group d-flex align-items-center justify-content-around">
+                              <label htmlFor="exampleInputGender" className="fs-6 fw-normal w-25">
+                                Gender
+                              </label>
+                              <div className="select_time_wrapper">
+                                <label className="rounded-0 text-white">
+                                  <input
+                                    type="radio"
+                                    name="gender"
+                                    value="male"
+                                    checked={formData.gender === "male"}
+                                    onChange={handleInputChange}
+                                    className="d-none"
+                                  />
+                                  <span className="text-center d-block py-3">
+                                    <MaleIcon />
+                                    Male
+                                  </span>
+                                </label>
+                                <label className="rounded-0 text-white">
+                                  <input
+                                    type="radio"
+                                    name="gender"
+                                    value="female"
+                                    checked={formData.gender === "female"}
+                                    onChange={handleInputChange}
+                                    className="d-none"
+                                  />
+                                  <span className="text-center d-block py-3">
+                                    <FemaleIcon />
+                                    Female
+                                  </span>
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-lg-12 mb-4">
+                            <div className="from-group d-flex align-items-center justify-content-around">
+                              <label htmlFor="exampleInputAge" className="fs-6 fw-normal w-25">
+                                Age
+                              </label>
                               <input
-                                type="radio"
-                                name="toggle"
-                                class="d-none"
+                                type="number"
+                                className="w-75 rounded-2 form-control input-group px-2"
+                                id="exampleInputAge"
+                                placeholder="20"
+                                name="age"
+                                value={parseInt(formData.age) || formData.age}
+                                onChange={handleInputChange}
                               />
-                              <span class="text-center d-block py-3">
-                                normal
-                              </span>
-                            </label>
-                            <label class="rounded-0 text-white">
+                            </div>
+                          </div>
+                          <div className="col-lg-12 mb-4">
+                            <div className="from-group d-flex align-items-center justify-content-around">
+                              <label htmlFor="exampleInputType" className="fs-6 fw-normal w-25">
+                                Detection Type
+                              </label>
+                              <div className="select_time_wrapper">
+                                <label className="rounded-0 text-white">
+                                  <input
+                                    type="radio"
+                                    name="type"
+                                    value="normal"
+                                    checked={formData.detection_type === "normal"}
+                                    onChange={handleTypeChange}
+                                    className="d-none"
+                                  />
+                                  <span className="text-center d-block py-3">
+                                    Normal
+                                  </span>
+                                </label>
+                                <label className="rounded-0 text-white">
+                                  <input
+                                    type="radio"
+                                    name="type"
+                                    value="urgent"
+                                    checked={formData.detection_type === "urgent"}
+                                    onChange={handleTypeChange}
+                                    className="d-none"
+                                  />
+                                  <span className="text-center d-block py-3">
+                                    Urgent
+                                  </span>
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-lg-12 mb-4">
+                            <div className="from-group d-flex align-items-center justify-content-around">
+                              <label htmlFor="defaultCheck1" className="fw-normal fs-6 input-group">
+                                Detection Location
+                              </label>
+                              <div className="d-flex align-items-center mx-4">
+                                <input
+                                  type="radio"
+                                  id="home"
+                                  name="location"
+                                  value="home"
+                                  checked={formData.detection_location === "home"}
+                                  onChange={handleLocationChange}
+                                  className=""
+                                />
+                                <label htmlFor="home" className="w-100 d-flex align-items-center mx-1">
+                                  <HomeIcon />
+                                  <span className="">Home</span>
+                                </label>
+                              </div>
+                              <div className="d-flex align-items-center mx-4 ">
+                                <input
+                                  type="radio"
+                                  id="clinic"
+                                  name="location"
+                                  value="clinic"
+                                  checked={formData.detection_location === "clinic"}
+                                  onChange={handleLocationChange}
+                                  className=""
+                                />
+                                <label htmlFor="clinic" className="w-100 d-flex align-items-center mx-1">
+                                  <MedicationIcon />
+                                  <span className="">Clinic</span>
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-lg-12 mb-4">
+                            <div className="from-group d-flex align-items-center justify-content-around">
+                              <label className="fs-6 fw-normal w-25">
+                                Day of Booking
+                              </label>
                               <input
-                                type="radio"
-                                name="toggle"
-                                class="d-none"
+                                type="date"
+                                className="w-75 rounded-2 form-control px-2"
+                                name="bookingDate"
+                                value={formData.day_booking}
+                                onChange={handleDateChange}
                               />
-                              <span class="text-center d-block py-3">
-                                urgent
-                              </span>
-                            </label>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-12 mb-4">
-                        <div className="from-group d-flex align-items-center justify-content-around">
-                          <label
-                            htmlFor="defaultCheck1"
-                            className="fw-normal fs-6 input-group"
-                          >
-                            Detection location
-                          </label>
-                          <div className="d-flex align-items-center mx-4">
-                            <input
-                              type="radio"
-                              id="home"
-                              name="loction"
-                              value="home"
-                              checked={location === "home"}
-                              onChange={handleLoctionChange}
-                              className=""
-                            />
-                            <label
-                              htmlFor="home"
-                              className="w-100 d-flex align-items-center mx-1"
-                            >
-                              <HomeIcon />
-                              <span className="">Home</span>
-                            </label>
+                          <div className="col-lg-12 mb-4">
+                            <div className="from-group d-flex align-items-center justify-content-around">
+                              <label className="fs-6 fw-normal w-25">
+                                Booking Time
+                              </label>
+                              <input
+                                type="time"
+                                className="w-75 rounded-2 form-control px-2"
+                                name="bookingTime"
+                                value={formData.time_booking}
+                                onChange={handleTimeChange}
+                              />
+                            </div>
                           </div>
-                          <div className="d-flex align-items-center mx-4 ">
-                            <input
-                              type="radio"
-                              id="clinic"
-                              name="loction"
-                              value="clinic"
-                              checked={location === "clinic"}
-                              onChange={handleLoctionChange}
-                              className=""
-                            />
-                            <label
-                              htmlFor="clinic"
-                              className="w-100 d-flex align-items-center mx-1"
-                            >
-                              <MedicationIcon />
-                              <span className="">Clinic</span>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-lg-12 mb-4">
-                        <div className="from-group d-flex align-items-center justify-content-around">
-                          <label className="fs-6 fw-normal w-25">
-                            Day of booking
-                          </label>
-                          <input
-                            type="date"
-                            className="w-75 rounded-2 form-control px-2"
-                            selected={formData.bookingDate}
-                            onChange={handleDateChange}
-                            dateFormat="MM/dd/yyyy"
-                          />
-                        </div>
-                      </div>
-                      <div className="col-lg-12 mb-4">
-                        <div className="from-group d-flex align-items-center justify-content-around">
-                          <label className="fs-6 fw-normal w-25">
-                            Booking timey
-                          </label>
-                          <input
-                            type="time"
-                            className="w-75 rounded-2 form-control px-2"
-                            name="bookingTime"
-                            value={formData.bookingTime}
-                            onChange={handleChange}
-                          />
                         </div>
                       </div>
                     </div>
+                    <div className="text-center mb-5 ro">
+                      <button
+                        type="button"
+                        className="btnReservation w-50 rounded-pill"
+                        onClick={handleSubmit}
+                      >
+                        {isLoading ? "Loading..." : t("Confirm Reservation")}
+                      </button>
+                    </div>
+
                   </div>
-                </div>
-                <div className="text-center mb-5 ro">
-                  <button
-                    type="button"
-                    className="btnReservation w-50 rounded-pill"
-                    data-bs-dismiss="modal"
-                  >
-                    confirm Reservation
-                  </button>
                 </div>
               </div>
             </div>
+            <Toaster
+              position="top-center"
+              reverseOrder={false}
+            />
+
           </div>
+
 
           <div className="reviews px-5">
             <div className="reviewsHeader">

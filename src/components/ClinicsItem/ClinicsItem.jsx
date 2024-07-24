@@ -22,6 +22,7 @@ const ClinicsItems = () => {
     };
   }, [dispatch, id]);
 
+  console.log(clinicsDetails);
   return (
     <>
       <div className={`container d-flex flex-column gap-5 pb-3 containerStyle`}>
