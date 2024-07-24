@@ -63,7 +63,7 @@ export default function TopBeAPartner() {
                                             </div > {" "}
                                             <div div className="Btn d-grid" >
                                                 <button className="btn btn-primary btn-Commission btn-block rounded-pill py-3 font-weight-bold display-6">
-                                                    {t("  Create Account")}
+                                                    {t("Create Account")}
                                                 </button>{" "}
                                             </div > {" "}
                                         </form > {" "}

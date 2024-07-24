@@ -6,6 +6,7 @@ import { fetchAllRestaurants } from "../../services/apiRestaurant";
 import { useTranslation } from "react-i18next";
 import { text } from "@fortawesome/fontawesome-svg-core";
 import Loader from "../loader/Loader";
+import NetworkError from "../loader/NetworkError";
 
 function AllRestaurants({restaurants,loading,error,setRestaurants,setLoading,setError}) {
     const [numToShow, setNumToShow] = useState(8)
@@ -46,7 +47,7 @@ function AllRestaurants({restaurants,loading,error,setRestaurants,setLoading,set
     }, [pathname]);
 
     if(loading) return <Loader/>
-
+    if(error) return (<NetworkError/>)
     return (
         <div className={`allRestaurants w-100 overflow-hidden ${lang === "ar" ? "ar" : ""}`}>
                 <div className="container">

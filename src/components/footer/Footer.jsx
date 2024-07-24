@@ -3,7 +3,7 @@ import facebook from "../../assets/faceBook.svg";
 import instagram from "../../assets/instagram.svg";
 import appStore from "../../assets/logo appstore.png";
 import googlePlay from "../../assets/logo googlestore.png";
-import logoImg from "../../assets/logo.png";
+import logoImg from "../../assets/Insta Order.svg";
 
 import "./footer.css";
 import { Link } from "react-router-dom";
@@ -47,7 +47,7 @@ const Footer = () => {
         </div>
         <div className={`container cobyRight`}>
           <p className="mb-0 text-text-black-50 text-center text-lg-start ">
-            {t(` Copyright © 2023 LOGO. Design & Develop by All Safe`)}
+            {t(`Copyright © 2023 LOGO. Design & Develop by All Safe`)}
           </p>
         </div>
       </div>
