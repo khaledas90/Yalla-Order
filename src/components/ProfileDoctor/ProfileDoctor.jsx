@@ -14,11 +14,10 @@ import HomeIcon from "@mui/icons-material/Home";
 import MedicationIcon from "@mui/icons-material/Medication";
 import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
-import { actClinicsCategoryById } from "../../store/ClinicsCategoryById/ClinicsCategoryByIdSlice";
-import confirmReservation from "../../store/reservation/confirmationSlice.js";
+import { ReservationClinic } from "../../store/BookingSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
-
+import { Toaster } from "react-hot-toast";
 const ProfileDoctor = () => {
   const settings = {
     dots: false,
@@ -71,6 +70,8 @@ const ProfileDoctor = () => {
     detection_location: "",
     day_booking: "",
     time_booking: "",
+    doctore_id: 14,
+    place_id: 34,
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -96,22 +97,32 @@ const ProfileDoctor = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({
+      ...formData,
+      [name]: name === 'age' ? Number(value) : value,
+    });
   };
 
   const handleSubmit = () => {
-    console.log(formData);  // Debugging line
+    console.log(formData);
     const { detection_type, detection_location, day_booking, time_booking } = formData;
 
     if (!detection_type || !detection_location || !day_booking || !time_booking) {
       toast.error("Please fill all fields");
       return;
+    } else if (!formData.name || !formData.phone || !formData.gender || !formData.age) {
+      toast.error("Please fill all fields");
+      return;
+    } else if (!formData.detection_type || !formData.detection_location || !formData.day_booking || !formData.time_booking) {
+      toast.error("Please fill all fields");
+      return;
     }
 
     setIsLoading(true);
-    dispatch(confirmReservation({ formData, navigate }))
+    dispatch(ReservationClinic({ formData, navigate }))
       .then(() => {
         setIsLoading(false);
+        localStorage.removeItem("orderConfirmed");
         toast.success("Reservation confirmed.");
       })
       .catch(() => {
@@ -169,6 +180,7 @@ const ProfileDoctor = () => {
                                   className="w-75 rounded-2 form-control input-group px-2"
                                   id={`exampleInput${field.charAt(0).toUpperCase() + field.slice(1)}`}
                                   name={field}
+                                  placeholder={t(field.charAt(0).toUpperCase() + field.slice(1))}
                                   value={formData[field]}
                                   onChange={handleChange}
                                 />
@@ -291,6 +303,7 @@ const ProfileDoctor = () => {
                     </div>
                   </div>
                 </div>
+                <Toaster />
               </div>
             </div>
           </div>
