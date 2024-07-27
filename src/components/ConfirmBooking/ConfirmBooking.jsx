@@ -3,99 +3,70 @@ import ReactStars from "react-rating-stars-component";
 import { useLocation, useParams } from 'react-router-dom';
 import NavClinics from "../NavClinics/NavClinics";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { actProfileDoctors } from "../../store/ProfilsDoctors/profileDoctorsSlice";
 import Loader from "../loader/Loader";
 import "./ConfirmBooking.css";
-import apiAuthenticate from "../../services/authentication/apiAuthenticate";
+import { fetchReservationDetails } from "../../store/reservation/reservationSlice";
+import { confirmReservation } from "../../store/reservation/confirmationSlice";
 import toast, { Toaster } from "react-hot-toast";
-import { useInView } from 'react-cool-inview';
 
 const ConfirmBooking = () => {
   const [clinicRating, setClinicRating] = useState(0);
-  const [dataReservation, setDataReservation] = useState(null);
-  const [url, setUrl] = useState('');
-  const [loading, setLoading] = useState(true);
   const [isClicked, setIsClicked] = useState(false);
   const [isLoadPayment, setIsLoadPayment] = useState(false);
+  const [showIframe, setShowIframe] = useState(false);
 
   const dispatch = useDispatch();
   const params = useParams();
   const id = params.id;
   const location = useLocation();
   const { idReservation } = location.state || {};
-  const doctorData = useSelector(
-    (state) => state.doctorData.profileDoctors.Doctordetails
-  );
+  const doctorData = useSelector((state) => state.doctorData.profileDoctors.Doctordetails);
+  const dataReservation = useSelector((state) => state.reservation.data);
+  const confirmation = useSelector((state) => state.confirmation);
 
   useEffect(() => {
+    const buttonDisabled = localStorage.getItem("orderConfirmed");
+    if (buttonDisabled) {
+      setIsClicked(true);
+    }
+
     if (id) {
       dispatch(actProfileDoctors(id));
     }
 
     if (idReservation) {
-      apiAuthenticate.get(`places/clinic/doctor/summary/reservation/${idReservation}`)
-        .then((response) => {
-          if (response.status === 200) {
-            toast.success(response.data.message);
-            setDataReservation(response.data.data);
-            setLoading(false);
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-          setLoading(false);
-        });
+      dispatch(fetchReservationDetails(idReservation));
     }
   }, [dispatch, id, idReservation]);
 
   const handleConfirmOrder = async (e) => {
     e.preventDefault();
+    if (isClicked) return;
+    localStorage.setItem("orderConfirmed", true);
     setIsClicked(true);
     setIsLoadPayment(true);
     try {
-      const data = await apiAuthenticate.get(
-        `/places/clinic/doctor/confirm/reservation/${idReservation}`
-      );
-
-      if (data.data.status === 200) {
-        toast.success(data.data.message);
-        setUrl(data.data.data);
-      }
+      await dispatch(confirmReservation(idReservation)).unwrap();
+      setShowIframe(true);
     } catch (error) {
-      toast.error(error.response?.data?.message || 'An error occurred');
+      toast.error("An error occurred while confirming the reservation.");
     } finally {
       setIsLoadPayment(false);
-      setIsClicked(false);
     }
   };
 
-  const { observe, inView, scrollDirection } = useInView({
-    threshold: 0.25,
-    onEnter: ({ entry }) => {
-      console.log('Iframe entered the view');
-      console.log('Iframe URL:', entry.target.src);
-      if (entry.target.tagName === 'IFRAME') {
-        console.log('Iframe entered the view');
-        console.log('Iframe URL:', entry.target.src);
-        localStorage.setItem('url22', entry.target.src);
-
-      }
-    },
-    onLeave: ({ entry }) => {
-      console.log('Iframe entered the view');
-      if (entry.target.tagName === 'IFRAME') {
-        console.log('Iframe left the view');
-        console.log('Iframe URL:', entry.target.src);
-        localStorage.setItem('url', entry.target.src);
-
-      }
-    },
-  });
-  console.log(localStorage.getItem('url'));
-  console.log(localStorage.getItem('url22'));
+  useEffect(() => {
+    try {
+      fetch('https://web-allsafeeg.com/FoodC/public/payment/callback?id=203360549')
+        .then(response => console.log(response))
+    } catch (error) {
+      console.error(error);
+    }
+  }, [confirmation]);
   return (
-    loading ? <Loader /> :
+    !dataReservation ? <Loader /> :
       <div className="ProfileDoctors">
         <Helmet>
           <title>Profile Doctors</title>
@@ -205,9 +176,8 @@ const ConfirmBooking = () => {
                   <span>{dataReservation?.totalprice || "reservation.fees"}</span>
                 </div>
               </div>
-              <div className="d-flex justify-content-center" >
+              <div className="d-flex justify-content-center">
                 <button
-                  ref={observe}
                   className={`confirm-button rounded-pill ${isClicked ? 'disabledBtn' : ''}`}
                   onClick={handleConfirmOrder}
                   disabled={isClicked}
@@ -215,17 +185,16 @@ const ConfirmBooking = () => {
                   {isLoadPayment ? "Loading..." : "Confirm Order"}
                 </button>
               </div>
-              <div className="iframe_container" >
-                <div className={`overlayIframe ${url ? 'activeOverlayIframe' : ''}`}></div>
-                {url && (
+              {showIframe && confirmation.url && (
+                <div className="iframe_container">
+                  <div className={`overlayIframe ${confirmation.url ? 'activeOverlayIframe' : ''}`}></div>
                   <iframe
                     title="Payment View"
-                    src={url}
+                    src={confirmation.url}
                     style={{ width: '100%', height: '100vh', border: 'none', position: 'relative', zIndex: 999999 }}
-                    ref={observe}
                   />
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -234,4 +203,4 @@ const ConfirmBooking = () => {
   );
 };
 
-export default ConfirmBooking;
+export default React.memo(ConfirmBooking);

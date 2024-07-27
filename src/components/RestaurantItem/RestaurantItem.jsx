@@ -116,15 +116,15 @@ function RestaurantItems() {
   const navigateToMenu = () => {
     navigate(`/restaurants/${id}/menu?restaurant=${restaurantInfo.name}`);
   };
-  
-  if(error) return (<NetworkError/>)
+
+  if (error) return (<NetworkError />)
 
   return (
     <div className={`Restaurant-item ${lang === "ar" ? "ar" : ""}`}>
-    <Toaster
-    position="top-center"
-    reverseOrder={false}
-    />
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
       <Helmet>
         {lang === "ar" ? (
           <title>

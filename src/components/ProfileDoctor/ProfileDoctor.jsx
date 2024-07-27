@@ -151,17 +151,22 @@ const ProfileDoctor = (DoctorAndClinicId) => {
     } else if (formData.detection_type === "Select" || formData.detection_location === "Select" || formData.day_booking === "Select" || formData.time_booking === "Select") {
       toast.error("Please fill all fields");
       return;
+    } else if (formData.name === "" || formData.phone === "" || formData.gender === "" || formData.age === "") {
+      toast.error("Please fill all fields");
     } else {
 
-      setIsLoading(true);
-      dispatch(ReservationClinic({ formData, navigate }))
-        .then(() => {
-          setIsLoading(false);
-        })
-        .catch(() => {
-          toast.error("An error occurred. Please try again.");
-          setIsLoading(false);
-        });
+      try {
+        setIsLoading(true);
+        dispatch(ReservationClinic({ formData, navigate }))
+        localStorage.removeItem("orderConfirmed")
+
+
+      } catch (error) {
+        toast.error("An error occurred. Please try again.");
+        setIsLoading(false);
+      }
+
+
     }
 
   };
@@ -199,7 +204,7 @@ const ProfileDoctor = (DoctorAndClinicId) => {
                       <h1 className="modal-title fw-bold px-5 text-white" id="exampleModalLabel">
                         Booking
                       </h1>
-                      <button type="button" class="btn-close btnCloseModel" data-bs-dismiss="modal" aria-label="Close"></button>
+                      <button type="button" className="btn-close btnCloseModel" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div className="modal-body my-2">
                       <div className="container">

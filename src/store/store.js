@@ -8,6 +8,9 @@ import ClinicsCategoryByIdSlice from "./ClinicsCategoryById/ClinicsCategoryByIdS
 import showClinicsDetailsSlice from "./showClinicsDetails/showClinicsDetailsSlice";
 import location from "./LocationSlice";
 import profileDoctorsSlice from "./ProfilsDoctors/profileDoctorsSlice";
+import confirmationSlice from "./reservation/confirmationSlice";
+import reservationSlice from "./reservation/reservationSlice";
+import paymentReducer from "./paymentSlice";
 const persistConfig = {
     key: "root",
     storage,
@@ -20,6 +23,9 @@ const reducer = combineReducers({
     clinicsDetails: showClinicsDetailsSlice,
     doctorData: profileDoctorsSlice,
     location: location,
+    confirmation: confirmationSlice,
+    reservation: reservationSlice,
+    payment: paymentReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
