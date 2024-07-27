@@ -3,8 +3,7 @@ import { Helmet } from "react-helmet";
 import SearchRestaurants from "../SearchRestaurants/SearchRestaurants";
 import Slider from "react-slick";
 import ReactStars from "react-rating-stars-component";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
 import "./RestaurantItem.css";
 import "../AllRestaurants/AllRestaurants.css";
 import CommentIcon from "../../assets/commentsIcon.svg";
@@ -77,7 +76,7 @@ function RestaurantItems() {
     event.preventDefault();
     try {
       const result = await addReview(id, comment, RestaurantRating);
-      toast.success('Review added successfully!')
+      toast.success("Review added successfully!");
 
       setComment("");
       setRestaurantRating(0);
@@ -118,10 +117,7 @@ function RestaurantItems() {
 
   return (
     <div className={`Restaurant-item ${lang === "ar" ? "ar" : ""}`}>
-    <Toaster
-    position="top-center"
-    reverseOrder={false}
-    />
+      <Toaster position="top-center" reverseOrder={false} />
       <Helmet>
         {lang === "ar" ? (
           <title>

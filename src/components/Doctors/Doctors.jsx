@@ -1,24 +1,29 @@
 import { Link, useParams } from "react-router-dom";
 import "./Doctors.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { actShowClinicsDetails } from "../../store/showClinicsDetails/showClinicsDetailsSlice";
+import like from "../../assets/like.svg";
+import likeFile from "../../assets/likeFile.svg";
 
 const Doctors = () => {
   // const [doctors, setDoctors] = useState([]);
+  const [favStatus, setFavStatus] = useState(false);
   const params = useParams();
   const id = params.id;
   const dispatch = useDispatch();
   const { clinicsDetails } = useSelector((state) => state.clinicsDetails);
+  const fav = useSelector((state) => state.favClinic);
 
   useEffect(() => {
+    console.log(fav, "555555");
     const controller = new AbortController();
     const signal = controller.signal;
     dispatch(actShowClinicsDetails(id, { signal }));
     return () => {
       controller.abort();
     };
-  }, [dispatch, id]);
+  }, [dispatch, id, fav]);
 
   return (
     <>
@@ -26,16 +31,16 @@ const Doctors = () => {
         {Array.isArray(clinicsDetails.Doctors) &&
           clinicsDetails.Doctors.map((e) => (
             <div className="col-lg-3 col-sm-12 col-md-6" key={e.id}>
-              <Link
-                className="text-decoration-none"
-                to={`/profileDoctor/${e.id}`}
-              >
-                <div className="card px-3 rounded-5 pb-3">
-                  <div className="d-flex justify-content-between mt-3 mb-2">
-                    <div className="doctorRate d-flex flex-column gap-2">
-                      <img src="" className="rateStyle" alt="Rate" />
-                      <p className="mb-0 ms-1"></p>
-                    </div>
+              <div className="card px-3 rounded-5 pb-3">
+                <div className="d-flex justify-content-between mt-3 mb-2">
+                  <div className="doctorRate d-flex flex-column gap-2">
+                    <img src="" className="rateStyle" alt="Rate" />
+                    <p className="mb-0 ms-1"></p>
+                  </div>
+                  <Link
+                    className="text-decoration-none"
+                    to={`/profileDoctor/${e.id}`}
+                  >
                     <div className="doctorDiv mt-4">
                       <img
                         src={e.image}
@@ -43,35 +48,48 @@ const Doctors = () => {
                         alt=""
                       />
                     </div>
-                    <div className="whishlist">
-                      {/* <img src={e.logo} alt="" /> */}
-                    </div>
-                  </div>
-                  <h5 className="mb-2 mt-2 text-center">Dr.{e.name}</h5>
-                  <h5 className="mb-3 mt-2 text-center">{e.department}</h5>
-                  <div className="date d-flex justify-content-evenly">
-                    <div className="days">
-                      <p className="mb-0">{e.days}</p>
-                    </div>
-                    <div className="hours">
-                      <p className="mb-0">{e.start_time}</p>
-                    </div>
-                    <div className="hours">
-                      <p className="mb-0">{e.end_time}</p>
-                    </div>
-                  </div>
-                  <div className="d-flex justify-content-evenly align-items-center mt-3">
-                    <div className="price">
-                      <h5 className="fw-bold mt-3">
-                        {e.fees} <span> L.E</span>
-                      </h5>
-                    </div>
-                    <div className="dateStyle d-flex justify-content-center align-items-center text-center">
-                      {/* <img src={e.logo} alt="date" /> */}
-                    </div>
+                  </Link>
+                  <div>
+                    <button
+                      className="btn"
+                      onClick={() => setFavStatus(!favStatus)}
+                    >
+                      {favStatus ? (
+                        <>
+                          <img src={likeFile} alt="" className="wishlistBtn" />
+                        </>
+                      ) : (
+                        <>
+                          <img src={like} alt="" className="wishlistBtn" />
+                        </>
+                      )}
+                    </button>
                   </div>
                 </div>
-              </Link>
+                <h5 className="mb-2 mt-2 text-center">Dr.{e.name}</h5>
+                <h5 className="mb-3 mt-2 text-center">{e.department}</h5>
+                <div className="date d-flex justify-content-evenly">
+                  <div className="days">
+                    <p className="mb-0">{e.days}</p>
+                  </div>
+                  <div className="hours">
+                    <p className="mb-0">{e.start_time}</p>
+                  </div>
+                  <div className="hours">
+                    <p className="mb-0">{e.end_time}</p>
+                  </div>
+                </div>
+                <div className="d-flex justify-content-evenly align-items-center mt-3">
+                  <div className="price">
+                    <h5 className="fw-bold mt-3">
+                      {e.fees} <span> L.E</span>
+                    </h5>
+                  </div>
+                  <div className="dateStyle d-flex justify-content-center align-items-center text-center">
+                    {/* <img src={e.logo} alt="date" /> */}
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
       </div>

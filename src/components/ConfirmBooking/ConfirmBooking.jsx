@@ -168,7 +168,7 @@ const ConfirmBooking = ({ reservation }) => {
               <div className="info-row">
                 <span>Cash</span>
                 <i class="fa-solid fa-cash-register text-info"></i>
-                <span> reservation.fees</span>
+                <span>fees</span>
               </div>
             </div>
             <div className="d-flex  justify-content-center">

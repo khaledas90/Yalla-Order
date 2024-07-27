@@ -34,7 +34,7 @@ export const actShowClinicsDetails = createAsyncThunk(
 
 const showClinicsDetailsSlice = createSlice({
   name: "clinicsDetails",
-  initialState,
+  initialState: initialState,
   reducers: {
     categoriesRecordsCleanUp: (state) => {
       state.ClinicsCategoryById = [];

@@ -23,7 +23,7 @@ export const actProfileDoctors = createAsyncThunk(
           signal,
         }
       );
-      //   console.log(res.data.data);
+      console.log(res.data.data);
       return res.data.data;
     } catch (error) {
       console.error(error, "API call error");

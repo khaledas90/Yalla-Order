@@ -7,18 +7,58 @@ import "slick-carousel/slick/slick-theme.css";
 import { useParams } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import Modal from "../modal/Modal";
-import { addReview } from "../../store/addReview/AddReview";
+import { addReview } from "../../services/addReview";
 import { useTranslation } from "react-i18next";
 import CommentIcon from "../../assets/commentsIcon.svg";
 
 import "./ProfileDoctor.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import HomeIcon from "@mui/icons-material/Home";
 import MedicationIcon from "@mui/icons-material/Medication";
 import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
+import { actClinicsCategoryById } from "../../store/ClinicsCategoryById/ClinicsCategoryByIdSlice";
+
 const ProfileDoctor = () => {
+  // slick slider
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          infinite: true,
+          dots: false,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
+  const [loading, setLoading] = useState(true);
+  const [restaurant, setRestaurant] = useState({});
   const { id } = useParams();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -63,7 +103,7 @@ const ProfileDoctor = () => {
       console.error("Error adding review:", error);
     }
   };
-
+  const [error, setError] = useState(null);
   const lang = localStorage.getItem("i18nextLng");
   const { t } = useTranslation();
 
@@ -83,41 +123,29 @@ const ProfileDoctor = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+  // const {
+  //   "Total rate": totalRate,
+  //   "best selling": bestSelling,
+  //   "resturant info": restaurantInfo,
+  //   reviwes,
+  // } = restaurant;
+  useEffect(() => {
+    const getRestaurant = async () => {
+      try {
+        setLoading(true); // Start loading
+        const data = await actClinicsCategoryById(id);
+        setRestaurant(data.data);
+        setError(null); // Clear any previous errors
+      } catch (error) {
+        console.error("Error fetching restaurant:", error);
+        setError("Failed to fetch restaurant");
+      } finally {
+        setLoading(false); // End loading
+      }
+    };
 
-  var settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    initialSlide: 0,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 2,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
+    getRestaurant();
+  }, [id]);
   return (
     <>
       <div className="my-5 profileDoctor">
@@ -364,9 +392,13 @@ const ProfileDoctor = () => {
             </div>
           </div>
 
-          <div className="reviews px-5">
+          <div className="reviews">
             <div className="reviewsHeader">
-              {lang === "ar" ? <p>{t("Reviews")}</p> : <p>{t("Reviews")}</p>}
+              {lang === "ar" ? (
+                <p>{t("Reviews")}uuu</p>
+              ) : (
+                <p>aaaaaaaaaaaaa {t("Reviews")}</p>
+              )}
 
               <Modal>
                 <Modal.Open opens="add-review">
@@ -404,12 +436,7 @@ const ProfileDoctor = () => {
                       placeholder={t("Comment")}
                     ></textarea>
                     <div className="text-center">
-                      <button
-                        className="add-review-btn"
-                        onClick={handleAddClick}
-                      >
-                        {t("Add")}
-                      </button>
+                      <button className="add-review-btn">{t("Add")}</button>
                     </div>
                   </form>
                 </Modal.Window>
@@ -423,15 +450,15 @@ const ProfileDoctor = () => {
                   </div>
                   <div className="userDetails">
                     <div>
-                      <p style={{ fontWeight: "500" }}>f</p>
+                      <p style={{ fontWeight: "500" }}>ahmed</p>
                       <p style={{ color: "#ddd", fontWeight: "500" }}>
                         {t("customer")}
                       </p>
                     </div>
                   </div>
                   <div className="comment">
-                    <p>r</p>
-                    <p>12</p>
+                    <p>rrr</p>
+                    <p>fffffffff</p>
                   </div>
                 </div>
               </div>

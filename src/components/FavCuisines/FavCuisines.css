@@ -44,5 +44,5 @@
 }
 
 .FavContainer .mainFav .slider-container .slick-slide .item:hover {
-  background-color: var(--main-color);
+  background-color: var(--secondary-color);
 }

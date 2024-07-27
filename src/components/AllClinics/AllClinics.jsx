@@ -10,6 +10,7 @@ function AllClinics() {
   const { ClinicsCategory } = useSelector((state) => state.ClinicsCategory);
 
   useEffect(() => {
+    console.log(ClinicsCategory, "5555555555");
     dispatch(actClinicsCatgoty());
   }, [dispatch]);
 

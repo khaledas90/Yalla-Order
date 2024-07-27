@@ -68,7 +68,7 @@ function FavCuisinesMedical() {
                   <div>
                     <div className="item">
                       <div>
-                        <img src={e.logo} className="w-100" alt="" />
+                        <img src={e.logo} className="w-100 rounded-3 " alt="" />
                       </div>
                       <p>{e.name}</p>
                     </div>

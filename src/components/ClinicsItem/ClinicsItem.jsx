@@ -32,13 +32,13 @@ const ClinicsItems = () => {
                 <div className="col-lg-4">
                   <div className={`card mt-3 p-1 cardShadow`}>
                     <img
-                      src={clinicsDetails.clinicinfo.logo}
+                      src={clinicsDetails?.logo}
                       className="w-100 rounded-2"
-                      alt={clinicsDetails.clinicinfo.name}
+                      alt={clinicsDetails?.clinicinfo?.name}
                     />
                   </div>
                   <p className="mb-0 text-center mt-2 fw-bold">
-                    {clinicsDetails.clinicinfo.name}
+                    {clinicsDetails?.clinicinfo?.name}
                   </p>
                 </div>
               </div>
@@ -47,11 +47,11 @@ const ClinicsItems = () => {
               <h4 className="fw-bold">
                 Summary of{" "}
                 <span className="text-info">
-                  {clinicsDetails.clinicinfo.name}
+                  {clinicsDetails?.clinicinfo?.name}
                 </span>
               </h4>
               <p className={`fw-medium summaryStyle`}>
-                {clinicsDetails.clinicinfo.descrption}
+                {clinicsDetails?.clinicinfo?.description}
               </p>
             </div>
           </div>

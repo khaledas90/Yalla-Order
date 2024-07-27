@@ -3,8 +3,8 @@ import Helmet from "react-helmet";
 import SearchRestaurants from "../components/SearchRestaurants/SearchRestaurants";
 import Search from "../assets/search.svg";
 import ClinicsItems from "../components/ClinicsItem/ClinicsItem";
-import NavRestaurants from "../components/NavRestaurants/NavRestaurants";
 import { useTranslation } from "react-i18next";
+import NavClinics from "../components/NavClinics/NavClinics";
 function ClinicItem() {
   const { t } = useTranslation();
 
@@ -19,7 +19,7 @@ function ClinicItem() {
         />
       </Helmet>
       <div className="Main_bg">
-        <NavRestaurants />
+        <NavClinics />
         <SearchRestaurants
           pageAddress={t(`Clinics`)}
           Pagetext={t(`Select your area to see the clinics near you`)}
