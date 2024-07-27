@@ -196,6 +196,12 @@
     right: -18px;
 }
 
+.slick-track {
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+}
+
 .slick-prev {
     left: -18px;
     z-index: 111;

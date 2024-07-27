@@ -25,6 +25,7 @@ export const actProfileDoctors = createAsyncThunk(
             //   console.log(res.data.data);
             return res.data.data;
         } catch (error) {
+            console.error(error, "API call error");
             return rejectWithValue(
                 error.response ? error.response.data.message : error.message
             );

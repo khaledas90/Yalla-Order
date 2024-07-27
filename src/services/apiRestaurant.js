@@ -156,7 +156,7 @@ export const addToCart = async ({
 // Post request to confirm an order
 export const confirmOrder = async (
   orderId,
-  { special_request, delivery_method, pay_method,address }
+  { special_request, delivery_method, pay_method, address }
 ) => {
   try {
     const response = await apiClient.post(
@@ -165,7 +165,7 @@ export const confirmOrder = async (
         special_request,
         delivery_method,
         pay_method,
-        address
+        address,
       }
     );
     return response.data;
@@ -303,10 +303,10 @@ export const searchRestaurants = async (name, type) => {
 // POST request to add a user address
 export const addUserAddress = async (address) => {
   try {
-    const response = await apiClient.post('/user/add/address', { address });
+    const response = await apiClient.post("/user/add/address", { address });
     return response.data;
   } catch (error) {
-    console.error('Error adding user address:', error);
+    console.error("Error adding user address:", error);
     throw error;
   }
 };
