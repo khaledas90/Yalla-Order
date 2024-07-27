@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import apiAuthenticate from "../../services/authentication/apiAuthenticate";
 
 const initialState = {
   error: null,
@@ -12,8 +12,8 @@ const actFav = createAsyncThunk(
   async (_, thunkAPI) => {
     const { rejectWithValue } = thunkAPI;
     try {
-      const res = await axios.get(
-        "https://insta-order-site.web-allsafeeg.com/api/places/listfavproduct?type=clinic",
+      const res = await apiAuthenticate.get(
+        "/places/listfavproduct?type=clinic",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

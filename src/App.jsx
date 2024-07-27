@@ -66,7 +66,6 @@ const MyReservations = lazy(() =>
   import("./components/Profile/MyReservations")
 );
 const NotFound = lazy(() => import("./components/NotFound/NotFound"));
-
 function App() {
   return (
     <LanguageProvider>
@@ -209,6 +208,7 @@ function App() {
                         </ProtectedRoute>
                       }
                     />
+
                     <Route path="/Login" element={<Login />} />
                     <Route path="/SignUp" element={<SignUp />} />
                     <Route path="/Forgot_password" element={<ForgetPass />} />

@@ -28,6 +28,10 @@ function ProfileDoctors() {
     dispatch(actProfileDoctors(id));
   }, [dispatch, id]);
 
+  const DoctorAndClinicId = {
+    doctorId: doctorData.id,
+    clinicId: doctorData.clinic_id
+  }
   return (
     <div className="ProfileDoctors">
       <Helmet>
@@ -99,7 +103,7 @@ function ProfileDoctors() {
           </div>
         </div>
       </div>
-      <ProfileDoctor />
+      <ProfileDoctor DoctorAndClinicId={DoctorAndClinicId} />
     </div>
   );
 }

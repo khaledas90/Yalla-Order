@@ -8,6 +8,7 @@ import ClinicsCategoryByIdSlice from "./ClinicsCategoryById/ClinicsCategoryByIdS
 import showClinicsDetailsSlice from "./showClinicsDetails/showClinicsDetailsSlice";
 import location from "./LocationSlice";
 import profileDoctorsSlice from "./ProfilsDoctors/profileDoctorsSlice";
+
 import FavSlice from "./favClinics/favSlice";
 
 const persistConfig = {

@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 import Modal from "../modal/Modal";
 import Loader from "../loader/Loader";
 import toast, { Toaster } from "react-hot-toast";
+import NetworkError from "../loader/NetworkError";
 
 function RestaurantItems() {
   // slick slider
@@ -114,6 +115,8 @@ function RestaurantItems() {
   const navigateToMenu = () => {
     navigate(`/restaurants/${id}/menu?restaurant=${restaurantInfo.name}`);
   };
+
+  if (error) return <NetworkError />;
 
   return (
     <div className={`Restaurant-item ${lang === "ar" ? "ar" : ""}`}>

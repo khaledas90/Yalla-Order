@@ -149,7 +149,6 @@
     "help?": "مساعدة؟",
     "Message *": "الرسالة *",
     "Send": "ارسال",
-<<<<<<< HEAD
     "Find your Location..": "ابحث عن موقعك..",
     "Contact us": "اتصل بنا",
      " Copyright © 2023 LOGO. Design & Develop by All Safe":" حقوق النشر © 2023 الشعار. تصميم وتطوير بواسطة All Safe",
@@ -159,8 +158,7 @@
     "Clinics":"العيادات",
     "Select your area to see the clinics near you":"اختر منطقتك لرؤية العيادات القريبة منك",
     "View Doctors": "عرض الأطباء",
-    "address": "العنوان"
-=======
+    "address": "العنوان",
     "Home" : "الصفحة الرئيسية",
     "Become a Partner" : "كن شريكا",
     "About us" : "معلومات عنا",
@@ -168,5 +166,4 @@
     "Log Out" : "تسجيل الخروج",
     "Saved Address" : "عنوانك",
     "My Orders" : "طلباتك"
->>>>>>> 19eed9db380bf4a4604a020e26824abe743d3f55
 }

@@ -3,13 +3,14 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import ReactStars from "react-rating-stars-component";
 
 import { useParams } from "react-router-dom";
-import ReactStars from "react-rating-stars-component";
+
 import Modal from "../modal/Modal";
-import { addReview } from "../../services/addReview";
+import { addReview } from "../../store/addReview/AddReview";
 import { useTranslation } from "react-i18next";
-import CommentIcon from "../../assets/commentsIcon.svg";
+import CommentIcon from "../../assets/revClinic.svg";
 
 import "./ProfileDoctor.css";
 import { useEffect, useState } from "react";
@@ -22,11 +23,12 @@ import { actClinicsCategoryById } from "../../store/ClinicsCategoryById/ClinicsC
 
 const ProfileDoctor = () => {
   // slick slider
+
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 4,
     slidesToScroll: 1,
     initialSlide: 0,
     responsive: [
@@ -57,36 +59,16 @@ const ProfileDoctor = () => {
     ],
   };
 
-  const [loading, setLoading] = useState(true);
-  const [restaurant, setRestaurant] = useState({});
   const { id } = useParams();
-  const [rating, setRating] = useState(0);
+
   const [comment, setComment] = useState("");
   const [RestaurantRating, setRestaurantRating] = useState(0);
-  const [type, setType] = useState("");
   const [location, setLoction] = useState("");
+  const [restaurant, setRestaurant] = useState({});
   const [formData, setFormData] = useState({
     bookingDate: new Date(),
     bookingTime: "",
   });
-
-  const handleStarClick = (value) => {
-    setRating(value);
-  };
-
-  const handleAddClick = () => {
-    if (rating === 0) {
-      alert("Please select a rating");
-      return;
-    }
-    if (comment.trim() === "") {
-      alert("Please add a comment");
-      return;
-    }
-
-    console.log("Rating:", rating);
-    console.log("Comment:", comment);
-  };
 
   const ratingChanged = (newRating) => {
     setRestaurantRating(newRating);
@@ -103,13 +85,9 @@ const ProfileDoctor = () => {
       console.error("Error adding review:", error);
     }
   };
-  const [error, setError] = useState(null);
+
   const lang = localStorage.getItem("i18nextLng");
   const { t } = useTranslation();
-
-  const handleTypeChange = (event) => {
-    setType(event.target.value);
-  };
 
   const handleLoctionChange = (event) => {
     setLoction(event.target.value);
@@ -123,29 +101,13 @@ const ProfileDoctor = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-  // const {
-  //   "Total rate": totalRate,
-  //   "best selling": bestSelling,
-  //   "resturant info": restaurantInfo,
-  //   reviwes,
-  // } = restaurant;
-  useEffect(() => {
-    const getRestaurant = async () => {
-      try {
-        setLoading(true); // Start loading
-        const data = await actClinicsCategoryById(id);
-        setRestaurant(data.data);
-        setError(null); // Clear any previous errors
-      } catch (error) {
-        console.error("Error fetching restaurant:", error);
-        setError("Failed to fetch restaurant");
-      } finally {
-        setLoading(false); // End loading
-      }
-    };
+  const {
+    "Total rate": totalRate,
+    "best selling": bestSelling,
+    "restaurant info": restaurantInfo,
+    reviews,
+  } = restaurant;
 
-    getRestaurant();
-  }, [id]);
   return (
     <>
       <div className="my-5 profileDoctor">
@@ -190,7 +152,7 @@ const ProfileDoctor = () => {
                           </label>
                           <input
                             type="text"
-                            className="w-75 rounded-2 form-control input-group px-2"
+                            className="w-75 rounded-2 form-conztrol input-group px-2"
                             id="exampleInputName"
                             placeholder="ahmed naser"
                           />
