@@ -1,64 +1,20 @@
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import ReactStars from "react-rating-stars-component";
-import { useParams } from "react-router-dom";
-import Modal from "../modal/Modal";
-import { addReview } from "../../store/addReview/AddReview";
+import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { toast, Toaster } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import CommentIcon from "../../assets/revClinic.svg";
-import "./ProfileDoctor.css";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { ReservationClinic } from "../../store/BookingSlice";
+import ReviewSection from "./ReviewSection";
 import HomeIcon from "@mui/icons-material/Home";
 import MedicationIcon from "@mui/icons-material/Medication";
 import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
-import { ReservationClinic } from "../../store/BookingSlice";
-import { useDispatch } from "react-redux";
-import { toast } from "react-hot-toast";
-import { Toaster } from "react-hot-toast";
+import "./ProfileDoctor.css";
+
 const ProfileDoctor = () => {
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: false,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
 
   const { id } = useParams();
-  const [comment, setComment] = useState("");
-  const [restaurantRating, setRestaurantRating] = useState(0);
-  const [location, setLocation] = useState("");
-  const [restaurant, setRestaurant] = useState({});
+  console.log(id);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -75,24 +31,6 @@ const ProfileDoctor = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const ratingChanged = (newRating) => {
-    setRestaurantRating(newRating);
-  };
-
-  const handleAddReview = async (event) => {
-    event.preventDefault();
-    try {
-      const result = await addReview(id, comment, restaurantRating);
-      console.log("Review added successfully:", result);
-      setComment("");
-      setRestaurantRating(0);
-    } catch (error) {
-      console.error("Error adding review:", error);
-      toast.error("Failed to add review.");
-    }
-  };
-
-  const lang = localStorage.getItem("i18nextLng");
   const { t } = useTranslation();
 
   const handleChange = (e) => {
@@ -308,75 +246,7 @@ const ProfileDoctor = () => {
             </div>
           </div>
 
-          <div className="reviews">
-            <div className="reviewsHeader">
-              <p>{t("Reviews")}</p>
-
-              <Modal>
-                <Modal.Open opens="add-review">
-                  <button className="add-outer">{t("Add Review")}</button>
-                </Modal.Open>
-                <Modal.Window name="add-review">
-                  <form
-                    onSubmit={handleAddReview}
-                    className={`add-review-form ${lang === "ar" ? "ar" : ""}`}
-                  >
-                    <h3 className="review-form-header">{t("Add Review")}</h3>
-                    <div>
-                      <div className="rating">
-                        <span>
-                          {restaurantRating} {t("Rating")}
-                        </span>
-                        <ReactStars
-                          count={5}
-                          onChange={ratingChanged}
-                          size={30}
-                          a11y={true}
-                          isHalf={true}
-                          emptyIcon={<i className="far fa-star" />}
-                          halfIcon={<i className="fa fa-star-half-alt" />}
-                          fullIcon={<i className="fa fa-star" />}
-                          activeColor="#ffd700"
-                          value={restaurantRating}
-                        />
-                      </div>
-                    </div>
-                    <textarea
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                      rows="6"
-                      placeholder={t("Comment")}
-                    ></textarea>
-                    <div className="text-center">
-                      <button className="add-review-btn">{t("Add")}</button>
-                    </div>
-                  </form>
-                </Modal.Window>
-              </Modal>
-            </div>
-
-            <Slider {...settings}>
-              <div>
-                <div className="review">
-                  <div className="icon">
-                    <img src={CommentIcon} alt="icon" />
-                  </div>
-                  <div className="userDetails">
-                    <div>
-                      <p style={{ fontWeight: "500" }}>ahmed</p>
-                      <p style={{ color: "#ddd", fontWeight: "500" }}>
-                        {t("customer")}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="comment">
-                    <p>rrr</p>
-                    <p>fffffffff</p>
-                  </div>
-                </div>
-              </div>
-            </Slider>
-          </div>
+          <ReviewSection doctore_id={id} />
         </div>
       </div>
     </>
