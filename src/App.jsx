@@ -113,6 +113,7 @@ function App() {
                         </ProtectedRoute>
                       }
                     />
+
                     <Route
                       path="/Clinics/:id"
                       element={

@@ -8,28 +8,33 @@ import ClinicsCategoryByIdSlice from "./ClinicsCategoryById/ClinicsCategoryByIdS
 import showClinicsDetailsSlice from "./showClinicsDetails/showClinicsDetailsSlice";
 import location from "./LocationSlice";
 import profileDoctorsSlice from "./ProfilsDoctors/profileDoctorsSlice";
-
+import confirmationSlice from "./reservation/confirmationSlice";
+import reservationSlice from "./reservation/reservationSlice";
+import paymentReducer from "./paymentSlice";
 import FavSlice from "./favClinics/favSlice";
-
 const persistConfig = {
-  key: "root",
-  storage,
+    key: "root",
+    storage,
 };
 
 const reducer = combineReducers({
-  User: UserSlice,
-  ClinicsCategory: ClinicsCategorySlice,
-  ClinicsCategoryById: ClinicsCategoryByIdSlice,
-  clinicsDetails: showClinicsDetailsSlice,
-  doctorData: profileDoctorsSlice,
-  location: location,
-  favClinic: FavSlice,
+    User: UserSlice,
+    ClinicsCategory: ClinicsCategorySlice,
+    ClinicsCategoryById: ClinicsCategoryByIdSlice,
+    clinicsDetails: showClinicsDetailsSlice,
+    doctorData: profileDoctorsSlice,
+    location: location,
+    confirmation: confirmationSlice,
+    reservation: reservationSlice,
+    payment: paymentReducer,
+    favClinic: FavSlice,
+
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+    reducer: persistedReducer,
 });
 
 export default store;

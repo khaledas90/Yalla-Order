@@ -30,6 +30,30 @@ const actClinicsCatgoty = createAsyncThunk(
     }
   }
 );
+const actSearchClinicsCatgoty = createAsyncThunk(
+  "category/clinic/search",
+  async ({ type, name }, thunkAPI) => {
+    const { rejectWithValue } = thunkAPI;
+    try {
+      const res = await axios.post(
+        "https://insta-order-site.web-allsafeeg.com/api/places/search/name",
+        { type, name },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            lang: localStorage.getItem("i18nextLng"),
+          },
+        }
+      ); // Replace with your actual API endpoint
+
+      return res.data.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response ? error.response.data : error.message
+      );
+    }
+  }
+);
 
 const ClinicsCategorySlice = createSlice({
   name: "ClinicsCategory",
@@ -53,9 +77,22 @@ const ClinicsCategorySlice = createSlice({
       state.loading = "failed";
       state.error = action.payload || action.error.message;
     });
+    builder.addCase(actSearchClinicsCatgoty.pending, (state) => {
+      state.loading = "pending";
+      state.error = null;
+    });
+    builder.addCase(actSearchClinicsCatgoty.fulfilled, (state, action) => {
+      state.loading = "success";
+
+      state.ClinicsCategory = action.payload;
+    });
+    builder.addCase(actSearchClinicsCatgoty.rejected, (state, action) => {
+      state.loading = "failed";
+      state.error = action.payload || action.error.message;
+    });
   },
 });
 
 export default ClinicsCategorySlice.reducer;
-export { actClinicsCatgoty };
+export { actClinicsCatgoty, actSearchClinicsCatgoty };
 export const { categoriesRecordsCleanUp } = ClinicsCategorySlice.actions;

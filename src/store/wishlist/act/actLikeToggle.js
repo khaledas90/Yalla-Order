@@ -9,24 +9,23 @@ const actLikeToggle = createAsyncThunk(
     const { rejectWithValue } = thunkAPI;
     try {
       const res = await apiAuthenticate.get(
-        `/places/listfavproduct?type=clinic&productId=${id}`,
+        `/places/listfavproduct?type=clinic`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
+            lang: localStorage.getItem("i18nextLng"),
           },
         }
       );
 
       if (res.data.length > 0) {
         await apiAuthenticate.delete(
-          `/places/clinic/doctor/remove/fav/doctor/${id}`
+          `(/places/clinic/doctor/remove/fav/doctor`
         );
+
         return { type: "remove", id };
       } else {
-        await apiAuthenticate.post(
-          `/places/clinic/doctor/add/fav/doctor/${id}`,
-          { productId: id }
-        );
+        await apiAuthenticate.post(`/places/clinic/doctor/add/fav/doctor`);
         return { type: "add", id };
       }
     } catch (error) {

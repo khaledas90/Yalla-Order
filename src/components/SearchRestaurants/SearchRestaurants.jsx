@@ -1,8 +1,9 @@
 import { useTranslation } from "react-i18next";
 import "./SearchRestaurants.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { searchRestaurants } from "../../services/apiRestaurant";
 import useScroll from "../../hooks/useScroll";
+import { useLocation } from "react-router-dom";
 
 function SearchRestaurants({
   pageAddress,
@@ -12,13 +13,15 @@ function SearchRestaurants({
   btnText,
   locIcon,
   onSearchResults,
+  type,
 }) {
   const [name, setName] = useState("");
-  const [type, setType] = useState("order");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { t } = useTranslation();
   const scrollPosition = useScroll();
+  const { pathname } = useLocation();
+
   // console.log(scrollPosition)
 
   const handleSearch = async (e) => {
@@ -29,6 +32,7 @@ function SearchRestaurants({
     try {
       const results = await searchRestaurants(name, type);
       onSearchResults(results.data);
+      console.log("Sersnovnsdoinvsdoinvsoi");
       window.scrollTo(0, 742);
     } catch (error) {
       console.error("Error searching for restaurants:", error);
