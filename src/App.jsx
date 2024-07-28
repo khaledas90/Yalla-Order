@@ -65,6 +65,7 @@ const ProtectedRoute = lazy(() =>
 const MyReservations = lazy(() =>
   import("./components/Profile/MyReservations")
 );
+const WhislistClinics = lazy(() => import("./pages/WhislitClinics"));
 const NotFound = lazy(() => import("./components/NotFound/NotFound"));
 function App() {
   return (
@@ -93,6 +94,14 @@ function App() {
                       element={
                         <ProtectedRoute>
                           <HomeMedical />
+                        </ProtectedRoute>
+                      }
+                    />
+                    <Route
+                      path="/whislistClinics"
+                      element={
+                        <ProtectedRoute>
+                          <WhislistClinics />
                         </ProtectedRoute>
                       }
                     />
