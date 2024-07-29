@@ -6,7 +6,7 @@ import Search from "../assets/search.svg";
 import AllClinics from "../components/AllClinics/AllClinics";
 import NavClinics from "../components/NavClinics/NavClinics";
 import { useTranslation } from "react-i18next";
-
+import Loader from "../components/loader/Loader";
 import axios from "axios";
 function Clinics() {
   const [clinics, setClinics] = useState([]);

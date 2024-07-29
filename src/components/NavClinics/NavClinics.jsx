@@ -9,6 +9,7 @@ import "./NavClinics.css";
 import LanguageMenu from "../LanguageSwitch/LanguageMenu";
 import ProfileMenuRestaurant from "../Profile/ProfileMenuClinic";
 import HeaderWishlist from "../HeaderWishlist/HeaderWishlist";
+import { useSelector } from "react-redux";
 
 function NavClinics() {
   const token = localStorage.getItem("token");
@@ -19,7 +20,7 @@ function NavClinics() {
     language: false,
     profile: false,
   });
-
+  const reservations = useSelector((state) => state.ShowReservation);
   const { t } = useTranslation();
   const lang = localStorage.getItem("i18nextLng");
   console.log(lang);
@@ -76,9 +77,13 @@ function NavClinics() {
                 </div>
               )}
               {icon === "calendar" && (
-                <div className="iconContainer">
-                  <EventOutlinedIcon />
-                </div>
+                <Link to="/MyReservations" >
+                  <div className="iconContainer">
+                    <EventOutlinedIcon />
+                    <span className="counter_reservations">{reservations.data.length}</span>
+                  </div>
+                </Link>
+
               )}
               {icon === "language" && <LanguageOutlinedIcon />}
               {icon === "profile" && <AccountCircleOutlinedIcon />}

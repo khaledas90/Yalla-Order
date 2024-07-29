@@ -92,6 +92,15 @@
     position: relative;
 }
 
+.iconContainer svg {
+    color: var(--white-color);
+    transition: all 0.3s;
+}
+
+.iconContainer svg:hover {
+    color: var(--secondary-color);
+}
+
 .iconContainer .Count {
     position: absolute;
     top: -10px;
@@ -122,6 +131,18 @@
 .loginBtn:hover {
     opacity: 1;
     background-color: var(--main-color);
+}
+
+.counter_reservations {
+    position: absolute;
+    top: -15px;
+    left: 25px;
+    color: var(--white-color);
+    transition: all 0.4s;
+}
+
+.counter_reservations:hover {
+    color: var(--secondary-color);
 }
 
 @media (max-width: 768px) {

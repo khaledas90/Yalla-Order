@@ -12,33 +12,23 @@ import { useDispatch, useSelector } from "react-redux";
 import NavRestaurants from "../NavRestaurants/NavRestaurants";
 import { logoutUser } from "../../store/thunk/logoutThunk";
 import imgEmpty from "../../assets/shopping-bag.png";
+import { ShowOrderResturant } from "../../store/ShowOrderResturant/ShowOrderResturant";
 import "./profile.css";
 
-const orders = [
-  {
-    id: 1,
-    restaurant: "El Maqam - Semouha",
-    date: "14/8/2023",
-    item: "Sausage Hawawshi",
-    address:
-      "Alexandria, Smouha, Smouha Circle, Zohour Bargout Building, floor 4, Apartment 2",
-    subtotal: "95.00 EGP",
-    deliveryFee: "11.99 EGP",
-    totalAmount: "106.99 EGP",
-  },
-];
-
 export default function MyOrder() {
-  const [isOrders, setIsOrders] = useState(orders.length > 0);
-  const { token } = useSelector((state) => state.User);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { token } = useSelector((state) => state.User);
+  const orders = useSelector((state) => state.ShowOrder);
+
+  const [isOrders, setIsOrders] = useState(orders.length > 0);
   const [isLoggedIn, setIsLoggedIn] = useState(!!token);
 
   useEffect(() => {
     setIsOrders(orders.length > 0);
     setIsLoggedIn(!!token);
-  }, [orders.length, token]);
+    dispatch(ShowOrderResturant());
+  }, [orders.length, token, dispatch]);
 
   const handleLogOut = async () => {
     const resultAction = await dispatch(logoutUser());
@@ -98,18 +88,18 @@ export default function MyOrder() {
                     <div className="col-lg-8">
                       <div className="content">
                         {isOrders ? (
-                          orders.map((order) => (
+                          orders.data.map((order) => (
                             <Card
-                              key={order.id}
+                              key={order["Order Id"]}
                               className="order-summary my-3 p-3 rounded"
                             >
                               <Card.Body>
                                 <Card.Title className="mb-2">
                                   <div className="d-flex justify-content-between mb-3">
                                     <span>
-                                      <strong>{order.restaurant}</strong>
+                                      <strong>{order.ResturantName}</strong>
                                     </span>
-                                    <span>{order.date}</span>
+                                    <span>Quantity:{order.OrderQTY || "0"}</span>
                                   </div>
                                   <span className="mb-2 mt-4 ">
                                     {order.item}
@@ -117,33 +107,28 @@ export default function MyOrder() {
                                 </Card.Title>
                                 <Card.Text className="d-flex justify-content-between mt-3">
                                   <strong>Delivery Address</strong>
-                                  <p>{order.address}</p>
+                                  <p>{order.ResturantAddress}</p>
                                 </Card.Text>
                                 <Card.Text>
                                   <div className="d-flex justify-content-between">
                                     <strong>Subtotal</strong>
                                     <span>
-                                      <strong>{order.subtotal}</strong>
+                                      <strong>{order.Total}</strong>
                                     </span>
                                   </div>
                                   <div className="d-flex justify-content-between">
                                     <strong>Delivery fee</strong>
                                     <span>
-                                      <strong>{order.deliveryFee}</strong>
+                                      <strong>{order.DeliveryFee}</strong>
                                     </span>
                                   </div>
                                   <div className="d-flex justify-content-between">
                                     <strong>Total amount</strong>
                                     <span>
-                                      <strong>{order.totalAmount}</strong>
+                                      <strong>{order.Total}</strong>
                                     </span>
                                   </div>
                                 </Card.Text>
-                                <div className="text-center mt-3 mb-2">
-                                  <Button className="btnAccounts">
-                                    <Link to="#">Order it again</Link>
-                                  </Button>
-                                </div>
                               </Card.Body>
                             </Card>
                           ))

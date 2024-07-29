@@ -31,7 +31,7 @@ function NavRestaurants() {
   const [bagItems, setBagItems] = useLocalStorageState([], "BagItems");
   const { t } = useTranslation();
   const lang = localStorage.getItem("i18nextLng");
-  console.log(lang);
+
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
@@ -73,9 +73,8 @@ function NavRestaurants() {
       </div>
       {token ? (
         <ul
-          className={`nav-links ${lang === "ar" ? "ar" : ""} ${
-            menuOpen ? "active" : ""
-          }`}
+          className={`nav-links ${lang === "ar" ? "ar" : ""} ${menuOpen ? "active" : ""
+            }`}
         >
           <li>
             <NavLink to="/HomeRestaurants">{t(`Home`)}</NavLink>
@@ -98,79 +97,79 @@ function NavRestaurants() {
       <div className="icons">
         {token
           ? ["favorite", "bag", "language", "profile"].map((icon) => (
-              <div
-                className="icon"
-                key={icon}
-                onClick={() => toggleDropdown(icon)}
-              >
+            <div
+              className="icon"
+              key={icon}
+              onClick={() => toggleDropdown(icon)}
+            >
+              {icon === "favorite" && (
+                <div className="iconContainer">
+                  <FavoriteBorderOutlinedIcon />
+                  {favCount !== 0 && (
+                    <span className="Count">{favCount}</span>
+                  )}
+                </div>
+              )}
+              {icon === "bag" && (
+                <div className="iconContainer">
+                  <ShoppingBagOutlinedIcon />
+                  {bagCount !== 0 && (
+                    <span className="Count">{bagCount}</span>
+                  )}
+                </div>
+              )}
+              {icon === "language" && <LanguageOutlinedIcon />}
+              {icon === "profile" && <AccountCircleOutlinedIcon />}
+              <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
                 {icon === "favorite" && (
-                  <div className="iconContainer">
-                    <FavoriteBorderOutlinedIcon />
-                    {favCount !== 0 && (
-                      <span className="Count">{favCount}</span>
-                    )}
-                  </div>
+                  <FavRestaurant
+                    favorites={favorites}
+                    loadingFavorites={loadingFavorites}
+                    favoritesError={favoritesError}
+                  />
                 )}
                 {icon === "bag" && (
-                  <div className="iconContainer">
-                    <ShoppingBagOutlinedIcon />
-                    {bagCount !== 0 && (
-                      <span className="Count">{bagCount}</span>
-                    )}
-                  </div>
+                  <Bag
+                    bagItems={bagItems}
+                    setBagItems={setBagItems}
+                    loadingBagItems={loadingBagItems}
+                    setLoadingBagItems={setLoadingBagItems}
+                    bagItemsError={bagItemsError}
+                    setBagItemsError={setBagItemsError}
+                  />
                 )}
-                {icon === "language" && <LanguageOutlinedIcon />}
-                {icon === "profile" && <AccountCircleOutlinedIcon />}
-                <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
-                  {icon === "favorite" && (
-                    <FavRestaurant
-                      favorites={favorites}
-                      loadingFavorites={loadingFavorites}
-                      favoritesError={favoritesError}
-                    />
-                  )}
-                  {icon === "bag" && (
-                    <Bag
-                      bagItems={bagItems}
-                      setBagItems={setBagItems}
-                      loadingBagItems={loadingBagItems}
-                      setLoadingBagItems={setLoadingBagItems}
-                      bagItemsError={bagItemsError}
-                      setBagItemsError={setBagItemsError}
-                    />
-                  )}
-                  {icon === "language" && <LanguageMenu />}
-                  {icon === "profile" && <ProfileMenuRestaurant />}
-                </div>
+                {icon === "language" && <LanguageMenu />}
+                {icon === "profile" && <ProfileMenuRestaurant />}
               </div>
-            ))
+            </div>
+          ))
           : ["favorite", "language"].map((icon) => (
-              <div
-                className="icon"
-                key={icon}
-                onClick={() => toggleDropdown(icon)}
-              >
-                {icon === "favorite" && (
-                  <div className="iconContainer">
-                    <FavoriteBorderOutlinedIcon />
-                    {favCount !== 0 && (
-                      <span className="Count">{favCount}</span>
-                    )}
-                  </div>
-                )}
-                {icon === "language" && <LanguageOutlinedIcon />}
-                <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
-                  {icon === "favorite" && (
-                    <FavRestaurant
-                      favorites={favorites}
-                      loadingFavorites={loadingFavorites}
-                      favoritesError={favoritesError}
-                    />
+            <div
+              className="icon"
+              key={icon}
+              onClick={() => toggleDropdown(icon)}
+            >
+              {icon === "favorite" && (
+                <div className="iconContainer">
+                  <FavoriteBorderOutlinedIcon />
+                  {favCount !== 0 && (
+                    <span className="Count">{favCount}</span>
                   )}
-                  {icon === "language" && <LanguageMenu />}
                 </div>
+              )}
+              {icon === "language" && <LanguageOutlinedIcon />}
+              <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
+                {icon === "favorite" && (
+                  <FavRestaurant
+                    favorites={favorites}
+                    loadingFavorites={loadingFavorites}
+                    favoritesError={favoritesError}
+                  />
+                )}
+                {icon === "language" && <LanguageMenu />}
               </div>
-            ))}
+            </div>
+          ))}
         {!token && (
           <div className="icon">
             <Link to="/login">
