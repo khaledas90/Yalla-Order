@@ -52,6 +52,28 @@ export const fetchRestaurantById = async (id) => {
   }
 };
 
+// get promo code list 
+export const fetchPromoCodes = async () => {
+  try {
+    const response = await apiClient.get('/promocode/list?type=order');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching promo codes:', error);
+    throw error; // Rethrow the error to be handled in the component
+  }
+};
+// Function to store a promo code for the user
+export const storePromoCode = async (promoCodeId) => {
+  try {
+    const response = await apiClient.get(`/promocode/storefor/user/${promoCodeId}`);
+
+    return response.data;
+  } catch (error) {
+    console.error('Error storing promo code:', error);
+    throw error; 
+  }
+};
+
 // add review
 
 export const addReview = async (restaurantId, comment, rate) => {

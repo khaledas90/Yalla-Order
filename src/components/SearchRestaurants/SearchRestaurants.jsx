@@ -32,7 +32,6 @@ function SearchRestaurants({
     try {
       const results = await searchRestaurants(name, type);
       onSearchResults(results.data);
-      console.log("Sersnovnsdoinvsdoinvsoi");
       window.scrollTo(0, 742);
     } catch (error) {
       console.error("Error searching for restaurants:", error);

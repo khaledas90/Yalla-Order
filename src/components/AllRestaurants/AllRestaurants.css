@@ -11,6 +11,16 @@
 .allRestaurants h1 span {
   color: var(--main-color);
 }
+.allRestaurants .container a{
+  color: var(--dark-color);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1.5rem;
+  transition: 0.3s;
+}
+.allRestaurants .container a:hover{
+  color: var(--main-color);
+}
 .allRestaurants.ar{
   text-align: right;
 }

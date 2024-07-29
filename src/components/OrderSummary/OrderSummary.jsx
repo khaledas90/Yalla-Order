@@ -35,8 +35,9 @@ const [confirmError, setConfirmError] = useState(null);
 const [successMessage, setSuccessMessage] = useState('');
 const {confirmedOrders,addConfirmedOrder} = useConfirmedOrder();
 const {deleteOrder} = useOrders();
-const address = localStorage.getItem('locations');
-const Lastaddress = address[address.length-1]
+const address = JSON.parse(localStorage.getItem('locations'));
+console.log(address)
+const Lastaddress = address?.at(0);
 // const TotalPrice = selectedDeliveryMethod === "delivery" ? Number(orderSummary.Total) + Number(orderSummary['Delivery Fee']) : Number(orderSummary.Total);
 useEffect(() => {
   const getOrderSummary = async () => {
@@ -68,11 +69,11 @@ const handleConfirmOrder = async (e) => {
       
       specail_request: specail_request,
       delivery_method: selectedDeliveryMethod,
-      pay_method: selectedPayMethod,
-      address : Lastaddress.placeName
+      pay_method: selectedPayMethod
     });
 
     setSuccessMessage('Order confirmed successfully!');
+    console.log(data)
     addConfirmedOrder({...data.data,restaurantName,productName})
     deleteOrder(data.data.id)
     Navigate(`/trackOrders/${data.data.id}`)
@@ -84,6 +85,36 @@ const handleConfirmOrder = async (e) => {
     setConfirmLoading(false);
   }
 };
+const handleConfirmOrderAndPay = async (e) => {
+  try {
+    e.preventDefault()
+    setConfirmLoading(true);
+    setConfirmError(null);
+    setSuccessMessage('');
+
+    const data = await confirmOrder(orderId, {
+      
+      specail_request: specail_request,
+      delivery_method: selectedDeliveryMethod,
+      pay_method: selectedPayMethod,
+      address : Lastaddress.placeName
+    });
+
+    setSuccessMessage('Order confirmed successfully!');
+    if(data.data) window.open(data.data)
+    console.log(data)
+    addConfirmedOrder({...data.data,restaurantName,productName})
+    deleteOrder(data.data.id)
+    
+    
+  } catch (error) {
+    console.error('Error confirming order:', error);
+    setConfirmError('Failed to confirm order');
+  } finally {
+    setConfirmLoading(false);
+  }
+};
+
 
 if (loading) {
   return <Loader/>;
@@ -206,7 +237,7 @@ if (loading) {
       <div className="text-center mt-5">
         {selectedPayMethod === "cash"? 
         <button onClick={handleConfirmOrder} className="confBtn">{confirmLoading ? t("Order in progress...") : t("Confirm Order")}</button> : 
-        <button className="confBtn">{t("Go to payment")}</button>
+        <button onClick={handleConfirmOrderAndPay} className="confBtn">{confirmLoading ? t("Order in progress...") : t("Go to payment")}</button>
  }
       </div>
     </form>

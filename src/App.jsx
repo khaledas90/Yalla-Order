@@ -13,6 +13,7 @@ import OrderProvider from "./context/OrderProvider";
 import ConfirmedOrderProvider from "./context/ConfirmedOrderProvider";
 import TransitionWrapper from "./hooks/TransitionWrapper";
 import Loader from "./components/loader/Loader";
+import PromoCode from "./components/AllRestaurants/PromoCode";
 
 const Footer = lazy(() => import("./components/footer/Footer"));
 const Login = lazy(() => import("./components/Login/Login"));
@@ -232,6 +233,14 @@ function App() {
                           <AboutUs />
                         </ProtectedRoute>
                       }
+                    />
+                    <Route
+                    path="/promocodes"
+                    element={
+                      <ProtectedRoute>
+                      <PromoCode/>
+                      </ProtectedRoute>
+                    }
                     />
                     <Route
                       path="/ContactUs"

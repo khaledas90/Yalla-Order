@@ -51,7 +51,24 @@ function AllRestaurants({restaurants,loading,error,setRestaurants,setLoading,set
     return (
         <div className={`allRestaurants w-100 overflow-hidden ${lang === "ar" ? "ar" : ""}`}>
                 <div className="container">
+                <div className={`d-flex justify-content-between align-items-center`}>
+                {lang === "ar" ? 
+                    <>
+                    <Link to={'/promocodes'}>{t("Show Offers")}</Link>
                     <h1><span>{t('all')}</span> {t('restaurants')}</h1>
+                    </>
+                    :
+                     <>
+                    <h1><span>{t('all')}</span> {t('restaurants')}</h1>
+                    <Link to={'/promocodes'}>{t("Show Offers")}</Link>
+                   
+                    </>
+
+                }
+                
+               
+                </div>
+                   
                 </div>
             <div className="restaurantsList">
                 <div className="container">

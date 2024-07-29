@@ -165,6 +165,10 @@
     "Edit Profile" : "Edit Profile",
     "Log Out" : "Log Out",
     "Saved Address" : "Saved Address",
-    "My Orders" : "My Orders"
+    "My Orders" : "My Orders",
+    "offers" : "offers",
+    "Promo Code" : "Promo Code",
+    "Click On order to get Promo Code" : "Click On order to get Promo Code",
+    "Show Offers" : "Show Offers"
 
 }

@@ -24,7 +24,7 @@ const styles = {
 };
 
 function CreateOrder({orderDetails,productName,productId}) {
-    const {additem,addsaui,resturant,sizes} = orderDetails;
+    const {additem = [],addsaui = [],resturant,sizes} = orderDetails;
     const [size_id,setSize_id] = useState();
     const [checkedExtras, setCheckedExtras] = useState([]);
     const [checkedSauce,setCheckedSauce] = useState([]);

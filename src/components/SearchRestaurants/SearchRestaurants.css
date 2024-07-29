@@ -16,7 +16,7 @@
 
 .formStyle button {
   font-size: 12px;
-  background-color: var(--secondary-color);
+  background-color: var(--main-darker);
   top: 8px !important;
   right: 5px !important;
 }

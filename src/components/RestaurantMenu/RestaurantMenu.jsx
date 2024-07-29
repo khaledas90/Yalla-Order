@@ -82,9 +82,17 @@ function RestaurantMenu() {
         const response = await addItemToFavorites(productId);
   
         setFavoriteSuccess(true);
+        if(response.message === "remove product to fav list"){
+          toast.error('Product removed from favorites successfully!') 
+        }
+        else{
+          toast.success('Product added to favorites successfully!')
+        } 
+        
+        console.log(response)
         handleFetchFavorites()
-        toast.success('Product added to favorites successfully!')
         return response;
+        
       } catch (error) {
         console.error('Error adding product to favorites:', error);
         toast.error("Failed to add product to favorites!")

@@ -165,5 +165,9 @@
     "Edit Profile" : "تعديل الملف الشخصى",
     "Log Out" : "تسجيل الخروج",
     "Saved Address" : "عنوانك",
-    "My Orders" : "طلباتك"
+    "My Orders" : "طلباتك",
+    "offers" : "العروض",
+    "Promo Code" : "الرمز الترويجى",
+    "Click On order to get Promo Code" : "اضغط لنسخ كود الخصم",
+    "Show Offers" : "العروض"
 }
