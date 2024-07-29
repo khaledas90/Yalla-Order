@@ -70,7 +70,7 @@ const ReviewSection = ({ doctore_id }) => {
             console.log(result.data);
             setComment("");
             setRestaurantRating(0);
-            fetchReviews(); // Fetch reviews again to update the list
+            fetchReviews();
         } catch (error) {
             toast.error("Failed to add review.");
         }

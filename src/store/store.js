@@ -12,6 +12,9 @@ import confirmationSlice from "./reservation/confirmationSlice";
 import reservationSlice from "./reservation/reservationSlice";
 import paymentReducer from "./paymentSlice";
 import FavSlice from "./favClinics/favSlice";
+import ShowReservation from "./reservation/ShowReservation";
+import ShowOrderResturantSlice from "./ShowOrderResturant/ShowOrderResturant";
+
 const persistConfig = {
     key: "root",
     storage,
@@ -26,9 +29,10 @@ const reducer = combineReducers({
     location: location,
     confirmation: confirmationSlice,
     reservation: reservationSlice,
+    ShowReservation: ShowReservation,
     payment: paymentReducer,
     favClinic: FavSlice,
-
+    ShowOrder: ShowOrderResturantSlice,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

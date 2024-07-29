@@ -217,6 +217,12 @@
     background-color: #ece7e7 !important;
 }
 
+.Restaurant-item .slick-arrow {
+    font-size: 0px;
+    line-height: 0;
+    text-indent: -1000em;
+}
+
 .Restaurant-item .slick-next {
     right: -18px;
 }

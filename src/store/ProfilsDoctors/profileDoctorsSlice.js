@@ -49,7 +49,7 @@ const profileDoctorsSlice = createSlice({
             })
             .addCase(actProfileDoctors.fulfilled, (state, action) => {
                 state.loading = "success";
-                state.profileDoctors = action.payload; // Corrected to profileDoctors
+                state.profileDoctors = action.payload;
             })
             .addCase(actProfileDoctors.rejected, (state, action) => {
                 state.loading = "failed";

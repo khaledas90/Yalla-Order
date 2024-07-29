@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-
-import { Button, Card } from "react-bootstrap";
-
+import { Card } from "react-bootstrap";
 import "./profile.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBagShopping,
   faCalendar,
   faMapLocation,
   faPenToSquare,
@@ -17,31 +14,26 @@ import { useDispatch, useSelector } from "react-redux";
 import NavRestaurants from "../NavRestaurants/NavRestaurants";
 import { logoutUser } from "../../store/thunk/logoutThunk";
 import NavClinics from "../NavClinics/NavClinics";
-const orders = [
-  {
-    id: 1,
-    restaurant: "El Maqam - Semouha",
-    date: "14/82023",
-    item: "Sausage Hawawshi",
-    address:
-      "Alexandria, Smouha, Smouha Circle, Zohour Bargout Building, floor 4, Apartment 2",
-    subtotal: "95.00 EGP",
-    deliveryFee: "11.99 EGP",
-    totalAmount: "106.99 EGP",
-  },
-];
+
+import Loader from "../loader/Loader";
+import { fetchReservationList } from "../../store/reservation/ShowReservation";
 export default function MyReservations() {
   const { typePage } = useSelector((state) => state.User);
-
-  const [isOrders, SetIsOrders] = useState(orders.length > 0);
+  const [loading, setLoading] = useState(true);
   const { token } = useSelector((state) => state.User);
+  const reservations = useSelector((state) => state.ShowReservation);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(!!token);
+
   useEffect(() => {
-    SetIsOrders(orders.length > 0);
+    console.log(reservations);
+    dispatch(fetchReservationList());
+    setLoading(false);
     setIsLoggedIn(!!token);
-  }, [isOrders]);
+  }, [token]);
+
+
   const handleLogOut = async () => {
     const resultAction = await dispatch(logoutUser());
     if (logoutUser.fulfilled.match(resultAction)) {
@@ -50,7 +42,7 @@ export default function MyReservations() {
   };
   return (
     <>
-      <div className="Profile ">
+      <div className="Profile">
         <div className="Main_bg_profile">
           {typePage === "restaurant" ? <NavRestaurants /> : <NavClinics />}
         </div>
@@ -63,7 +55,7 @@ export default function MyReservations() {
                 <div className="card">
                   <div className="card-body p-0">
                     <div className="row">
-                      <div className="col-lg-4 ">
+                      <div className="col-lg-4">
                         <div className="List_group">
                           <ul>
                             <li>My Account</li>
@@ -89,68 +81,58 @@ export default function MyReservations() {
                               />
                               <Link to="/MyAddress"> Saved Address</Link>
                             </li>
-                            <li onClick={handleLogOut}>
-                              <FontAwesomeIcon
-                                icon={faRightFromBracket}
-                                className=" profile-icon"
-                              />
-                              <Link> Log Out </Link>
+                            <li>
+                              <Link onClick={handleLogOut}>
+                                <FontAwesomeIcon
+                                  icon={faRightFromBracket}
+                                  className="profile-icon"
+                                />
+                                Log Out
+                              </Link>
                             </li>
                           </ul>
                         </div>
                       </div>
-                      <div className="col-lg-8 ">
+                      <div className="col-lg-8">
                         <div className="content">
-                          {isOrders ? (
-                            orders.map((order) => (
+                          {loading ? (
+                            <Loader />
+                          ) : reservations.data.length > 0 ? (
+                            reservations.data.map((order) => (
                               <Card
-                                key={order.id}
+                                key={order['reservation id']}
                                 className="order-summary my-3 p-3 rounded"
                               >
                                 <Card.Body>
                                   <Card.Title className="mb-2">
                                     <div className="d-flex justify-content-between mb-3">
                                       <span>
-                                        <strong>{order.restaurant}</strong>
+                                        <strong>{order.clinicname}</strong>
                                       </span>
-                                      <span>{order.date}</span>
+                                      <span>{order.patientday_booking}</span>
                                     </div>
-                                    <span className="mb-2 mt-4 ">
-                                      {order.item}
+                                    <span className="mb-2 mt-4">
+                                      {order["Doctor name"] || "Dr. Unknown"}
                                     </span>
                                   </Card.Title>
 
                                   <Card.Text className="d-flex justify-content-between mt-3">
-                                    <strong>Delivery Address</strong>
-                                    <p>{order.address}</p>
+                                    <strong>Clinic Address</strong>
+                                    <p>{order.clinicAddress}</p>
+                                  </Card.Text>
+                                  <Card.Text className="d-flex justify-content-between mt-3">
+                                    <strong>time booking</strong>
+                                    <p>{order.patienttime_booking}</p>
                                   </Card.Text>
                                   <Card.Text>
                                     <div className="d-flex justify-content-between">
-                                      <strong>Subtotal</strong>
+                                      <strong>Total Price</strong>
                                       <span>
-                                        <strong>{order.subtotal}</strong>
+                                        <strong>{order.totalprice}</strong>
                                       </span>
                                     </div>
-                                    <div className="d-flex justify-content-between">
-                                      <strong>Delivery fee</strong>
-                                      <span>
-                                        <strong>{order.deliveryFee}</strong>
-                                      </span>
-                                    </div>
-                                    <div className="d-flex justify-content-between">
-                                      <strong>Total amount</strong>
-                                      <span>
-                                        <strong>{order.totalAmount}</strong>
-                                      </span>
-                                    </div>
+
                                   </Card.Text>
-                                  <div className="text-center mt-3 mb-2 ">
-                                    <Button className="btnAccounts">
-                                      <Link exact="true" to="">
-                                        Order it again
-                                      </Link>
-                                    </Button>
-                                  </div>
                                 </Card.Body>
                               </Card>
                             ))

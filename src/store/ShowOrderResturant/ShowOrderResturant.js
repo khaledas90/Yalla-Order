@@ -1,26 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import apiAuthenticate from '../../services/authentication/apiAuthenticate';
-import toast from 'react-hot-toast';
 
-export const fetchReservationDetails = createAsyncThunk(
-    'reservation/fetchReservationDetails',
-    async(idReservation, { rejectWithValue }) => {
+export const ShowOrderResturant = createAsyncThunk(
+    'ShowOrderResturant/fetchReservationList',
+    async(_, { rejectWithValue }) => {
         try {
-            const response = await apiAuthenticate.get(`places/clinic/doctor/summary/reservation/${idReservation}`);
+            const response = await apiAuthenticate.get("/places/restaurantes/order/show?type=order");
             if (response.status === 200) {
-                toast.success(response.data.message);
                 return response.data.data;
             }
         } catch (error) {
-            toast.error(error.response.data.message || 'An error occurred');
+            console.error("Failed to fetch reservations", error);
             return rejectWithValue(error.response.data.message || 'An error occurred');
         }
     }
 );
 
-
-const reservationSlice = createSlice({
-    name: 'reservation',
+const ShowOrderResturantSlice = createSlice({
+    name: 'ShowOrder',
     initialState: {
         data: null,
         loading: false,
@@ -29,19 +26,19 @@ const reservationSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchReservationDetails.pending, (state) => {
+            .addCase(ShowOrderResturant.pending, (state) => {
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(fetchReservationDetails.fulfilled, (state, action) => {
+            .addCase(ShowOrderResturant.fulfilled, (state, action) => {
                 state.data = action.payload;
                 state.loading = false;
             })
-            .addCase(fetchReservationDetails.rejected, (state, action) => {
+            .addCase(ShowOrderResturant.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload;
             });
     },
 });
 
-export default reservationSlice.reducer;
+export default ShowOrderResturantSlice.reducer;

@@ -14,7 +14,8 @@ import "./NavClinics.css";
 
 import LanguageMenu from "../LanguageSwitch/LanguageMenu";
 import ProfileMenuRestaurant from "../Profile/ProfileMenuClinic";
-// import api
+
+
 
 function NavClinics() {
   const token = localStorage.getItem("token");
@@ -50,9 +51,8 @@ function NavClinics() {
       </div>
       {token ? (
         <ul
-          className={`nav-links ${lang === "ar" ? "ar" : ""} ${
-            menuOpen ? "active" : ""
-          }`}
+          className={`nav-links ${lang === "ar" ? "ar" : ""} ${menuOpen ? "active" : ""
+            }`}
         >
           <li>
             <NavLink to="/HomeMedical">{t("Home")}</NavLink>
@@ -72,38 +72,38 @@ function NavClinics() {
       <div className="icons">
         {token
           ? ["favorite", "calendar", "language", "profile"].map((icon) => (
-              <div
-                className="icon"
-                key={icon}
-                onClick={() => toggleDropdown(icon)}
-              >
-                {icon === "favorite" && <div className="iconContainer"></div>}
-                {icon === "calendar" && (
-                  <div className="iconContainer">
-                    <EventOutlinedIcon />
-                  </div>
-                )}
-                {icon === "language" && <LanguageOutlinedIcon />}
-                {icon === "profile" && <AccountCircleOutlinedIcon />}
-                <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
-                  {icon === "language" && <LanguageMenu />}
-                  {icon === "profile" && <ProfileMenuRestaurant />}
+            <div
+              className="icon"
+              key={icon}
+              onClick={() => toggleDropdown(icon)}
+            >
+              {icon === "favorite" && <div className="iconContainer"></div>}
+              {icon === "calendar" && (
+                <div className="iconContainer">
+                  <EventOutlinedIcon />
                 </div>
+              )}
+              {icon === "language" && <LanguageOutlinedIcon />}
+              {icon === "profile" && <AccountCircleOutlinedIcon />}
+              <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
+                {icon === "language" && <LanguageMenu />}
+                {icon === "profile" && <ProfileMenuRestaurant />}
               </div>
-            ))
+            </div>
+          ))
           : ["favorite", "language"].map((icon) => (
-              <div
-                className="icon"
-                key={icon}
-                onClick={() => toggleDropdown(icon)}
-              >
-                {icon === "favorite" && <div className="iconContainer"></div>}
-                {icon === "language" && <LanguageOutlinedIcon />}
-                <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
-                  {icon === "language" && <LanguageMenu />}
-                </div>
+            <div
+              className="icon"
+              key={icon}
+              onClick={() => toggleDropdown(icon)}
+            >
+              {icon === "favorite" && <div className="iconContainer"></div>}
+              {icon === "language" && <LanguageOutlinedIcon />}
+              <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
+                {icon === "language" && <LanguageMenu />}
               </div>
-            ))}
+            </div>
+          ))}
         {!token && (
           <div className="icon">
             <Link to="/login">
