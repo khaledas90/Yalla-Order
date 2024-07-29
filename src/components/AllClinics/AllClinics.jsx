@@ -1,19 +1,9 @@
 import { Link } from "react-router-dom";
 import "./AllClinics.css";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { actClinicsCatgoty } from "../../store/ClinicsCatgory/ClinicsCatgorySlice";
+
 import { useTranslation } from "react-i18next";
 
-function AllClinics() {
-  const dispatch = useDispatch();
-  const { ClinicsCategory } = useSelector((state) => state.ClinicsCategory);
-
-  useEffect(() => {
-    console.log(ClinicsCategory, "5555555555");
-    dispatch(actClinicsCatgoty());
-  }, [dispatch]);
-
+function AllClinics({ clinics }) {
   const { t } = useTranslation();
 
   const lang = localStorage.getItem("i18nextLng");
@@ -32,7 +22,7 @@ function AllClinics() {
       <div className="ClinicList">
         <div className="container">
           <div className="row">
-            {ClinicsCategory?.map((e) => (
+            {clinics?.map((e) => (
               <div key={e.id} className="col-12 col-md-6 col-lg-3 mb-5">
                 <div className="Clinic">
                   <Link to={`/ShowClinicsCategoryById/${e.id}`}>

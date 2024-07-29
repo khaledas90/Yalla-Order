@@ -1,21 +1,14 @@
-// import react
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink } from "react-router-dom";
-// import SVG
 import logoImg from "../../assets/Insta Order.svg";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import EventOutlinedIcon from "@mui/icons-material/EventOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-// import style
 import "./NavClinics.css";
-// import component
-
 import LanguageMenu from "../LanguageSwitch/LanguageMenu";
 import ProfileMenuRestaurant from "../Profile/ProfileMenuClinic";
-
-
+import HeaderWishlist from "../HeaderWishlist/HeaderWishlist";
 
 function NavClinics() {
   const token = localStorage.getItem("token");
@@ -77,7 +70,11 @@ function NavClinics() {
               key={icon}
               onClick={() => toggleDropdown(icon)}
             >
-              {icon === "favorite" && <div className="iconContainer"></div>}
+              {icon === "favorite" && (
+                <div className="iconContainer">
+                  <HeaderWishlist />
+                </div>
+              )}
               {icon === "calendar" && (
                 <div className="iconContainer">
                   <EventOutlinedIcon />
@@ -97,7 +94,11 @@ function NavClinics() {
               key={icon}
               onClick={() => toggleDropdown(icon)}
             >
-              {icon === "favorite" && <div className="iconContainer"></div>}
+              {icon === "favorite" && (
+                <div className="iconContainer">
+                  <HeaderWishlist />
+                </div>
+              )}
               {icon === "language" && <LanguageOutlinedIcon />}
               <div className={`dropdown ${dropdownOpen[icon] ? "show" : ""}`}>
                 {icon === "language" && <LanguageMenu />}

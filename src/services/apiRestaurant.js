@@ -294,6 +294,7 @@ export const searchRestaurants = async (name, type) => {
       name,
       type,
     });
+
     return response.data;
   } catch (error) {
     console.error("Error searching for restaurants:", error);

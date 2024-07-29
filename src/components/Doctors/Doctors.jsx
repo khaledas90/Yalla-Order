@@ -1,29 +1,31 @@
 import { Link, useParams } from "react-router-dom";
 import "./Doctors.css";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { actShowClinicsDetails } from "../../store/showClinicsDetails/showClinicsDetailsSlice";
-import like from "../../assets/like.svg";
-import likeFile from "../../assets/likeFile.svg";
+import like from "../../assets/likeDoctors.svg";
+// import likeFile from "../../assets/likeFile.svg";
+import { actLikeToggle } from "../../store/wishlist/wishlistSlice";
 
 const Doctors = () => {
   // const [doctors, setDoctors] = useState([]);
-  const [favStatus, setFavStatus] = useState(false);
   const params = useParams();
   const id = params.id;
   const dispatch = useDispatch();
   const { clinicsDetails } = useSelector((state) => state.clinicsDetails);
-  const fav = useSelector((state) => state.favClinic);
 
   useEffect(() => {
-    console.log(fav, "555555");
     const controller = new AbortController();
     const signal = controller.signal;
     dispatch(actShowClinicsDetails(id, { signal }));
     return () => {
       controller.abort();
     };
-  }, [dispatch, id, fav]);
+  }, [dispatch, id]);
+
+  const LikeToggleHandler = () => {
+    dispatch(actLikeToggle(id));
+  };
 
   return (
     <>
@@ -50,19 +52,8 @@ const Doctors = () => {
                     </div>
                   </Link>
                   <div>
-                    <button
-                      className="btn"
-                      onClick={() => setFavStatus(!favStatus)}
-                    >
-                      {favStatus ? (
-                        <>
-                          <img src={likeFile} alt="" className="wishlistBtn" />
-                        </>
-                      ) : (
-                        <>
-                          <img src={like} alt="" className="wishlistBtn" />
-                        </>
-                      )}
+                    <button className="btn" onClick={LikeToggleHandler}>
+                      <img src={like} alt="" className="wishlistBtn" />
                     </button>
                   </div>
                 </div>
