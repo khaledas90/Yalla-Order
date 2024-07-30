@@ -11,14 +11,13 @@ import { registerUser } from "../../store/thunk/registerThunk";
 import NavRestaurants from "../NavRestaurants/NavRestaurants";
 import { useTranslation } from "react-i18next";
 import Loader from "../loader/Loader";
+import { Toaster, toast } from "react-hot-toast";
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { status, error } = useSelector((state) => state.User);
   const [showPassword, setShowPassword] = useState(false);
-
-
 
   const formik = useFormik({
     initialValues: {
@@ -34,7 +33,6 @@ const SignUp = () => {
       Password: Yup.string().required('Password is required'),
     }),
     onSubmit: async (values) => {
-
       dispatch(registerUser({ values, navigate }));
     },
   });
@@ -146,7 +144,10 @@ const SignUp = () => {
                 </div>
               </form>
               {status === 'loading' && <Loader />}
-
+              <Toaster
+                position="top-center"
+                reverseOrder={false}
+              />
             </div>
           </div>
         </div>

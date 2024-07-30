@@ -133,7 +133,8 @@
     background-color: var(--main-color);
 }
 
-.counter_reservations {
+.counter_reservations,
+.counter_Fav {
     position: absolute;
     top: -15px;
     left: 25px;

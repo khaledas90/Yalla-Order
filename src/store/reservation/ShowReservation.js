@@ -13,6 +13,7 @@ export const fetchReservationList = createAsyncThunk(
             }
         } catch (error) {
             console.error("Failed to fetch reservations", error);
+            return rejectWithValue(error.response.data.message || 'An error occurred');
         }
     });
 

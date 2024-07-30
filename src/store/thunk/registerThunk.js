@@ -26,6 +26,7 @@ export const registerUser = createAsyncThunk(
                 }, 1000);
                 return {...response.data, userData: values };
             } else {
+                console.log(response);
                 toast.error(response.data.message);
                 return rejectWithValue(response.data.message);
             }

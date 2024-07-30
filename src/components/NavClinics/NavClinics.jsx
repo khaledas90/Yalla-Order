@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink } from "react-router-dom";
 import logoImg from "../../assets/Insta Order.svg";
@@ -14,6 +14,8 @@ import { useSelector } from "react-redux";
 function NavClinics() {
   const token = localStorage.getItem("token");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [countReservations, setCountReservations] = useState('0');
+  const [countFav, setCountCountFav] = useState('0');
   const [dropdownOpen, setDropdownOpen] = useState({
     favorite: false,
     bag: false,
@@ -21,9 +23,24 @@ function NavClinics() {
     profile: false,
   });
   const reservations = useSelector((state) => state.ShowReservation);
+  const favClinic = useSelector((state) => state.favClinic);
+
   const { t } = useTranslation();
   const lang = localStorage.getItem("i18nextLng");
-  console.log(lang);
+
+  useEffect(() => {
+    if (reservations.data === null || reservations.data.length === 0) {
+      setCountReservations("0");
+    } else {
+      setCountReservations(reservations.data.length.toString());
+    }
+
+    if (favClinic.favClinic === null || favClinic.favClinic.length === 0) {
+      setCountCountFav("0");
+    } else {
+      setCountCountFav(favClinic.favClinic.length.toString());
+    }
+  }, [reservations, favClinic]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -45,8 +62,7 @@ function NavClinics() {
       </div>
       {token ? (
         <ul
-          className={`nav-links ${lang === "ar" ? "ar" : ""} ${menuOpen ? "active" : ""
-            }`}
+          className={`nav-links ${lang === "ar" ? "ar" : ""} ${menuOpen ? "active" : ""}`}
         >
           <li>
             <NavLink to="/HomeMedical">{t("Home")}</NavLink>
@@ -73,17 +89,17 @@ function NavClinics() {
             >
               {icon === "favorite" && (
                 <div className="iconContainer">
+                  <span className="counter_Fav">{countFav}</span>
                   <HeaderWishlist />
                 </div>
               )}
               {icon === "calendar" && (
-                <Link to="/MyReservations" >
+                <Link to="/MyReservations">
                   <div className="iconContainer">
                     <EventOutlinedIcon />
-                    <span className="counter_reservations">{reservations.data.length}</span>
+                    <span className="counter_reservations">{countReservations}</span>
                   </div>
                 </Link>
-
               )}
               {icon === "language" && <LanguageOutlinedIcon />}
               {icon === "profile" && <AccountCircleOutlinedIcon />}
