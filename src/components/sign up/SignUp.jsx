@@ -4,22 +4,21 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  faApple,
-  faFacebook,
-  faGoogle,
-} from "@fortawesome/free-brands-svg-icons";
+import { faApple, faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import "./signUp.css";
 import { registerUser } from "../../store/thunk/registerThunk";
 import NavRestaurants from "../NavRestaurants/NavRestaurants";
 import { useTranslation } from "react-i18next";
+import Loader from "../loader/Loader";
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { status, error } = useSelector((state) => state.User);
   const [showPassword, setShowPassword] = useState(false);
+
+
 
   const formik = useFormik({
     initialValues: {
@@ -35,11 +34,11 @@ const SignUp = () => {
       Password: Yup.string().required('Password is required'),
     }),
     onSubmit: async (values) => {
-      localStorage.setItem('token', 'token');
-      dispatch(registerUser(values));
-      navigate('/login')
+
+      dispatch(registerUser({ values, navigate }));
     },
   });
+
   const { t } = useTranslation();
   const lang = localStorage.getItem("i18nextLng");
 
@@ -146,13 +145,13 @@ const SignUp = () => {
                   </span>
                 </div>
               </form>
-              {status === 'loading' && <p>Loading...</p>}
-              {status === 'failed' && <p>Error: {error}</p>}
+              {status === 'loading' && <Loader />}
+
             </div>
           </div>
         </div>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 };
 

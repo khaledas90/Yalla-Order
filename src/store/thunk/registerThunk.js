@@ -5,8 +5,9 @@ import { bake_cookie } from "sfcookies";
 
 export const registerUser = createAsyncThunk(
     'user/register',
-    async({ userData, navigate }, thunkAPI) => {
-        const { Email, Name, Phone, Password } = userData;
+    async({ values, navigate }, { rejectWithValue }) => {
+        const { Email, Name, Phone, Password } = values;
+
         try {
             const response = await apiAuthenticate.post('/register', {
                 name: Name,
@@ -19,28 +20,20 @@ export const registerUser = createAsyncThunk(
             if (response.status === 200) {
                 toast.success(response.data.message);
                 bake_cookie('token', token);
-                bake_cookie('phoneUser', Phone);
-                bake_cookie('PasswordUser', Password);
+                localStorage.setItem('token', token);
                 setTimeout(() => {
                     navigate('/login');
                 }, 1000);
-                return {...response.data, userData };
+                return {...response.data, userData: values };
             } else {
                 toast.error(response.data.message);
-                return thunkAPI.rejectWithValue(response.data.message);
+                return rejectWithValue(response.data.message);
             }
 
         } catch (error) {
-            if (error.response.data.errors.email.join() === 'validation.unique') {
-                toast.error('Email already exists');
-            } else if (error.response.data.errors.phone.join() === 'validation.unique') {
-                toast.error('Phone already exists');
-            } else if (error.response.data.errors.email.join() === 'validation.email' && error.response.data.errors.phone.join() === 'validation.phone') {
-                toast.error('Email and Phone already exists');
-            } else {
-                toast.error(error.response.data.message);
-            }
-            return thunkAPI.rejectWithValue(error.response.data.message);
+            const errorMessage = error.response.data.message || 'Registration failed';
+            toast.error(errorMessage);
+            return rejectWithValue(errorMessage);
         }
     }
 );

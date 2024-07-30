@@ -33,23 +33,26 @@ function NavRestaurants() {
   const lang = localStorage.getItem("i18nextLng");
 
   useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        setLoadingFavorites(true);
-        setFavoritesError(null);
+    if (!token) {
+      return
+    } else {
+      const fetchFavorites = async () => {
+        try {
+          setLoadingFavorites(true);
+          setFavoritesError(null);
 
-        const data = await fetchFavoritesList();
+          const data = await fetchFavoritesList();
 
-        setFavorites(data.data[0].items);
-      } catch (error) {
-        console.error("Error fetching favorites list:", error);
-        setFavoritesError("Failed to fetch favorites list");
-      } finally {
-        setLoadingFavorites(false);
-      }
-    };
+          setFavorites(data.data[0].items);
+        } catch (error) {
 
-    fetchFavorites();
+          setFavoritesError("Failed to fetch favorites list");
+        } finally {
+          setLoadingFavorites(false);
+        }
+      };
+      fetchFavorites();
+    }
   }, []);
   const favCount = favorites.length;
   const bagCount = bagItems.length;
@@ -86,7 +89,7 @@ function NavRestaurants() {
             <NavLink to="/BecomeAPartner">{t("Become a Partner")}</NavLink>
           </li>
           <li>
-            <NavLink to="/trackOrders">{t("TRACK ORDERS")}</NavLink>
+            <NavLink to="/trackOrders">{t("track order")}</NavLink>
           </li>
           <li>
             <NavLink to="/AboutUs">{t("About us")}</NavLink>
