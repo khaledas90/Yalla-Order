@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./NavRestaurants.css";
 import logoImg from "../../assets/Insta Order.svg";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -31,6 +31,11 @@ function NavRestaurants() {
   const lang = localStorage.getItem("i18nextLng");
   const { bagItems, loadingBagItems, bagItemsError, removeOrder, isRemoving } = useBagItems();
 
+  const favoriteRef = useRef(null);
+  const bagRef = useRef(null);
+  const languageRef = useRef(null);
+  const profileRef = useRef(null);
+
   useEffect(() => {
     if (!token || token === "undefined") {
       setFavorites([]);
@@ -55,6 +60,7 @@ function NavRestaurants() {
 
   const favCount = favorites.length;
   const bagCount = bagItems?.length;
+
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
@@ -65,6 +71,29 @@ function NavRestaurants() {
       [dropdown]: !dropdownOpen[dropdown],
     });
   };
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        favoriteRef.current && !favoriteRef.current.contains(event.target) &&
+        bagRef.current && !bagRef.current.contains(event.target) &&
+        languageRef.current && !languageRef.current.contains(event.target) &&
+        profileRef.current && !profileRef.current.contains(event.target)
+      ) {
+        setDropdownOpen({
+          favorite: false,
+          bag: false,
+          language: false,
+          profile: false,
+        });
+      }
+    };
+
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
 
   return (
     <div className="navBar">
@@ -100,6 +129,12 @@ function NavRestaurants() {
               className="icon"
               key={icon}
               onClick={() => toggleDropdown(icon)}
+              ref={
+                icon === "favorite" ? favoriteRef
+                  : icon === "bag" ? bagRef
+                    : icon === "language" ? languageRef
+                      : profileRef
+              }
             >
               {icon === "favorite" && (
                 <div className="iconContainer">
@@ -146,6 +181,7 @@ function NavRestaurants() {
               className="icon"
               key={icon}
               onClick={() => toggleDropdown(icon)}
+              ref={icon === "favorite" ? favoriteRef : languageRef}
             >
               {icon === "favorite" && (
                 <div className="iconContainer">

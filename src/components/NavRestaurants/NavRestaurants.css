@@ -13,7 +13,8 @@
     font-weight: bold;
     width: 150px;
 }
-.navBar .nav-links.ar{
+
+.navBar .nav-links.ar {
     direction: rtl;
     unicode-bidi: bidi-override;
 }
@@ -67,7 +68,7 @@
     background-color: white;
     color: black;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
+    border-radius: 23px;
     overflow: hidden;
 }
 

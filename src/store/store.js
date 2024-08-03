@@ -14,7 +14,7 @@ import paymentReducer from "./paymentSlice";
 import FavSlice from "./favClinics/favSlice";
 import ShowReservation from "./reservation/ShowReservation";
 import ShowOrderResturantSlice from "./ShowOrderResturant/ShowOrderResturant";
-
+import profileReducer from "./profileUser/profileReducer";
 const persistConfig = {
     key: "root",
     storage,
@@ -33,6 +33,7 @@ const reducer = combineReducers({
     payment: paymentReducer,
     favClinic: FavSlice,
     ShowOrder: ShowOrderResturantSlice,
+    profile: profileReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);

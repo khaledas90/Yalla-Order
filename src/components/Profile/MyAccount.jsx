@@ -6,15 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBagShopping, faCalendar, faMapLocation, faPenToSquare, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
 import { logoutUser } from '../../store/thunk/logoutThunk';
-import apiAuthenticate from '../../services/authentication/apiAuthenticate';
+import { fetchProfileData, updateProfileData } from '../../store/profileUser/profileReducer';
 import toast, { Toaster } from 'react-hot-toast';
 import NavRestaurants from '../NavRestaurants/NavRestaurants';
 import NavClinics from '../NavClinics/NavClinics';
 
 export default function MyAccount() {
   const { typePage } = useSelector((state) => state.User);
+  const { data: profileData, loading, error } = useSelector((state) => state.profile);
   const [isUpdate, setIsUpdate] = useState(false);
-  const [profileData, setProfileData] = useState({});
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,37 +30,38 @@ export default function MyAccount() {
       email: Yup.string().email('Invalid email address').required('Email is required').max(65),
       phone: Yup.string().required('Phone is required').matches(/^[0-9]{11}$/, 'Phone must be exactly 11 digits'),
     }),
-    onSubmit: async (values) => {
-      try {
-        await apiAuthenticate.post('/user/edit/profile', {
-          name: values.Name,
-          email: values.email,
-          phone: values.phone,
-        });
-        toast.success('Profile updated successfully!');
-      } catch (err) {
-        toast.error('Error updating profile.');
+    onSubmit: (values) => {
+      const hasChanges = values.Name !== profileData.name ||
+        values.email !== profileData.email ||
+        values.phone !== profileData.phone;
+
+      if (!hasChanges) {
+        toast.error('No changes detected in profile fields.');
+        return;
       }
+
+      dispatch(updateProfileData(values))
+        .unwrap()
+        .then(() => {
+          toast.success('Profile updated successfully!');
+          setIsUpdate(false);
+        })
+        .catch((error) => toast.error('Error updating profile: ' + error));
     },
   });
 
   useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const res = await apiAuthenticate.get('/user/show/profile');
-        setProfileData(res.data.data);
+    dispatch(fetchProfileData())
+      .unwrap()
+      .then((data) => {
         formik.setValues({
-          Name: res.data.data.name || '',
-          email: res.data.data.email || '',
-          phone: res.data.data.phone || '',
+          Name: data.name || '',
+          email: data.email || '',
+          phone: data.phone || '',
         });
-      } catch (err) {
-        toast.error('Error fetching profile data.');
-      }
-    };
-
-    fetchProfileData();
-  }, []);
+      })
+      .catch((error) => toast.error('Error fetching profile data: ' + error));
+  }, [dispatch]);
 
   const handleLogOut = async () => {
     const resultAction = await dispatch(logoutUser());
@@ -165,7 +166,7 @@ export default function MyAccount() {
                             <div className="form-group row mb-3">
                               <div className="col-lg-12 d-flex justify-content-center text-center">
                                 {isUpdate ? (
-                                  <button type="submit" onClick={() => setIsUpdate(false)} className="btn btn-primary text-white btnAccount btnAccountSave">
+                                  <button type="submit" className="btn btn-primary text-white btnAccount btnAccountSave">
                                     Update
                                   </button>
                                 ) : (
@@ -178,6 +179,7 @@ export default function MyAccount() {
                           </form>
                         </div>
                       </div>
+                      <Toaster position="top-center" reverseOrder={false} theme="colored" />
                     </div>
                   </div>
                 </div>
