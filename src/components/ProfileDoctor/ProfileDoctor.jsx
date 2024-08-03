@@ -9,12 +9,12 @@ import HomeIcon from "@mui/icons-material/Home";
 import MedicationIcon from "@mui/icons-material/Medication";
 import FemaleIcon from "@mui/icons-material/Female";
 import MaleIcon from "@mui/icons-material/Male";
+import { AddFavClinic, DeleteFavClinic } from "../../store/favClinics/favSlice";
 import "./ProfileDoctor.css";
 
-const ProfileDoctor = () => {
+const ProfileDoctor = ({ DoctorAndClinicId }) => {
 
   const { id } = useParams();
-  console.log(id);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -26,8 +26,8 @@ const ProfileDoctor = () => {
     detection_location: "",
     day_booking: "",
     time_booking: "",
-    doctore_id: 14,
-    place_id: 34,
+    doctore_id: DoctorAndClinicId.doctorId,
+    place_id: Number(DoctorAndClinicId.clinicId),
   });
   const [isLoading, setIsLoading] = useState(false);
 

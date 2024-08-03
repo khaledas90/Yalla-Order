@@ -11,15 +11,13 @@ import { registerUser } from "../../store/thunk/registerThunk";
 import NavRestaurants from "../NavRestaurants/NavRestaurants";
 import { useTranslation } from "react-i18next";
 import Loader from "../loader/Loader";
+import { Toaster, toast } from "react-hot-toast";
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { status, error } = useSelector((state) => state.User);
   const [showPassword, setShowPassword] = useState(false);
-
-
-
   const formik = useFormik({
     initialValues: {
       Name: "",
@@ -27,17 +25,36 @@ const SignUp = () => {
       Phone: "",
       Password: "",
     },
-    validationSchema: Yup.object({
-      Name: Yup.string().required('Name is required'),
-      Email: Yup.string().email('Invalid email address').required('Email is required'),
-      Phone: Yup.string().required('Phone is required'),
-      Password: Yup.string().required('Password is required'),
-    }),
-    onSubmit: async (values) => {
 
+    validationSchema: Yup.object({
+      Name: Yup.string()
+        .matches(/^[A-Za-z\s]+$/, 'Name can only contain letters and spaces')
+        .min(2, 'Name must be at least 2 characters')
+        .required('Name is required'),
+
+      Email: Yup.string()
+        .email('Invalid email address')
+        .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, 'Please enter a valid email address')
+        .required('Email is required'),
+
+      Phone: Yup.string()
+        .matches(/^\d{11}$/, 'Phone must be exactly 11 digits')
+        .required('Phone is required'),
+
+      Password: Yup.string()
+        .min(8, 'Password must be at least 8 characters')
+        .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+        .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+        .matches(/\d/, 'Password must contain at least one number')
+        .required('Password is required'),
+    }),
+
+    onSubmit: async (values) => {
+      localStorage.clear();
       dispatch(registerUser({ values, navigate }));
     },
   });
+
 
   const { t } = useTranslation();
   const lang = localStorage.getItem("i18nextLng");
@@ -47,7 +64,7 @@ const SignUp = () => {
       <NavRestaurants />
       <div className={`container p-5 ${lang === "ar" ? "ar" : ""}`}>
         <div className="row justify-content-center">
-          <div className="col-lg-7">
+          <div className="col-lg-8">
             <div className="card p-4">
               <form className="py-2 px-2" onSubmit={formik.handleSubmit}>
                 <h2 className="text-center mb-5">{t('Create Account')}</h2>
@@ -146,7 +163,10 @@ const SignUp = () => {
                 </div>
               </form>
               {status === 'loading' && <Loader />}
-
+              <Toaster
+                position="top-center"
+                reverseOrder={false}
+              />
             </div>
           </div>
         </div>

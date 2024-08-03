@@ -10,14 +10,18 @@ import {
   faGoogle,
 } from "@fortawesome/free-brands-svg-icons";
 import { useNavigate } from "react-router-dom";
-import apiAuthenticate from "../../services/authentication/apiAuthenticate";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../store/thunk/loginThunk";
 import NavRestaurants from "../NavRestaurants/NavRestaurants";
-import { t } from "i18next";
+
 import { useTranslation } from "react-i18next";
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const { t } = useTranslation()
+  const lang = localStorage.getItem("i18nextLng")
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const formik = useFormik({
@@ -26,27 +30,23 @@ export default function Login() {
       Password: "",
     },
     validationSchema: Yup.object({
-      Email: Yup.string().email('Invalid email address').required('Email is required'),
-      Password: Yup.string().required('Password is required'),
+      Email: Yup.string()
+        .email('Invalid email address')
+        .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, 'Please enter a valid email address')
+        .required('Email is required'),
+      Password: Yup.string()
+        .min(8, 'Password must be at least 8 characters')
+        .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+        .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+        .matches(/\d/, 'Password must contain at least one number')
+        .required('Password is required'),
+
     }),
     onSubmit: async (values) => {
-      const { Email, Password } = values;
-      console.log(Email, Password)
-      try {
-        const response = await apiAuthenticate.post('/login', {
-          email: Email,
-          password: Password,
-        });
-        navigate('/HomeRestaurants')
-        localStorage.setItem('token', response.data.data);
-        console.log(response.data);
-      } catch (error) {
-        console.log(error.response ? error.response.data : error.message);
-      }
+
+      dispatch(loginUser({ values, navigate }));
     },
   });
-  const { t } = useTranslation()
-  const lang = localStorage.getItem("i18nextLng")
   return (
     <>
       <div className="Login Main_bg">

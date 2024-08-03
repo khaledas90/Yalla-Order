@@ -37,6 +37,7 @@ function NavRestaurants() {
 
   useEffect(() => {
     if (!token) {
+      localStorage.removeItem("token");
       return
     } else {
       const fetchFavorites = async () => {

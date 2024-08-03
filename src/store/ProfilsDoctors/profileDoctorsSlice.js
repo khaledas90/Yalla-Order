@@ -3,6 +3,7 @@ import axios from "axios";
 
 const initialState = {
     profileDoctors: [],
+
     error: null,
     loading: "idle",
 };
@@ -12,7 +13,7 @@ export const actProfileDoctors = createAsyncThunk(
     async(id, thunkAPI) => {
         const { rejectWithValue, signal } = thunkAPI;
         try {
-            //   console.log(id);
+            // console.log(id);
             const res = await axios.get(
                 `https://insta-order-site.web-allsafeeg.com/api/places/clinic/doctor/list/${id}`, {
                     headers: {
