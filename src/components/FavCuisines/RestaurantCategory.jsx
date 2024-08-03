@@ -5,34 +5,43 @@ import "./RestaurantCategory.css";
 import NavRestaurants from '../NavRestaurants/NavRestaurants';
 import { useTranslation } from 'react-i18next';
 import Loader from '../loader/Loader';
+import { useQuery } from '@tanstack/react-query';
 function RestaurantCategory() {
     const {id} = useParams();
     const [searchParams,setSearchParams] = useSearchParams();
     const categoryName = searchParams.get("categoryName");
     const { t } = useTranslation();
-    const [loadingProducts, setLoadingProducts] = useState(false);
-  const [productsError, setProductsError] = useState(null);
-  const [products, setProducts] = useState([]);
+  //   const [loadingProducts, setLoadingProducts] = useState(false);
+  // const [productsError, setProductsError] = useState(null);
+  // const [products, setProducts] = useState([]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setLoadingProducts(true);
-        setProductsError(null);
 
-        const data = await fetchProductsByCategory(id);
 
-        setProducts(data.data);
-      } catch (error) {
-        console.error('Error fetching products list:', error);
-        setProductsError('Failed to fetch products list');
-      } finally {
-        setLoadingProducts(false);
-      }
-    };
 
-    fetchProducts();
-  }, [id]);
+
+  const { data: products = [], isLoading: loadingProducts, isError: productsError } = useQuery({
+    queryKey : ['productsByCategory', id],
+    queryFn :  () => fetchProductsByCategory(id),});
+
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       setLoadingProducts(true);
+  //       setProductsError(null);
+
+  //       const data = await fetchProductsByCategory(id);
+
+  //       setProducts(data.data);
+  //     } catch (error) {
+  //       console.error('Error fetching products list:', error);
+  //       setProductsError('Failed to fetch products list');
+  //     } finally {
+  //       setLoadingProducts(false);
+  //     }
+  //   };
+
+  //   fetchProducts();
+  // }, [id]);
   if(loadingProducts) return <Loader/>
   return (
     <div className='category'>
@@ -42,7 +51,7 @@ function RestaurantCategory() {
     </div>
         <div className='container py-5'>
             <div className='row'>
-                    {products?.map((product => 
+                    {products.data?.map((product => 
                         <div className='col-12 col-sm-6 col-md-4 mb-4'>
                             <Link to={`/restaurants/${product.place_id}/menu/orderPage?restaurantId=${product.place_id}&productId=${product.id}&productName=${product['product name']}`}>
                          <div key={product.id} className="dish">

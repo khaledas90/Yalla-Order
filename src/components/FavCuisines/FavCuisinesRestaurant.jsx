@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import Loader from "../loader/Loader";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useQuery } from "@tanstack/react-query";
 function FavCuisinesRestaurant() {
   const { t } = useTranslation();
   const lang = localStorage.getItem("i18nextLng");
@@ -51,29 +52,33 @@ function FavCuisinesRestaurant() {
       },
     ],
   };
-  const [loadingCategories, setLoadingCategories] = useState(false);
-  const [categoriesError, setCategoriesError] = useState(null);
-  const [categories, setCategories] = useState([]);
+  // const [loadingCategories, setLoadingCategories] = useState(false);
+  // const [categoriesError, setCategoriesError] = useState(null);
+  // const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    const fetchCategoriesList = async () => {
-      try {
-        setLoadingCategories(true);
-        setCategoriesError(null);
+  const { data: categories = [], isLoading: loadingCategories, isError: categoriesError } = useQuery({
+    queryKey : ['categories'],
+    queryFn : fetchCategories });
 
-        const data = await fetchCategories();
+  // useEffect(() => {
+  //   const fetchCategoriesList = async () => {
+  //     try {
+  //       setLoadingCategories(true);
+  //       setCategoriesError(null);
 
-        setCategories(data.data);
-      } catch (error) {
-        console.error("Error fetching categories list:", error);
-        setCategoriesError("Failed to fetch categories list");
-      } finally {
-        setLoadingCategories(false);
-      }
-    };
+  //       const data = await fetchCategories();
 
-    fetchCategoriesList();
-  }, []);
+  //       setCategories(data.data);
+  //     } catch (error) {
+  //       console.error("Error fetching categories list:", error);
+  //       setCategoriesError("Failed to fetch categories list");
+  //     } finally {
+  //       setLoadingCategories(false);
+  //     }
+  //   };
+
+  //   fetchCategoriesList();
+  // }, []);
   if (loadingCategories) return <Loader />;
   return (
     <div className={`FavContainer ${lang === "ar" ? "rtl" : ""}`}>
@@ -83,7 +88,7 @@ function FavCuisinesRestaurant() {
           <h1>{t("Customer Favorite Cuisines")}</h1>
           <div className="slider-container">
             <Slider {...settings}>
-              {categories?.map((category) => (
+              {categories.data?.map((category) => (
                 <Link
                   to={`/categories/${category.id}?categoryName=${category.name}`}
                   key={category.id}

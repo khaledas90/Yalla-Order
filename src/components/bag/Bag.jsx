@@ -1,88 +1,86 @@
 import { useNavigate } from "react-router-dom";
-import { useOrders } from "../../context/OrderProvider";
 import "./Bag.css";
 import EmptyBag from "./EmptyBag";
-import { useEffect, useState } from "react";
-import { deleteOrder, fetchBagItems } from "../../services/apiRestaurant";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import Spinner from "../loader/Spinner";
-import toast, { Toaster } from "react-hot-toast";
+
 function Bag({
   bagItems,
-  setBagItems,
   loadingBagItems,
-  setLoadingBagItems,
   bagItemsError,
-  setBagItemsError,
+  removeOrder,
+  isRemoving
 }) {
-  const {orders,addOrder} = useOrders();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState('');
+  // const {orders,addOrder} = useOrders();
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
+  // const [successMessage, setSuccessMessage] = useState('');
   const Navigate = useNavigate();
 
   function handleNavToOrderSummary(restaurantId,OrderId,restaurantName,productName){
     Navigate(`/restaurants/${restaurantId}/menu/orderPage/${OrderId}?restaurantName=${restaurantName}&productName=${productName}`)
   }
-  useEffect(() => {
-    const fetchBagItemsList = async () => {
-      try {
-        setLoadingBagItems(true);
-        setBagItemsError(null);
-
-        const data = await fetchBagItems();
-        setBagItems(data.data);
-      } catch (error) {
-        console.error('Error fetching bag items list:', error);
-        setBagItemsError('Failed to fetch bag items list');
-      } finally {
-        setLoadingBagItems(false);
-      }
-    };
-
-    fetchBagItemsList();
-  }, []);
-
-  const fetchBagItemsListFunc = async () => {
-    try {
-      setLoadingBagItems(true);
-      setBagItemsError(null);
-
-      const data = await fetchBagItems();
-      setBagItems(data.data); // Adjust the data path as necessary
-    } catch (error) {
-      console.error('Error fetching bag items list:', error);
-      setBagItemsError('Failed to fetch bag items list');
-    } finally {
-      setLoadingBagItems(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchBagItemsListFunc();
-  }, []);
 
 
+  // useEffect(() => {
+  //   const fetchBagItemsList = async () => {
+  //     try {
+  //       setLoadingBagItems(true);
+  //       setBagItemsError(null);
 
-  const handleDeleteOrder = async (orderId) => {
-    try {
-      setLoading(true);
-      setError(null);
-      setSuccessMessage('');
+  //       const data = await fetchBagItems();
+  //       setBagItems(data.data);
+  //     } catch (error) {
+  //       console.error('Error fetching bag items list:', error);
+  //       setBagItemsError('Failed to fetch bag items list');
+  //     } finally {
+  //       setLoadingBagItems(false);
+  //     }
+  //   };
 
-      const data = await deleteOrder(orderId);
-      await fetchBagItemsListFunc();
-      setSuccessMessage('Order deleted successfully!');
-      toast.success("Order deleted successfully!")
-    } catch (error) {
-      console.error('Error deleting order:', error);
-      setError('Failed to delete order');
-    } finally {
-      setLoading(false);
-    }
-  };
+  //   fetchBagItemsList();
+  // }, []);
 
-  if (bagItems.length === 0) return <EmptyBag />;
+  // const fetchBagItemsListFunc = async () => {
+  //   try {
+  //     setLoadingBagItems(true);
+  //     setBagItemsError(null);
+
+  //     const data = await fetchBagItems();
+  //     setBagItems(data.data); // Adjust the data path as necessary
+  //   } catch (error) {
+  //     console.error('Error fetching bag items list:', error);
+  //     setBagItemsError('Failed to fetch bag items list');
+  //   } finally {
+  //     setLoadingBagItems(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchBagItemsListFunc();
+  // }, []);
+
+
+
+  // const handleDeleteOrder = async (orderId) => {
+  //   try {
+  //     setLoading(true);
+  //     setError(null);
+  //     setSuccessMessage('');
+
+  //     const data = await deleteOrder(orderId);
+  //     await fetchBagItemsListFunc();
+  //     setSuccessMessage('Order deleted successfully!');
+  //     toast.success("Order deleted successfully!")
+  //   } catch (error) {
+  //     console.error('Error deleting order:', error);
+  //     setError('Failed to delete order');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  if (bagItems?.length === 0) return <EmptyBag />;
   if (loadingBagItems) return <Spinner />;
   return (
     <div className="bag">
@@ -131,7 +129,7 @@ function Bag({
                 Check Order
               </button>
               <button
-                onClick={() => handleDeleteOrder(order["Order Id"])}
+                onClick={() => removeOrder(order["Order Id"])}
                 className="delBtn"
               >
                 <DeleteOutlineOutlinedIcon />

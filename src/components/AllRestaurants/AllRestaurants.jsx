@@ -8,29 +8,30 @@ import { text } from "@fortawesome/fontawesome-svg-core";
 import Loader from "../loader/Loader";
 import NetworkError from "../loader/NetworkError";
 
-function AllRestaurants({restaurants,loading,error,setRestaurants,setLoading,setError}) {
+function AllRestaurants({restaurants,loading,error}) {
     const [numToShow, setNumToShow] = useState(8)
     const { t } = useTranslation();
   const { pathname } = useLocation();
   const RestaurantsToshow = restaurants?.slice(0, numToShow);
   const lang = localStorage.getItem("i18nextLng");
-  useEffect(() => {
-    const getRestaurants = async () => {
-      try {
-        setLoading(true); // Start loading
-        const data = await fetchAllRestaurants();
-        setRestaurants(data.data);
-        setError(null); // Clear any previous errors
-      } catch (error) {
-        console.error('Error fetching restaurants:', error);
-        setError('Failed to fetch restaurants');
-      } finally {
-        setLoading(false); // End loading
-      }
-    };
+  
+//   useEffect(() => {
+//     const getRestaurants = async () => {
+//       try {
+//         setLoading(true); // Start loading
+//         const data = await fetchAllRestaurants();
+//         setRestaurants(data.data);
+//         setError(null); // Clear any previous errors
+//       } catch (error) {
+//         console.error('Error fetching restaurants:', error);
+//         setError('Failed to fetch restaurants');
+//       } finally {
+//         setLoading(false); // End loading
+//       }
+//     };
 
-    getRestaurants();
-  }, []);
+//     getRestaurants();
+//   }, [setLoading,setRestaurants,setError]);
 
     function handleIncrease() {
         if (numToShow <= restaurants.length) {
@@ -39,7 +40,7 @@ function AllRestaurants({restaurants,loading,error,setRestaurants,setLoading,set
         }
     }
     const handleSearchResults = (results) => {
-        setRestaurants(results);
+        // setRestaurants(results);
       };
     useEffect(() => {
 

@@ -16,6 +16,7 @@ import { use } from "i18next";
 import { useConfirmedOrder } from "../../context/ConfirmedOrderProvider";
 import { useOrders } from "../../context/OrderProvider";
 import { read_cookie } from "sfcookies";
+import useBagItems from "../bag/useBagItems";
 function OrderSummary() {
   const [orderSummary, setOrderSummary] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -34,6 +35,7 @@ const [confirmLoading, setConfirmLoading] = useState(false);
 const [confirmError, setConfirmError] = useState(null);
 const [successMessage, setSuccessMessage] = useState('');
 const {confirmedOrders,addConfirmedOrder} = useConfirmedOrder();
+const {removeOrder} = useBagItems();
 const {deleteOrder} = useOrders();
 const address = JSON.parse(localStorage.getItem('locations'));
 console.log(address)
@@ -77,6 +79,7 @@ const handleConfirmOrder = async (e) => {
     addConfirmedOrder({...data.data,restaurantName,productName})
     deleteOrder(data.data.id)
     Navigate(`/trackOrders/${data.data.id}`)
+    window.location.reload();
     
   } catch (error) {
     console.error('Error confirming order:', error);
@@ -105,6 +108,7 @@ const handleConfirmOrderAndPay = async (e) => {
     console.log(data)
     addConfirmedOrder({...data.data,restaurantName,productName})
     deleteOrder(data.data.id)
+    removeOrder(data.data.id)
     
     
   } catch (error) {

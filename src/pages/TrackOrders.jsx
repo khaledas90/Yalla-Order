@@ -7,33 +7,38 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { fetchOrdersList } from '../services/apiRestaurant';
 import Loader from '../components/loader/Loader';
+import { useQuery } from '@tanstack/react-query';
 function TrackOrders() {
   const { confirmedOrders } = useConfirmedOrder();
   const { t } = useTranslation();
   const Navigate = useNavigate();
-  const [loadingOrders, setLoadingOrders] = useState(false);
-  const [ordersError, setOrdersError] = useState(null);
-  const [orders, setOrders] = useState([]);
+  // const [loadingOrders, setLoadingOrders] = useState(false);
+  // const [ordersError, setOrdersError] = useState(null);
+  // const [orders, setOrders] = useState([]);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        setLoadingOrders(true);
-        setOrdersError(null);
+  const { data: orders = [], isLoading: loadingOrders, isError: ordersError } = useQuery({
+    queryKey :  ['orders'],
+    queryFn :  fetchOrdersList,
+  });
+  // useEffect(() => {
+  //   const fetchOrders = async () => {
+  //     try {
+  //       setLoadingOrders(true);
+  //       setOrdersError(null);
 
-        const data = await fetchOrdersList();
+  //       const data = await fetchOrdersList();
 
-        setOrders(data.data);
-      } catch (error) {
-        console.error('Error fetching orders list:', error);
-        setOrdersError('Failed to fetch orders list');
-      } finally {
-        setLoadingOrders(false);
-      }
-    };
+  //       setOrders(data.data);
+  //     } catch (error) {
+  //       console.error('Error fetching orders list:', error);
+  //       setOrdersError('Failed to fetch orders list');
+  //     } finally {
+  //       setLoadingOrders(false);
+  //     }
+  //   };
 
-    fetchOrders();
-  }, []);
+  //   fetchOrders();
+  // }, []);
 
   if (loadingOrders) return <Loader />
 
@@ -51,7 +56,7 @@ function TrackOrders() {
           </div> :
 
           <div className='row'>
-            {orders?.map((order =>
+            {orders.data?.map((order =>
               <div key={order.id} className='col-12 col-sm-6 col-md-4 col-lg-3 mb-4'>
 
                 <div className='confirmedOrder'>

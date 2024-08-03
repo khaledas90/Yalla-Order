@@ -13,6 +13,7 @@ import ProfileMenuRestaurant from "../Profile/ProfileMenuResturant";
 import { fetchFavoritesList } from "../../services/apiRestaurant";
 import { useTranslation } from "react-i18next";
 import { useLocalStorageState } from "../../hooks/useLocalStorageState";
+import useBagItems from "../bag/useBagItems";
 
 function NavRestaurants() {
   const token = localStorage.getItem("token");
@@ -26,11 +27,13 @@ function NavRestaurants() {
   const [loadingFavorites, setLoadingFavorites] = useState(false);
   const [favoritesError, setFavoritesError] = useState(null);
   const [favorites, setFavorites] = useLocalStorageState([], "FavItems");
-  const [loadingBagItems, setLoadingBagItems] = useState(false);
-  const [bagItemsError, setBagItemsError] = useState(null);
-  const [bagItems, setBagItems] = useLocalStorageState([], "BagItems");
+  // const [loadingBagItems, setLoadingBagItems] = useState(false);
+  // const [bagItemsError, setBagItemsError] = useState(null);
+  // const [bagItems, setBagItems] = useLocalStorageState([], "BagItems");
   const { t } = useTranslation();
   const lang = localStorage.getItem("i18nextLng");
+  const { bagItems, loadingBagItems, bagItemsError,  removeOrder, isRemoving  } = useBagItems();
+
 
   useEffect(() => {
     if (!token) {
@@ -55,7 +58,7 @@ function NavRestaurants() {
     }
   }, []);
   const favCount = favorites.length;
-  const bagCount = bagItems.length;
+  const bagCount = bagItems?.length;
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
@@ -134,11 +137,10 @@ function NavRestaurants() {
                 {icon === "bag" && (
                   <Bag
                     bagItems={bagItems}
-                    setBagItems={setBagItems}
                     loadingBagItems={loadingBagItems}
-                    setLoadingBagItems={setLoadingBagItems}
                     bagItemsError={bagItemsError}
-                    setBagItemsError={setBagItemsError}
+                    removeOrder = {removeOrder}
+                    isRemoving = {isRemoving}
                   />
                 )}
                 {icon === "language" && <LanguageMenu />}

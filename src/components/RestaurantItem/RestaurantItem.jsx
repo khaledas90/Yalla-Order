@@ -17,6 +17,7 @@ import Modal from "../modal/Modal";
 import Loader from "../loader/Loader";
 import toast, { Toaster } from "react-hot-toast";
 import NetworkError from "../loader/NetworkError";
+import { useRestaurant } from "./useRestaurant";
 
 function RestaurantItems() {
   // slick slider
@@ -61,9 +62,9 @@ function RestaurantItems() {
   const lang = localStorage.getItem("i18nextLng");
   const navigate = useNavigate();
   const { id } = useParams();
-  const [restaurant, setRestaurant] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // const [restaurant, setRestaurant] = useState({});
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
   const { t } = useTranslation();
 
   const [comment, setComment] = useState("");
@@ -85,39 +86,45 @@ function RestaurantItems() {
       console.error("Error adding review:", error);
     }
   };
+  const { data: restaurant, isLoading, isError, error } = useRestaurant(id);
+console.log(restaurant)
 
-  useEffect(() => {
-    const getRestaurant = async () => {
-      try {
-        setLoading(true); // Start loading
-        const data = await fetchRestaurantById(id);
-        setRestaurant(data.data);
-        setError(null); // Clear any previous errors
-      } catch (error) {
-        console.error("Error fetching restaurant:", error);
-        setError("Failed to fetch restaurant");
-      } finally {
-        setLoading(false); // End loading
-      }
-    };
+  // useEffect(() => {
+  //   const getRestaurant = async () => {
+  //     try {
+  //       setLoading(true); // Start loading
+  //       const data = await fetchRestaurantById(id);
+  //       setRestaurant(data.data);
+  //       setError(null); // Clear any previous errors
+  //     } catch (error) {
+  //       console.error("Error fetching restaurant:", error);
+  //       setError("Failed to fetch restaurant");
+  //     } finally {
+  //       setLoading(false); // End loading
+  //     }
+  //   };
 
-    getRestaurant();
-  }, [id]);
+  //   getRestaurant();
+  // }, [id]);
 
-  if (loading) return <Loader />;
+  if (isLoading) return <Loader />;
 
-  const {
-    "Total rate": totalRate,
-    "best selling": bestSelling,
-    "resturant info": restaurantInfo,
-    reviwes,
-  } = restaurant;
+  
+
   const navigateToMenu = () => {
     navigate(`/restaurants/${id}/menu?restaurant=${restaurantInfo.name}`);
   };
 
 
   if (error) return (<NetworkError />)
+    const {
+      "Total rate": totalRate,
+      "best selling": bestSelling,
+      "resturant info": restaurantInfo,
+      reviwes,
+    } = restaurant.data;
+
+  
 
   return (
     <div className={`Restaurant-item ${lang === "ar" ? "ar" : ""}`}>
@@ -127,15 +134,15 @@ function RestaurantItems() {
       />
 
       <Helmet>
-        {lang === "ar" ? (
+        {lang === "ar" ? 
           <title>
-            {t("Restaurant")} {RestaurantName}
+            {t("Restaurant")} {restaurantInfo?.name}
           </title>
-        ) : (
+         : 
           <title>
-            {restaurantInfo.name} {t("Restaurant")}
+            {restaurantInfo?.name} {t("Restaurant")}
           </title>
-        )}
+        }
       </Helmet>
       <div className="inputDiv inputDivRestaurantItem">
         <SearchRestaurants
@@ -150,18 +157,18 @@ function RestaurantItems() {
 
       <div className="restaurant-overview">
         <div className="img-wrapper">
-          <img src={restaurantInfo.logo} alt={CurrentRestaurant.name} />
+          <img src={restaurantInfo?.logo} alt={CurrentRestaurant.name} />
         </div>
       </div>
 
       <div className="container">
         <div className="restaurant-deliver mb-5">
           <p>
-            <span>{restaurantInfo.name}</span> {t("delivers to you")}
+            <span>{restaurantInfo?.name}</span> {t("delivers to you")}
           </p>
-          <p>{restaurantInfo.address}</p>
+          <p>{restaurantInfo?.address}</p>
         </div>
-        {bestSelling.length !== 0 ? (
+        {bestSelling?.length !== 0 ? (
           <div className="dishes">
             <p>{t("Best Seller Dishes")}</p>
             <div className="row">
@@ -192,7 +199,7 @@ function RestaurantItems() {
               </p>
             ) : (
               <p>
-                {restaurantInfo.name} {t("Reviews")}
+                {restaurantInfo?.name} {t("Reviews")}
               </p>
             )}
 

@@ -4,6 +4,7 @@ import { addToCart } from "../../services/apiRestaurant";
 import { useOrders } from "../../context/OrderProvider";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import useBagItems from "../bag/useBagItems";
 
 const styles = {
     section: {
@@ -29,14 +30,14 @@ function CreateOrder({orderDetails,productName,productId}) {
     const [checkedExtras, setCheckedExtras] = useState([]);
     const [checkedSauce,setCheckedSauce] = useState([]);
     const [qty,setQty] = useState(1);
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
     const {t} = useTranslation()
     const lang = localStorage.getItem("i18nextLng");
     const Navigate = useNavigate();
     const {orders,addOrder} = useOrders();
-
+    const {addToBag,loading} = useBagItems();
     function handleChangeExtras(e){
         const {value,checked} = e.target;
         if (checked) {
@@ -69,33 +70,51 @@ function CreateOrder({orderDetails,productName,productId}) {
         }
     }
     
-    const handleAddToCart = async (e) => {
-        e.preventDefault()
-        try {
-          setLoading(true);
-          setError(null);
-          setSuccessMessage('');
+    // const handleAddToCart = async (e) => {
+    //     e.preventDefault()
+    //     try {
+    //       setLoading(true);
+    //       setError(null);
+    //       setSuccessMessage('');
     
-          const data = await addToCart({
-            qty,
-            product_id: productId,
-            place_id:resturant.id,
-            size_id,
-            item : checkedExtras,
-            sauce:checkedSauce
-          });
-          Navigate(`/HomeRestaurants`)
-          setSuccessMessage('Item added to cart successfully!');
-          const newOrder = {...data.data,resturant,productName}
-          addOrder(newOrder)
+    //       const data = await addToCart({
+    //         qty,
+    //         product_id: productId,
+    //         place_id:resturant.id,
+    //         size_id,
+    //         item : checkedExtras,
+    //         sauce:checkedSauce
+    //       });
+    //       Navigate(`/HomeRestaurants`)
+    //       setSuccessMessage('Item added to cart successfully!');
+    //       const newOrder = {...data.data,resturant,productName}
+    //       addOrder(newOrder)
 
-        } catch (error) {
-          console.error('Error adding to cart:', error);
-          setError('Failed to add item to cart');
-        } finally {
-          setLoading(false);
-        }
+    //     } catch (error) {
+    //       console.error('Error adding to cart:', error);
+    //       setError('Failed to add item to cart');
+    //     } finally {
+    //       setLoading(false);
+    //     }
+    //   };
+    const handleAddToCart = (e) => {
+        e.preventDefault();
+        addToBag({
+          qty,
+          product_id: productId,
+          place_id: resturant.id,
+          size_id,
+          item: checkedExtras,
+          sauce: checkedSauce,
+        }, {
+          onSuccess: (data) => {
+            Navigate(`/HomeRestaurants`);
+            const newOrder = { ...data.data, resturant, productName };
+            addOrder(newOrder);
+          },
+        });
       };
+    
     
     return (
         <form className={`createOrder ${lang=== "ar" ? "ar" : ""}`}>

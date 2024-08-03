@@ -13,7 +13,7 @@ import rate from "../../assets/rate.svg";
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import FavoriteOutlinedIcon from '@mui/icons-material/FavoriteOutlined';
-import { addItemToFavorites, fetchAllCategories, fetchAllMenuItems, fetchFavoritesList, fetchMenuItems, fetchRestaurantById } from "../../services/apiRestaurant";
+import { addItemToFavorites, fetchAllCategories,fetchCategories, fetchAllMenuItems, fetchFavoritesList, fetchMenuItems, fetchRestaurantById } from "../../services/apiRestaurant";
 import PaymentsOutlinedIcon from '@mui/icons-material/PaymentsOutlined';
 import { useTranslation } from "react-i18next";
 import Loader from "../loader/Loader";
@@ -21,6 +21,8 @@ import Spinner from "../loader/Spinner";
 import toast, { Toaster } from "react-hot-toast";
 import NetworkError from "../loader/NetworkError";
 import stars from "../../assets/stars.png";
+import { useRestaurant } from "../RestaurantItem/useRestaurant";
+import { useQuery } from "@tanstack/react-query";
 const Menu = [
     {
         id: 1, DishName: "Sausage Hawawshi", category: "Hawawshi", image: SausageHawawshi1, ingradiantes: "Dough stuffed with Oriental susage , Mozzarella cheese , Roumi cheese and vegetables", price: "EGP 95.00"
@@ -40,14 +42,14 @@ function RestaurantMenu() {
     const [RestaurantRating, setRestaurantRating] = useState();
     const [activeTab, setActiveTab] = useState('menu');
     
-    const [restaurant, setRestaurant] = useState({});
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [categories, setCategories] = useState([]);
+    // const [restaurant, setRestaurant] = useState({});
+    // const [loading, setLoading] = useState(true);
+    // const [error, setError] = useState(null);
+    // const [categories, setCategories] = useState([]);
     const [showCategory, setShowCategory] = useState("All");
-    const [loadCategories,setLoadCategories] = useState(true)
-    const [erorrCategories,setErorrCategories] = useState(true)
-    const [selectedCategoryId,setSelectedCategoryId] = useState();
+    // const [loadCategories,setLoadCategories] = useState(true)
+    // const [erorrCategories,setErorrCategories] = useState(true)
+    const [selectedCategoryId,setSelectedCategoryId] = useState(-1);
     const [menuItems, setMenuItems] = useState([]);
     const [loadMenuItems,setLoadMenuItems] = useState(false);
     const [errorMenuItems,setErrorMenuItems] = useState(true);
@@ -140,44 +142,48 @@ function RestaurantMenu() {
   
 
 
+    const { data: restaurant, isLoading, isError, error } = useRestaurant(id);
 
-    useEffect(() => {
-        const getRestaurant = async () => {
-          try {
-            setLoading(true); 
-            const data = await fetchRestaurantById(id);
-            setRestaurant(data.data);
-            console.log(data.data)
-            setError(null); 
-          } catch (error) {
-            console.error('Error fetching restaurant:', error);
-            setError('Failed to fetch restaurant');
-          } finally {
-            setLoading(false);
-          }
-        };
+    // useEffect(() => {
+    //     const getRestaurant = async () => {
+    //       try {
+    //         setLoading(true); 
+    //         const data = await fetchRestaurantById(id);
+    //         setRestaurant(data.data);
+    //         console.log(data.data)
+    //         setError(null); 
+    //       } catch (error) {
+    //         console.error('Error fetching restaurant:', error);
+    //         setError('Failed to fetch restaurant');
+    //       } finally {
+    //         setLoading(false);
+    //       }
+    //     };
     
-        getRestaurant();
-      }, [id]);
+    //     getRestaurant();
+    //   }, [id]);
     
+    const { data: categories = [], isLoading: LoadCategories, isError: ErorrCategories } = useQuery({
+      queryKey : ['categories'],
+      queryFn : fetchCategories });
 
-      useEffect(() => {
-        const getCategories = async () => {
-          try {
-            setLoadCategories(true); // Start loading
-            const data = await fetchAllCategories();
-            setCategories(data.data);
-            setErorrCategories(null); // Clear any previous errors
-          } catch (error) {
-            console.error('Error fetching categories:', error);
-            setErorrCategories('Failed to fetch categories');
-          } finally {
-            setLoadCategories(false); // End loading
-          }
-        };
+      // useEffect(() => {
+      //   const getCategories = async () => {
+      //     try {
+      //       setLoadCategories(true); // Start loading
+      //       const data = await fetchAllCategories();
+      //       setCategories(data.data);
+      //       setErorrCategories(null); // Clear any previous errors
+      //     } catch (error) {
+      //       console.error('Error fetching categories:', error);
+      //       setErorrCategories('Failed to fetch categories');
+      //     } finally {
+      //       setLoadCategories(false); // End loading
+      //     }
+      //   };
     
-        getCategories();
-      }, []);
+      //   getCategories();
+      // }, []);
 
       useEffect(() => {
         const fetchMenu = async () => {
@@ -201,9 +207,9 @@ function RestaurantMenu() {
       }, [id]);
 
 
-      if(loading) return <Loader/>
+      if(isLoading) return <Loader/>
 
-      const { "Total rate": totalRate, "best selling": bestSelling, "resturant info": restaurantInfo, reviwes } = restaurant;
+      const { "Total rate": totalRate, "best selling": bestSelling, "resturant info": restaurantInfo, reviwes } = restaurant?.data;
 
       const handleShowCategory = async (e,id) => {
         setShowCategory(e.target.title);
@@ -311,7 +317,7 @@ function RestaurantMenu() {
                                     <p>{t("Categories")}</p>
                                     <ul className="categoriesList">
                                         <li title="All" onClick={(e) => handleShowCategory(e,-1)} className={`${showCategory === "All" ? "active" : ""}`}>All Menu</li>
-                                        {categories?.map((el => <li onClick={(e) => handleShowCategory(e,el.id)} title={el.name} className={`${showCategory === el.name ? "active" : ""}`}  key={el.id}>{el.name}</li>))}
+                                        {categories.data?.map((el => <li onClick={(e) => handleShowCategory(e,el.id)} title={el.name} className={`${showCategory === el.name ? "active" : ""}`}  key={el.id}>{el.name}</li>))}
                                     </ul>
                                 </div>
                                 <div className="menuBasedCategory">

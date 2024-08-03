@@ -9,14 +9,15 @@ import Loader from "../loader/Loader";
 import NetworkError from "../loader/NetworkError";
 import NavRestaurants from "../NavRestaurants/NavRestaurants";
 import toast, { Toaster } from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
 
 function PromoCode() {
     const [numToShow, setNumToShow] = useState(8)
     const { t } = useTranslation();
   const { pathname } = useLocation();
-  const [promoCodes, setPromoCodes] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // const [promoCodes, setPromoCodes] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
   const lang = localStorage.getItem("i18nextLng");
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -51,24 +52,27 @@ function PromoCode() {
 
 
 
+  const { data: promoCodes = [], isLoading: loading, isError: error } = useQuery({
+    queryKey :  ['promoCodes'],
+    queryFn : fetchPromoCodes,
+  } );
 
+  // useEffect(() => {
+  //   const getPromoCodes = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const data = await fetchPromoCodes();
+  //       setPromoCodes(data.data);
+  //       setError(null);
+  //     } catch (error) {
+  //       setError('Failed to fetch promo codes');
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-  useEffect(() => {
-    const getPromoCodes = async () => {
-      try {
-        setLoading(true);
-        const data = await fetchPromoCodes();
-        setPromoCodes(data.data);
-        setError(null);
-      } catch (error) {
-        setError('Failed to fetch promo codes');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getPromoCodes();
-  }, []);
+  //   getPromoCodes();
+  // }, []);
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -101,7 +105,7 @@ function PromoCode() {
             <div className="restaurantsList">
                 <div className="container">
                     <div className="row">
-                        {promoCodes?.map((restaurant) =>
+                        {promoCodes.data?.map((restaurant) =>
                             <div key={restaurant.id} className="col-12 col-md-6 col-lg-3 mb-5">
                                 <div onClick={(e) => handleStorePromoCode(e,restaurant.promocodeid)} title={restaurant.promocodename} className={`restaurant promo ${restaurant.status === "ON"? "active" : ""}`}>
                                         <img src={restaurant.logo} alt="restaurant" />

@@ -14,6 +14,7 @@ import ConfirmedOrderProvider from "./context/ConfirmedOrderProvider";
 import TransitionWrapper from "./hooks/TransitionWrapper";
 import Loader from "./components/loader/Loader";
 import PromoCode from "./components/AllRestaurants/PromoCode";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const Footer = lazy(() => import("./components/footer/Footer"));
 const Login = lazy(() => import("./components/Login/Login"));
@@ -68,8 +69,20 @@ const MyReservations = lazy(() =>
 );
 const WhislistClinics = lazy(() => import("./pages/WhislitClinics"));
 const NotFound = lazy(() => import("./components/NotFound/NotFound"));
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,  // Don't refetch on window focus
+      retry: 2, // Retry failed requests once
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      cacheTime: 10 * 60 * 1000, // 10 minutes
+    },
+  },
+});
 function App() {
   return (
+    <QueryClientProvider client={queryClient}>
     <LanguageProvider>
       <ConfirmedOrderProvider>
         <OrderProvider>
@@ -308,6 +321,7 @@ function App() {
         </OrderProvider>
       </ConfirmedOrderProvider>
     </LanguageProvider>
+    </QueryClientProvider>
   );
 }
 
