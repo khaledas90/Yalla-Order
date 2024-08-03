@@ -43,6 +43,7 @@ export default function Login() {
 
     }),
     onSubmit: async (values) => {
+      console.log(values);
 
       dispatch(loginUser({ values, navigate }));
     },

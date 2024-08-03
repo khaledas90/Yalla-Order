@@ -27,18 +27,14 @@ function NavRestaurants() {
   const [loadingFavorites, setLoadingFavorites] = useState(false);
   const [favoritesError, setFavoritesError] = useState(null);
   const [favorites, setFavorites] = useLocalStorageState([], "FavItems");
-  // const [loadingBagItems, setLoadingBagItems] = useState(false);
-  // const [bagItemsError, setBagItemsError] = useState(null);
-  // const [bagItems, setBagItems] = useLocalStorageState([], "BagItems");
   const { t } = useTranslation();
   const lang = localStorage.getItem("i18nextLng");
-  const { bagItems, loadingBagItems, bagItemsError,  removeOrder, isRemoving  } = useBagItems();
-
+  const { bagItems, loadingBagItems, bagItemsError, removeOrder, isRemoving } = useBagItems();
 
   useEffect(() => {
-    if (!token) {
-      localStorage.removeItem("token");
-      return
+    if (!token || token === "undefined") {
+      setFavorites([]);
+      return;
     } else {
       const fetchFavorites = async () => {
         try {
@@ -46,10 +42,8 @@ function NavRestaurants() {
           setFavoritesError(null);
 
           const data = await fetchFavoritesList();
-
           setFavorites(data.data[0].items);
         } catch (error) {
-
           setFavoritesError("Failed to fetch favorites list");
         } finally {
           setLoadingFavorites(false);
@@ -57,7 +51,8 @@ function NavRestaurants() {
       };
       fetchFavorites();
     }
-  }, []);
+  }, [token, setFavorites, setLoadingFavorites, setFavoritesError]);
+
   const favCount = favorites.length;
   const bagCount = bagItems?.length;
   const toggleMenu = () => {
@@ -78,11 +73,8 @@ function NavRestaurants() {
           <img src={logoImg} alt="insta order" />
         </Link>
       </div>
-      {token ? (
-        <ul
-          className={`nav-links ${lang === "ar" ? "ar" : ""} ${menuOpen ? "active" : ""
-            }`}
-        >
+      {token && token !== "undefined" ? (
+        <ul className={`nav-links ${lang === "ar" ? "ar" : ""} ${menuOpen ? "active" : ""}`}>
           <li>
             <NavLink to="/HomeRestaurants">{t(`Home`)}</NavLink>
           </li>
@@ -102,7 +94,7 @@ function NavRestaurants() {
       ) : null}
 
       <div className="icons">
-        {token
+        {token && token !== "undefined"
           ? ["favorite", "bag", "language", "profile"].map((icon) => (
             <div
               className="icon"
@@ -140,8 +132,8 @@ function NavRestaurants() {
                     bagItems={bagItems}
                     loadingBagItems={loadingBagItems}
                     bagItemsError={bagItemsError}
-                    removeOrder = {removeOrder}
-                    isRemoving = {isRemoving}
+                    removeOrder={removeOrder}
+                    isRemoving={isRemoving}
                   />
                 )}
                 {icon === "language" && <LanguageMenu />}

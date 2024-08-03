@@ -27,11 +27,11 @@ export default function MyReservations() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!token);
 
   useEffect(() => {
-    console.log(reservations);
+
     dispatch(fetchReservationList());
     setLoading(false);
     setIsLoggedIn(!!token);
-  }, [token]);
+  }, [token, dispatch]);
 
 
   const handleLogOut = async () => {

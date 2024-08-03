@@ -224,10 +224,10 @@
 }
 
 .Restaurant-item .slick-next {
-    right: -18px;
+    right: 9px;
 }
 
 .Restaurant-item .slick-prev {
-    left: -18px;
+    left: 9px;
     z-index: 111;
 }

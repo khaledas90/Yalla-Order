@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 function ProfileMenuRestaurant() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const handleLogOut = async () => {
     console.log("logout");
     const resultAction = await dispatch(logoutUser());
@@ -25,10 +25,10 @@ function ProfileMenuRestaurant() {
 
   return (
     <ul className='profMenu'>
-      <li><Link to="/MyAccount"><ModeEditOutlineOutlinedIcon />{t("Edit Profile")}</Link></li>
-      <li><Link to="/MyOrder"><ShoppingBagOutlinedIcon />{t("My Orders")}</Link></li>
-      <li><Link to="/MyAddress"><MapOutlinedIcon />{t("Saved Address")}</Link></li>
-      <li onClick={handleLogOut}><LoginOutlinedIcon /> {t("Log Out")}</li>
+      <li className='p-2'><Link to="/MyAccount"><ModeEditOutlineOutlinedIcon />{t("Edit Profile")}</Link></li>
+      <li className='p-2'><Link to="/MyOrder"><ShoppingBagOutlinedIcon />{t("My Orders")}</Link></li>
+      <li className='p-2'><Link to="/MyAddress"><MapOutlinedIcon />{t("Saved Address")}</Link></li>
+      <li className='p-2' onClick={handleLogOut}><LoginOutlinedIcon /> {t("Log Out")}</li>
       <Toaster position="top-center" reverseOrder={false} />
     </ul>
   )

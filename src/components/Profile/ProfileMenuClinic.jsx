@@ -29,22 +29,22 @@ function ProfileMenuClinic() {
   return (
     <>
       <ul className="profMenu">
-        <li>
+        <li className='p-2'>
           <Link to="/MyAccount">
             <ModeEditOutlineOutlinedIcon /> Edit Profile
           </Link>
         </li>
-        <li>
+        <li className='p-2'>
           <Link to="/MyReservations">
             <ShoppingBagOutlinedIcon /> My reservations
           </Link>
         </li>
-        <li>
+        <li className='p-2'>
           <Link to="/MyAddress">
             <MapOutlinedIcon /> Saved Address
           </Link>
         </li>
-        <li onClick={handleLogOut}>
+        <li className='p-2' onClick={handleLogOut}>
           <LoginOutlinedIcon /> Log Out
         </li>
       </ul>

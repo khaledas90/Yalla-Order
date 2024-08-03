@@ -5,8 +5,8 @@ import { bake_cookie } from "sfcookies";
 
 export const loginUser = createAsyncThunk(
     'user/login',
-    async({ userData, navigate }, thunkAPI) => {
-        const { Email, Password } = userData;
+    async({ values, navigate }, thunkAPI) => {
+        const { Email, Password } = values;
         try {
             const response = await apiAuthenticate.post('/login', {
                 email: Email,
@@ -15,10 +15,8 @@ export const loginUser = createAsyncThunk(
             if (response.status === 200) {
                 toast.success(response.data.message);
                 const token = response.data.data;
-                console.log(response.data.data, 'token');
                 bake_cookie('token', token);
-                localStorage.getItem('token', token);
-                console.log(localStorage.getItem('token'));
+                localStorage.setItem('token', token);
                 setTimeout(() => {
                     navigate('/HomeRestaurants');
                 }, 1000);

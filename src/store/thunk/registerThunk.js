@@ -18,8 +18,8 @@ export const registerUser = createAsyncThunk(
 
             if (response.status === 200) {
                 toast.success(response.data.message);
-                const token = response.data.data
-                localStorage.setItem('token', token)
+                // const token = response.data.data
+                // localStorage.setItem('token', token)
 
                 setTimeout(() => {
                     navigate('/login');

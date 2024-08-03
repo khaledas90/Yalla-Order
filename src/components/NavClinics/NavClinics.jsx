@@ -15,7 +15,7 @@ function NavClinics() {
   const token = localStorage.getItem("token");
   const [menuOpen, setMenuOpen] = useState(false);
   const [countReservations, setCountReservations] = useState('0');
-  const [countFav, setCountCountFav] = useState('0');
+  const [countFav, setCountFav] = useState('0');
   const [dropdownOpen, setDropdownOpen] = useState({
     favorite: false,
     bag: false,
@@ -29,16 +29,18 @@ function NavClinics() {
   const lang = localStorage.getItem("i18nextLng");
 
   useEffect(() => {
-    if (reservations.data === null || reservations.data.length === 0) {
-      setCountReservations("0");
-    } else {
+    // Check if reservations.data exists and is an array
+    if (Array.isArray(reservations.data) && reservations.data.length > 0) {
       setCountReservations(reservations.data.length.toString());
+    } else {
+      setCountReservations("0");
     }
 
-    if (favClinic.favClinic === null || favClinic.favClinic.length === 0) {
-      setCountCountFav("0");
+    // Check if favClinic.favClinic exists and is an array
+    if (Array.isArray(favClinic.favClinic) && favClinic.favClinic.length > 0) {
+      setCountFav(favClinic.favClinic.length.toString());
     } else {
-      setCountCountFav(favClinic.favClinic.length.toString());
+      setCountFav("0");
     }
   }, [reservations, favClinic]);
 
@@ -61,9 +63,7 @@ function NavClinics() {
         </Link>
       </div>
       {token ? (
-        <ul
-          className={`nav-links ${lang === "ar" ? "ar" : ""} ${menuOpen ? "active" : ""}`}
-        >
+        <ul className={`nav-links ${lang === "ar" ? "ar" : ""} ${menuOpen ? "active" : ""}`}>
           <li>
             <NavLink to="/HomeMedical">{t("Home")}</NavLink>
           </li>
