@@ -24,7 +24,7 @@ function Clinics() {
           },
         }
       );
-      setClinics(response.data.data); // Assuming the data is nested under 'data' based on the context provided
+      setClinics(response.data.data);
       setError(null);
     } catch (error) {
       console.error("Error fetching clinics:", error);
